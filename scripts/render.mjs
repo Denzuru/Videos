@@ -136,9 +136,14 @@ try {
       throw new Error(`renderer reported "${result}" for range ${start}-${end}s`);
     }
 
+    // A full slice yields one frame per step plus the boundary frame. Anything
+    // short of that means the animation ended inside this slice.
     const produced = await frameCount();
-    // A range past the end of the animation still flushes one trailing frame.
-    if (produced <= 1) {
+    const expected = Math.round((end - start) * fps) + 1;
+    const reachedEnd = produced < expected;
+
+    // Past the end, the renderer still flushes a couple of trailing frames.
+    if (produced <= 2) {
       await fs.rm(frameDir, {recursive: true, force: true});
       await fs.mkdir(frameDir, {recursive: true});
       break;
@@ -150,6 +155,7 @@ try {
     console.log(
       `  rendered ${start}s-${end}s (${produced} frames, ${total} total)`,
     );
+    if (reachedEnd) break;
     start = end;
   }
 

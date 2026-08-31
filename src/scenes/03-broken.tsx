@@ -1,6 +1,7 @@
 import {Line, Node, Rect, Txt, makeScene2D} from '@motion-canvas/2d';
 import {
   all,
+  fadeTransition,
   chain,
   createRef,
   easeInOutSine,
@@ -92,6 +93,9 @@ export default makeScene2D(function* (view) {
     </>,
   );
 
+  // Cross-fade in from the scene before, rather than cutting.
+  yield* fadeTransition(0.9);
+
   yield loop(Infinity, () =>
     chain(
       heartLeft().scale(1.05, 1, easeInOutSine),
@@ -137,7 +141,7 @@ export default makeScene2D(function* (view) {
 
   // The wall rises between the child and the light.
   yield* all(
-    wall().position.y(60, 1.6, easeOutCubic),
+    wall().position.y(210, 1.6, easeOutCubic),
     say(caption(), 'It breaks the friendship we were made for.', 2.8),
   );
 

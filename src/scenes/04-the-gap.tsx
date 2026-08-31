@@ -1,6 +1,7 @@
 import {Node, Rect, Txt, makeScene2D} from '@motion-canvas/2d';
 import {
   all,
+  fadeTransition,
   chain,
   createRef,
   easeInCubic,
@@ -12,7 +13,7 @@ import {
   waitFor,
 } from '@motion-canvas/core';
 import {Backdrop, Caption, say} from '../components/narration';
-import {GlowOrb, Kid, Starfield} from '../components/figures';
+import {Chasm, GlowOrb, Kid, Starfield} from '../components/figures';
 import {font, palette} from '../theme';
 
 /** One of the "good things I did" blocks the child piles up. */
@@ -42,29 +43,13 @@ export default makeScene2D(function* (view) {
       <Backdrop from={palette.night} to={palette.nightDeep} />
       <Starfield count={80} seed={57} tint={palette.muted} />
 
-      {/* Two ledges with a chasm between them. */}
-      <Rect
-        size={[900, 620]}
-        position={[-720, 470]}
-        radius={[0, 30, 0, 0]}
-        fill={'#2b3358'}
-        stroke={'#1d2340'}
-        lineWidth={8}
-      />
-      <Rect
-        size={[900, 620]}
-        position={[720, 470]}
-        radius={[30, 0, 0, 0]}
-        fill={'#2b3358'}
-        stroke={'#1d2340'}
-        lineWidth={8}
-      />
+      <Chasm />
 
-      <Node ref={light} position={[600, -40]}>
+      <Node ref={light} position={[620, -110]}>
         <GlowOrb color={palette.gold} radius={230} intensity={0.45} />
         <Txt
           text={'GOD'}
-          y={250}
+          y={205}
           fontFamily={font.display}
           fontWeight={600}
           fontSize={44}
@@ -73,19 +58,22 @@ export default makeScene2D(function* (view) {
         />
       </Node>
 
-      <Node ref={blocks} position={[-560, 160]}>
+      <Node ref={blocks} position={[-620, 123]}>
         <TryBlock label={'be good'} y={0} scale={0} />
         <TryBlock label={'be kind'} y={-78} scale={0} />
         <TryBlock label={'try harder'} y={-156} scale={0} />
       </Node>
 
-      <Node ref={kid} position={[-620, 60]}>
-        <Kid scale={0.95} />
+      <Node ref={kid} position={[-620, 36]}>
+        <Kid scale={1.15} />
       </Node>
 
       <Caption ref={caption} />
     </>,
   );
+
+  // Cross-fade in from the scene before, rather than cutting.
+  yield* fadeTransition(0.9);
 
   yield loop(Infinity, () =>
     chain(
@@ -101,11 +89,11 @@ export default makeScene2D(function* (view) {
   yield* all(
     say(caption(), 'Some of us tried jumping.', 2),
     chain(
-      kid().position([-420, -80], 0.55, easeOutCubic),
-      kid().position([-250, 520], 0.7, easeInCubic),
+      kid().position([-420, -110], 0.55, easeOutCubic),
+      kid().position([-250, 560], 0.7, easeInCubic),
     ),
   );
-  kid().position([-620, 60]).opacity(0);
+  kid().position([-620, 36]).opacity(0);
   yield* kid().opacity(1, 0.5);
 
   // Attempt two: build a tower of good deeds.
@@ -118,7 +106,7 @@ export default makeScene2D(function* (view) {
   );
 
   yield* all(
-    kid().position([-560, -100], 1, easeOutCubic),
+    kid().position([-620, -194], 1, easeOutCubic),
     say(caption(), 'We piled up every good thing we could think of.', 3),
   );
 
@@ -136,7 +124,7 @@ export default makeScene2D(function* (view) {
         ),
       ),
     ),
-    kid().position([-620, 60], 0.9, easeInCubic),
+    kid().position([-620, 36], 0.9, easeInCubic),
     say(caption(), 'Because being good enough was never the answer.', 3.2),
   );
 

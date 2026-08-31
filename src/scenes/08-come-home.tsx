@@ -1,6 +1,7 @@
 import {Circle, Layout, Node, Rect, Txt, makeScene2D} from '@motion-canvas/2d';
 import {
   all,
+  fadeTransition,
   chain,
   createRef,
   easeInOutSine,
@@ -11,7 +12,15 @@ import {
   waitFor,
 } from '@motion-canvas/core';
 import {Backdrop, Caption, say} from '../components/narration';
-import {Cross, GlowOrb, Heart, Kid, Sparkle, Starfield} from '../components/figures';
+import {
+  Chasm,
+  Cross,
+  GlowOrb,
+  Heart,
+  Kid,
+  Sparkle,
+  Starfield,
+} from '../components/figures';
 import {font, glow, palette, titleText, verseText} from '../theme';
 
 export default makeScene2D(function* (view) {
@@ -38,37 +47,22 @@ export default makeScene2D(function* (view) {
       <Starfield count={60} seed={113} tint={palette.cream} />
 
       <Node ref={scene}>
-        <Rect
-          size={[900, 620]}
-          position={[-720, 470]}
-          radius={[0, 30, 0, 0]}
-          fill={'#3a4270'}
-          stroke={'#2a3055'}
-          lineWidth={8}
-        />
-        <Rect
-          size={[900, 620]}
-          position={[720, 470]}
-          radius={[30, 0, 0, 0]}
-          fill={'#3a4270'}
-          stroke={'#2a3055'}
-          lineWidth={8}
-        />
+        <Chasm warm />
 
         <Node ref={light} position={[620, -60]}>
           <GlowOrb color={palette.gold} radius={240} intensity={0.45} />
         </Node>
 
-        <Node ref={bridge} position={[0, 60]} rotation={90} scale={1.55}>
+        <Node ref={bridge} position={[0, 196]} rotation={90} scale={1.55}>
           <Cross color={palette.parchment} height={420} width={260} thickness={44} />
         </Node>
 
-        <Node ref={kid} position={[-620, 60]}>
-          <Kid scale={0.95} />
+        <Node ref={kid} position={[-620, 36]}>
+          <Kid scale={1.15} />
         </Node>
       </Node>
 
-      <Node ref={heart} position={[0, -170]} scale={0}>
+      <Node ref={heart} position={[0, -310]} scale={0}>
         <Heart color={palette.rose} size={170} />
       </Node>
 
@@ -85,7 +79,7 @@ export default makeScene2D(function* (view) {
         direction={'column'}
         gap={34}
         alignItems={'center'}
-        y={-40}
+        y={20}
         opacity={0}
       >
         {prayerLines.map(line => (
@@ -130,6 +124,9 @@ export default makeScene2D(function* (view) {
     </>,
   );
 
+  // Cross-fade in from the scene before, rather than cutting.
+  yield* fadeTransition(0.9);
+
   yield loop(Infinity, () =>
     chain(
       light().scale(1.05, 1.9, easeInOutSine),
@@ -142,12 +139,11 @@ export default makeScene2D(function* (view) {
 
   // The child crosses.
   yield* all(
-    kid().position([-180, 60], 2, easeOutCubic),
+    kid().position([-180, 36], 2, easeOutCubic),
     say(caption(), 'Jesus says: come to me.', 2.4),
   );
   yield* all(
-    kid().position([330, 20], 2.2, easeOutCubic),
-    kid().scale(0.85, 2.2),
+    kid().position([330, 36], 2.2, easeOutCubic),
     sparkles().opacity(1, 1.6),
     say(caption(), 'You do not have to fix yourself first.', 2.8),
   );
@@ -165,9 +161,7 @@ export default makeScene2D(function* (view) {
     1.6,
     ...prayer()
       .children()
-      .map(line =>
-        all(line.opacity(1, 0.9, easeOutCubic), line.position.y(line.position.y() - 14, 0.9, easeOutCubic)),
-      ),
+      .map(line => line.opacity(1, 0.9, easeOutCubic)),
   );
   yield* waitFor(2.4);
 

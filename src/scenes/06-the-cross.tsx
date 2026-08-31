@@ -1,6 +1,7 @@
 import {Node, Rect, Txt, makeScene2D} from '@motion-canvas/2d';
 import {
   all,
+  fadeTransition,
   chain,
   createRef,
   easeInOutCubic,
@@ -11,7 +12,7 @@ import {
   waitFor,
 } from '@motion-canvas/core';
 import {Backdrop, Caption, say} from '../components/narration';
-import {Cross, GlowOrb, Kid, Starfield} from '../components/figures';
+import {Chasm, Cross, GlowOrb, Kid, Starfield} from '../components/figures';
 import {alpha, font, palette} from '../theme';
 
 export default makeScene2D(function* (view) {
@@ -30,22 +31,7 @@ export default makeScene2D(function* (view) {
       <Starfield count={80} seed={83} tint={palette.muted} />
       <Backdrop ref={dawn} from={'#4a3170'} to={'#ffb36b'} opacity={0} />
 
-      <Rect
-        size={[900, 620]}
-        position={[-720, 470]}
-        radius={[0, 30, 0, 0]}
-        fill={'#2b3358'}
-        stroke={'#1d2340'}
-        lineWidth={8}
-      />
-      <Rect
-        size={[900, 620]}
-        position={[720, 470]}
-        radius={[30, 0, 0, 0]}
-        fill={'#2b3358'}
-        stroke={'#1d2340'}
-        lineWidth={8}
-      />
+      <Chasm />
 
       <Node ref={light} position={[620, -60]} opacity={0}>
         <GlowOrb color={palette.gold} radius={210} intensity={0.45} />
@@ -66,8 +52,8 @@ export default makeScene2D(function* (view) {
         />
       </Node>
 
-      <Node ref={kid} position={[-620, 60]} opacity={0}>
-        <Kid scale={0.95} />
+      <Node ref={kid} position={[-620, 36]} opacity={0}>
+        <Kid scale={1.15} />
       </Node>
 
       <Node ref={cross} position={[0, -60]} scale={0} opacity={0}>
@@ -86,7 +72,7 @@ export default makeScene2D(function* (view) {
       <Txt
         ref={label}
         text={'a bridge'}
-        y={-260}
+        y={-40}
         fontFamily={font.display}
         fontWeight={600}
         fontSize={72}
@@ -98,6 +84,9 @@ export default makeScene2D(function* (view) {
     </>,
   );
 
+  // Cross-fade in from the scene before, rather than cutting.
+  yield* fadeTransition(0.9);
+
   yield* say(caption(), 'But not everybody wanted a King like Jesus.', 2.8);
 
   yield* all(
@@ -108,7 +97,7 @@ export default makeScene2D(function* (view) {
 
   // The sky goes dark.
   yield* all(
-    dark().opacity(0.72, 2.2),
+    dark().opacity(0.55, 2.2),
     say(caption(), 'The sky went dark in the middle of the day.', 2.8),
   );
 
@@ -117,7 +106,7 @@ export default makeScene2D(function* (view) {
   yield* say(caption(), 'He was choosing.', 2.2);
 
   yield* all(
-    dark().opacity(0.35, 1.6),
+    dark().opacity(0.25, 1.6),
     say(caption(), 'Every wrong thing we had ever done, He carried.', 3.2),
   );
   yield* say(caption(), 'Yours too. He carried yours.', 2.8);
@@ -133,7 +122,7 @@ export default makeScene2D(function* (view) {
 
   yield* all(
     cross().rotation(90, 1.8, easeInOutCubic),
-    cross().position([0, 60], 1.8, easeInOutCubic),
+    cross().position([0, 196], 1.8, easeInOutCubic),
     cross().scale(1.55, 1.8, easeInOutCubic),
     light().opacity(1, 1.8),
     kid().opacity(1, 1.4),

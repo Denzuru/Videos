@@ -44,19 +44,24 @@ export function Starfield({
     const x = (random() - 0.5) * area[0];
     const y = (random() - 0.5) * area[1];
     const size = 1.5 + random() * 4;
-    const brightness = 0.25 + random() * 0.6;
+    const brightness = 0.3 + random() * 0.6;
 
     stars.push(
       <Circle
         position={[x, y]}
         size={size * 2}
         fill={new Color(tint).alpha(brightness)}
-        {...glow(alpha(tint as string, brightness * 0.8), size * 5)}
       />,
     );
   }
 
-  return <Node {...rest}>{stars}</Node>;
+  // The field never changes shape, so rasterise it once. Scenes still fade and
+  // twinkle it by tweening the opacity of this node, which reuses the cache.
+  return (
+    <Node cache cachePadding={20} {...rest}>
+      {stars}
+    </Node>
+  );
 }
 
 export interface KidProps extends NodeProps {
@@ -271,6 +276,80 @@ export function GlowOrb({
   }
 
   return <Node {...rest}>{layers}</Node>;
+}
+
+export interface ChasmProps extends NodeProps {
+  warm?: boolean;
+}
+
+/**
+ * Two lit ledges with a void between them. The dark rect behind the ledges is
+ * what makes the gap read as a gap — without it the sky shows through and the
+ * two ledges look like one continuous floor.
+ *
+ * The ledge surface sits at y = 160, which is where anything standing on it
+ * (the child, the cross laid down as a bridge) has to line up.
+ */
+export function Chasm({warm = false, ...rest}: ChasmProps) {
+  const rock = warm ? '#4c4470' : '#333c66';
+  const lip = warm ? '#6f6199' : '#4d5891';
+
+  return (
+    <Node {...rest}>
+      <Rect width={1980} height={700} y={510} fill={'#04060e'} />
+      <Rect
+        size={[900, 620]}
+        position={[-720, 470]}
+        radius={[0, 26, 0, 0]}
+        fill={rock}
+      />
+      <Rect
+        size={[900, 620]}
+        position={[720, 470]}
+        radius={[26, 0, 0, 0]}
+        fill={rock}
+      />
+      <Rect size={[900, 20]} position={[-720, 170]} radius={[0, 10, 0, 0]} fill={lip} />
+      <Rect size={[900, 20]} position={[720, 170]} radius={[10, 0, 0, 0]} fill={lip} />
+    </Node>
+  );
+}
+
+export interface RayBurstProps extends NodeProps {
+  count?: number;
+  color?: PossibleColor;
+  length?: number;
+}
+
+/**
+ * A wheel of tapered light beams. Triangles rather than bars, so the burst
+ * reads as light rather than as a set of sticks.
+ */
+export function RayBurst({
+  count = 18,
+  color = palette.gold,
+  length = 900,
+  ...rest
+}: RayBurstProps) {
+  const beams: Node[] = [];
+  for (let i = 0; i < count; i++) {
+    const long = i % 2 === 0;
+    const reach = long ? length : length * 0.6;
+    const spread = long ? 46 : 30;
+    beams.push(
+      <Line
+        points={[
+          [-spread, 0],
+          [spread, 0],
+          [0, -reach],
+        ]}
+        closed
+        fill={new Color(color).alpha(long ? 0.22 : 0.13)}
+        rotation={(360 / count) * i}
+      />,
+    );
+  }
+  return <Node {...rest}>{beams}</Node>;
 }
 
 export interface MoonProps extends NodeProps {

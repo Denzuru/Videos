@@ -7,6 +7,7 @@ import {
   easeInOutSine,
   easeOutBack,
   easeOutCubic,
+  fadeTransition,
   loop,
   sequence,
   waitFor,
@@ -17,7 +18,7 @@ import {glow, palette} from '../theme';
 
 /** A rounded hill silhouette. */
 function Hill(props: Record<string, unknown>) {
-  return <Circle fill={palette.dusk} {...props} />;
+  return <Circle fill={'#2f6b52'} {...props} />;
 }
 
 /** A lollipop tree: trunk plus a cluster of leaves. */
@@ -60,15 +61,15 @@ export default makeScene2D(function* (view) {
         <GlowOrb color={palette.gold} radius={360} intensity={0.5} />
       </Node>
 
-      <Node ref={land} y={640}>
-        <Hill size={1500} position={[-620, 260]} />
-        <Hill size={1200} position={[640, 300]} />
+      <Node ref={land} y={1080}>
+        <Hill size={1500} position={[-620, 240]} />
+        <Hill size={1180} position={[640, 300]} />
         <Rect
           width={2100}
           height={520}
           y={300}
           radius={40}
-          fill={'#2c4a3b'}
+          fill={'#25573f'}
         />
         <Node ref={trees} y={40}>
           <Tree position={[-620, 0]} scale={0} leaf={'#67c9a0'} />
@@ -78,12 +79,12 @@ export default makeScene2D(function* (view) {
         </Node>
       </Node>
 
-      <Node ref={kid} position={[0, 300]} scale={0}>
+      <Node ref={kid} position={[-30, 250]} scale={0}>
         <Kid />
       </Node>
 
-      <Node ref={heart} position={[0, 110]} scale={0}>
-        <Heart color={palette.rose} size={110} />
+      <Node ref={heart} position={[-30, 78]} scale={0}>
+        <Heart color={palette.rose} size={150} />
       </Node>
 
       <Node ref={sparkles} opacity={0}>
@@ -96,6 +97,9 @@ export default makeScene2D(function* (view) {
       <Caption ref={caption} />
     </>,
   );
+
+  // Cross-fade in from the scene before, rather than cutting.
+  yield* fadeTransition(0.9);
 
   yield loop(Infinity, () =>
     chain(
@@ -110,10 +114,10 @@ export default makeScene2D(function* (view) {
   // Sunrise. Everything warms at once.
   yield* all(
     sun().opacity(1, 1.4),
-    sun().position.y(-160, 4.5, easeOutCubic),
+    sun().position.y(-236, 4.5, easeOutCubic),
     dawn().opacity(0.92, 4.5),
     stars().opacity(0.25, 4.5),
-    land().position.y(180, 3.4, easeOutCubic),
+    land().position.y(250, 3.4, easeOutCubic),
     say(caption(), 'And light poured into the dark.', 2.4),
   );
 
@@ -132,8 +136,8 @@ export default makeScene2D(function* (view) {
 
   yield loop(Infinity, () =>
     chain(
-      kid().position.y(288, 1.3, easeInOutSine),
-      kid().position.y(300, 1.3, easeInOutSine),
+      kid().position.y(238, 1.3, easeInOutSine),
+      kid().position.y(250, 1.3, easeInOutSine),
     ),
   );
 

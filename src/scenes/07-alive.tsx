@@ -1,6 +1,7 @@
 import {Circle, Node, Rect, Txt, makeScene2D} from '@motion-canvas/2d';
 import {
   all,
+  fadeTransition,
   chain,
   createRef,
   easeInOutSine,
@@ -12,26 +13,8 @@ import {
   waitFor,
 } from '@motion-canvas/core';
 import {Backdrop, Caption, say} from '../components/narration';
-import {GlowOrb, Kid, Sparkle, Starfield} from '../components/figures';
+import {GlowOrb, Kid, RayBurst, Sparkle, Starfield} from '../components/figures';
 import {font, glow, palette} from '../theme';
-
-/** A wheel of light rays for the resurrection burst. */
-function Rays({count = 24, ...rest}: {count?: number} & Record<string, unknown>) {
-  const rays: Node[] = [];
-  for (let i = 0; i < count; i++) {
-    rays.push(
-      <Rect
-        size={[i % 2 ? 10 : 18, i % 2 ? 620 : 860]}
-        radius={10}
-        offset={[0, -1]}
-        rotation={(360 / count) * i}
-        fill={palette.gold}
-        opacity={i % 2 ? 0.35 : 0.6}
-      />,
-    );
-  }
-  return <Node {...rest}>{rays}</Node>;
-}
 
 export default makeScene2D(function* (view) {
   const caption = createRef<Txt>();
@@ -59,11 +42,11 @@ export default makeScene2D(function* (view) {
       />
 
       <Node ref={tombLight} position={[0, 200]} scale={0} opacity={0}>
-        <GlowOrb color={palette.gold} radius={230} intensity={0.45} />
+        <GlowOrb color={palette.gold} radius={330} intensity={0.6} />
       </Node>
 
       <Node ref={rays} position={[0, 200]} scale={0} opacity={0}>
-        <Rays />
+        <RayBurst count={18} color={palette.gold} length={980} />
       </Node>
 
       <Node ref={stone} position={[0, 210]}>
@@ -85,8 +68,8 @@ export default makeScene2D(function* (view) {
         <Sparkle position={[600, 20]} size={44} color={palette.mint} />
       </Node>
 
-      <Node ref={kid} position={[-560, 320]} opacity={0}>
-        <Kid scale={0.85} />
+      <Node ref={kid} position={[-720, 232]} opacity={0}>
+        <Kid scale={1.05} />
       </Node>
 
       <Txt
@@ -105,6 +88,9 @@ export default makeScene2D(function* (view) {
       <Caption ref={caption} />
     </>,
   );
+
+  // Cross-fade in from the scene before, rather than cutting.
+  yield* fadeTransition(0.9);
 
   yield* say(caption(), 'Jesus died. That part is really true.', 2.8);
   yield* say(caption(), 'His friends laid Him in a tomb in a garden.', 3);
@@ -148,8 +134,8 @@ export default makeScene2D(function* (view) {
 
   yield loop(Infinity, () =>
     chain(
-      kid().position.y(300, 0.9, easeInOutSine),
-      kid().position.y(320, 0.9, easeInOutSine),
+      kid().position.y(214, 0.9, easeInOutSine),
+      kid().position.y(232, 0.9, easeInOutSine),
     ),
   );
 

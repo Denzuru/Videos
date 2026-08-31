@@ -12,7 +12,7 @@ export function Caption(props: TxtProps) {
   return (
     <Txt
       {...narrationText}
-      y={382}
+      y={428}
       opacity={0}
       width={1500}
       textWrap
@@ -27,15 +27,15 @@ export function Caption(props: TxtProps) {
  */
 export function* say(caption: Txt, text: string, hold = 2.6) {
   caption.text(text);
-  caption.y(414);
+  caption.y(458);
   yield* all(
     caption.opacity(1, 0.5, easeOutCubic),
-    caption.y(382, 0.5, easeOutCubic),
+    caption.y(428, 0.5, easeOutCubic),
   );
   yield* waitFor(hold);
   yield* all(
     caption.opacity(0, 0.4, easeInCubic),
-    caption.y(360, 0.4, easeInCubic),
+    caption.y(408, 0.4, easeInCubic),
   );
 }
 

@@ -1,6 +1,7 @@
 import {Circle, Line, Node, Rect, Txt, makeScene2D} from '@motion-canvas/2d';
 import {
   all,
+  fadeTransition,
   chain,
   createRef,
   easeInOutSine,
@@ -11,7 +12,7 @@ import {
   waitFor,
 } from '@motion-canvas/core';
 import {Backdrop, Caption, say} from '../components/narration';
-import {GlowOrb, Kid, Sparkle, Starfield} from '../components/figures';
+import {Chasm, GlowOrb, Kid, Sparkle, Starfield} from '../components/figures';
 import {font, glow, palette} from '../theme';
 
 /**
@@ -67,6 +68,7 @@ export default makeScene2D(function* (view) {
       <Backdrop from={palette.nightDeep} to={palette.night} />
       <Starfield count={110} seed={71} />
       <Backdrop ref={warmth} from={'#33265c'} to={'#a85a3c'} opacity={0} />
+      <Chasm />
 
       <Line
         ref={trail}
@@ -90,18 +92,18 @@ export default makeScene2D(function* (view) {
         <GlowOrb color={palette.gold} radius={320} intensity={0.45} />
       </Node>
 
-      <Node ref={jesus} position={[0, 60]} opacity={0} scale={0.7}>
+      <Node ref={jesus} position={[0, 0]} opacity={0} scale={0.85}>
         <LightFigure />
       </Node>
 
-      <Node ref={kid} position={[-520, 300]} opacity={0}>
-        <Kid scale={0.9} />
+      <Node ref={kid} position={[-620, 36]}>
+        <Kid scale={1.15} />
       </Node>
 
       <Txt
         ref={name}
         text={'Jesus'}
-        y={330}
+        y={318}
         fontFamily={font.display}
         fontWeight={600}
         fontSize={96}
@@ -113,6 +115,9 @@ export default makeScene2D(function* (view) {
       <Caption ref={caption} />
     </>,
   );
+
+  // Cross-fade in from the scene before, rather than cutting.
+  yield* fadeTransition(0.9);
 
   yield* say(caption(), 'So God did the thing nobody expected.', 2.6);
   yield* say(caption(), 'He did not wait for us to climb up to Him.', 2.8);
@@ -142,7 +147,7 @@ export default makeScene2D(function* (view) {
 
   yield* all(
     jesus().opacity(1, 1.4),
-    jesus().scale(1, 1.4, easeOutBack),
+    jesus().scale(1.25, 1.4, easeOutBack),
     say(caption(), 'God sent His only Son into the world.', 3),
   );
 
@@ -151,10 +156,7 @@ export default makeScene2D(function* (view) {
     say(caption(), 'His name is Jesus.', 2.4),
   );
 
-  yield* all(
-    kid().opacity(1, 1.2),
-    say(caption(), 'He was fully God, and He was fully a person.', 3),
-  );
+  yield* say(caption(), 'He was fully God, and He was fully a person.', 3);
 
   yield* say(caption(), 'He held children. He fed hungry people.', 2.8);
   yield* say(caption(), 'He healed the sick and calmed a storm with a word.', 3.2);

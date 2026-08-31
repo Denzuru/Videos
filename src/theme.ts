@@ -51,6 +51,9 @@ export const narrationText = {
   textAlign: 'center' as const,
   fontSize: 58,
   lineHeight: 84,
+  // A dark halo, so a caption stays readable wherever the art puts it.
+  shadowColor: 'rgba(6, 8, 22, 0.9)',
+  shadowBlur: 22,
 };
 
 export const verseText = {
