@@ -84,14 +84,14 @@ export default makeScene2D(function* (view) {
       </Node>
 
       <Node ref={heart} position={[-30, 78]} scale={0}>
-        <Heart color={palette.rose} size={150} />
+        <Heart color={palette.rose} size={210} />
       </Node>
 
       <Node ref={sparkles} opacity={0}>
-        <Sparkle position={[-300, -180]} size={40} color={palette.gold} />
-        <Sparkle position={[300, -230]} size={32} color={palette.cream} />
-        <Sparkle position={[180, -60]} size={24} color={palette.rose} />
-        <Sparkle position={[-210, -30]} size={28} color={palette.sky} />
+        <Sparkle position={[-300, -180]} size={88} color={palette.gold} />
+        <Sparkle position={[300, -230]} size={70} color={palette.cream} />
+        <Sparkle position={[180, -60]} size={54} color={palette.rose} />
+        <Sparkle position={[-210, -30]} size={62} color={palette.sky} />
       </Node>
 
       <Caption ref={caption} />

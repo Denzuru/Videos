@@ -145,35 +145,50 @@ export function Kid({
 
 export interface SparkleProps extends NodeProps {
   color?: PossibleColor;
+  size?: number;
 }
 
-/** A four-point twinkle. Used for wonder, and later for glory. */
-export function Sparkle({color = palette.gold, ...rest}: SparkleProps) {
+/**
+ * A four-point twinkle. Used for wonder, and later for glory.
+ *
+ * `Path` ignores `size`, so the requested size becomes a scale on an inner
+ * node. Keeping it off the outer node leaves `scale` free for callers to tween
+ * — the twinkle loops multiply against this rather than replacing it.
+ */
+export function Sparkle({color = palette.gold, size = 100, ...rest}: SparkleProps) {
   return (
-    <Path
-      data={'M 0 -50 Q 9 -9 50 0 Q 9 9 0 50 Q -9 9 -50 0 Q -9 -9 0 -50 Z'}
-      fill={color}
-      {...glow(color as string, 40)}
-      {...rest}
-    />
+    <Node {...rest}>
+      <Node scale={size / 100}>
+        <Path
+          data={'M 0 -50 Q 9 -9 50 0 Q 9 9 0 50 Q -9 9 -50 0 Q -9 -9 0 -50 Z'}
+          fill={color}
+          {...glow(color as string, 40)}
+        />
+      </Node>
+    </Node>
   );
 }
 
 export interface HeartProps extends NodeProps {
   color?: PossibleColor;
+  size?: number;
 }
 
-export function Heart({color = palette.rose, ...rest}: HeartProps) {
+/** Sized the same way as {@link Sparkle}, and for the same reason. */
+export function Heart({color = palette.rose, size = 112, ...rest}: HeartProps) {
   return (
-    <Path
-      data={
-        'M 0 34 C -44 2 -56 -30 -28 -48 C -11 -58 0 -46 0 -35 ' +
-        'C 0 -46 11 -58 28 -48 C 56 -30 44 2 0 34 Z'
-      }
-      fill={color}
-      {...glow(color as string, 45)}
-      {...rest}
-    />
+    <Node {...rest}>
+      <Node scale={size / 112}>
+        <Path
+          data={
+            'M 0 34 C -44 2 -56 -30 -28 -48 C -11 -58 0 -46 0 -35 ' +
+            'C 0 -46 11 -58 28 -48 C 56 -30 44 2 0 34 Z'
+          }
+          fill={color}
+          {...glow(color as string, 45)}
+        />
+      </Node>
+    </Node>
   );
 }
 

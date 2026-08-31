@@ -62,10 +62,10 @@ export default makeScene2D(function* (view) {
       </Node>
 
       <Node ref={sparkles} opacity={0}>
-        <Sparkle position={[-420, -220]} size={54} color={palette.gold} />
-        <Sparkle position={[430, -280]} size={40} color={palette.cream} />
-        <Sparkle position={[-620, 40]} size={34} color={palette.rose} />
-        <Sparkle position={[600, 20]} size={44} color={palette.mint} />
+        <Sparkle position={[-420, -220]} size={118} color={palette.gold} />
+        <Sparkle position={[430, -280]} size={88} color={palette.cream} />
+        <Sparkle position={[-620, 40]} size={76} color={palette.rose} />
+        <Sparkle position={[600, 20]} size={96} color={palette.mint} />
       </Node>
 
       <Node ref={kid} position={[-720, 232]} opacity={0}>

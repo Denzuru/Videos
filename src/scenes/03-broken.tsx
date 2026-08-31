@@ -41,11 +41,11 @@ export default makeScene2D(function* (view) {
         <Line
           ref={crack}
           points={[
-            [-6, -128],
-            [26, -50],
-            [-24, 4],
-            [18, 58],
-            [-4, 118],
+            [-8, -142],
+            [30, -62],
+            [-28, 2],
+            [22, 52],
+            [-4, 88],
           ]}
           stroke={palette.nightDeep}
           lineWidth={12}

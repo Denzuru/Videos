@@ -85,7 +85,7 @@ export default makeScene2D(function* (view) {
       />
 
       <Node ref={star} position={[220, -620]}>
-        <Sparkle size={110} color={palette.gold} />
+        <Sparkle size={230} color={palette.gold} />
       </Node>
 
       <Node ref={burst} position={[0, 120]} scale={0} opacity={0}>
