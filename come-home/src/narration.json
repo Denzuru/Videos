@@ -1,0 +1,270 @@
+{
+  "01-weight": {
+    "src": "/vo/01-weight.wav",
+    "duration": 14.028,
+    "lines": [
+      {
+        "id": "tired",
+        "start": 0,
+        "end": 2.525
+      },
+      {
+        "id": "carrying",
+        "start": 2.525,
+        "end": 7.025
+      },
+      {
+        "id": "mistake",
+        "start": 7.025,
+        "end": 9.514
+      },
+      {
+        "id": "again",
+        "start": 9.514,
+        "end": 14.028
+      }
+    ]
+  },
+  "02-running": {
+    "src": "/vo/02-running.wav",
+    "duration": 14.994,
+    "lines": [
+      {
+        "id": "moving",
+        "start": 0,
+        "end": 1.27
+      },
+      {
+        "id": "louder",
+        "start": 1.27,
+        "end": 3.979
+      },
+      {
+        "id": "screen",
+        "start": 3.979,
+        "end": 6.166
+      },
+      {
+        "id": "quiet",
+        "start": 6.166,
+        "end": 8.98
+      },
+      {
+        "id": "question",
+        "start": 8.98,
+        "end": 12.353
+      },
+      {
+        "id": "done",
+        "start": 12.353,
+        "end": 14.994
+      }
+    ]
+  },
+  "03-the-gap": {
+    "src": "/vo/03-the-gap.wav",
+    "duration": 17.868,
+    "lines": [
+      {
+        "id": "word",
+        "start": 0,
+        "end": 1.489
+      },
+      {
+        "id": "sin",
+        "start": 1.489,
+        "end": 2.41
+      },
+      {
+        "id": "petty",
+        "start": 2.41,
+        "end": 4.961
+      },
+      {
+        "id": "canyon",
+        "start": 4.961,
+        "end": 6.582
+      },
+      {
+        "id": "stacked",
+        "start": 6.582,
+        "end": 12.835
+      },
+      {
+        "id": "climbed",
+        "start": 12.835,
+        "end": 15.386
+      },
+      {
+        "id": "notone",
+        "start": 15.386,
+        "end": 17.868
+      }
+    ]
+  },
+  "04-the-cross": {
+    "src": "/vo/04-the-cross.wav",
+    "duration": 19.409,
+    "lines": [
+      {
+        "id": "expected",
+        "start": 0,
+        "end": 2.773
+      },
+      {
+        "id": "standard",
+        "start": 2.773,
+        "end": 5.991
+      },
+      {
+        "id": "took",
+        "start": 5.991,
+        "end": 11.189
+      },
+      {
+        "id": "hands",
+        "start": 11.189,
+        "end": 14.399
+      },
+      {
+        "id": "losing",
+        "start": 14.399,
+        "end": 17.597
+      },
+      {
+        "id": "you",
+        "start": 17.597,
+        "end": 19.409
+      }
+    ]
+  },
+  "05-alive": {
+    "src": "/vo/05-alive.wav",
+    "duration": 12.931,
+    "lines": [
+      {
+        "id": "empty",
+        "start": 0,
+        "end": 3.425
+      },
+      {
+        "id": "legend",
+        "start": 3.425,
+        "end": 6.147
+      },
+      {
+        "id": "receipt",
+        "start": 6.147,
+        "end": 10.262
+      },
+      {
+        "id": "paid",
+        "start": 10.262,
+        "end": 12.931
+      }
+    ]
+  },
+  "06-the-offer": {
+    "src": "/vo/06-the-offer.wav",
+    "duration": 16.196,
+    "lines": [
+      {
+        "id": "offer",
+        "start": 0,
+        "end": 3.001
+      },
+      {
+        "id": "clean",
+        "start": 3.001,
+        "end": 5.053
+      },
+      {
+        "id": "harder",
+        "start": 5.053,
+        "end": 7.383
+      },
+      {
+        "id": "come",
+        "start": 7.383,
+        "end": 8.856
+      },
+      {
+        "id": "grace",
+        "start": 8.856,
+        "end": 13.989
+      },
+      {
+        "id": "reaching",
+        "start": 13.989,
+        "end": 16.196
+      }
+    ]
+  },
+  "07-the-promise": {
+    "src": "/vo/07-the-promise.wav",
+    "duration": 18.521,
+    "lines": [
+      {
+        "id": "romans",
+        "start": 0,
+        "end": 2.174
+      },
+      {
+        "id": "confess",
+        "start": 2.174,
+        "end": 10.465
+      },
+      {
+        "id": "now",
+        "start": 10.465,
+        "end": 12.664
+      },
+      {
+        "id": "sitting",
+        "start": 12.664,
+        "end": 14.529
+      },
+      {
+        "id": "nochurch",
+        "start": 14.529,
+        "end": 18.521
+      }
+    ]
+  },
+  "08-come-home": {
+    "src": "/vo/08-come-home.wav",
+    "duration": 16.353,
+    "lines": [
+      {
+        "id": "prayer",
+        "start": 0,
+        "end": 3
+      },
+      {
+        "id": "running",
+        "start": 3,
+        "end": 4.726
+      },
+      {
+        "id": "lord",
+        "start": 4.726,
+        "end": 7.643
+      },
+      {
+        "id": "whole",
+        "start": 7.643,
+        "end": 10.811
+      },
+      {
+        "id": "party",
+        "start": 10.811,
+        "end": 14.401
+      },
+      {
+        "id": "today",
+        "start": 14.401,
+        "end": 16.353
+      }
+    ]
+  }
+}
