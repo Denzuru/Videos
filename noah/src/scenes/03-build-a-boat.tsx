@@ -12,7 +12,7 @@ import {
   waitFor,
 } from '@revideo/core';
 import {Noah} from '../components/creatures';
-import {Caption, PunchWord, punch, say} from '../components/narration';
+import {Caption, PunchWord, makeNarrator, punch} from '../components/narration';
 import {Cloud, Hill, SkyBackdrop} from '../components/world';
 import {font, palette, punchText} from '../theme';
 
@@ -121,39 +121,44 @@ export default makeScene2D('build-a-boat', function* (view) {
     </>,
   );
 
+  const {begin, speak, untilDone} = makeNarrator(view, caption(), 'buildABoat');
+
   yield* fadeTransition(0.5);
+  yield* begin();
   yield loop(Infinity, () =>
     chain(noah().position.y(320, 0.9, easeInOutSine), noah().position.y(340, 0.9, easeInOutSine)),
   );
 
-  yield* say(caption(), 'One day, God said something surprising.', 1.9);
+  yield* speak('One day, God said something surprising.');
 
   yield* all(
     voice().opacity(1, 0.3),
     voice().scale(1, 0.5, easeOutBack),
-    say(caption(), 'A big flood was coming, and everyone needed rescuing.', 2.4),
+    speak('A big flood was coming, and everyone needed rescuing.'),
   );
 
   yield* all(
     blueprint().opacity(1, 0.6),
     blueprint().scale(0.98, 0.6, easeOutBack),
-    say(caption(), 'So God gave Noah a plan.', 1.8),
+    speak('So God gave Noah a plan.'),
   );
   yield* blueprint().scale(0.92, 0.3);
 
-  yield* punch(word(), 'A HUGE BOAT!', 0.8, 5);
+  yield punch(word(), 'A HUGE BOAT!', 0.8, 5);
 
   yield* all(
     sequence(0.25, ...facts().children().map(f => f.scale(1, 0.5, easeOutBack))),
-    say(caption(), 'Not a little rowing boat. An enormous one.', 2.3),
+    speak('Not a little rowing boat. An enormous one.'),
   );
 
-  yield* say(caption(), 'Big enough for Noah, his family, and the animals.', 2.5);
-  yield* say(caption(), 'Every single kind of animal.', 2);
+  yield* speak('Big enough for Noah, his family, and the animals.');
+  yield* speak('Every single kind of animal.');
 
   yield* all(
     voice().opacity(0, 0.5),
     facts().opacity(0, 0.5),
     blueprint().opacity(0, 0.5),
   );
+
+  yield* untilDone();
 });

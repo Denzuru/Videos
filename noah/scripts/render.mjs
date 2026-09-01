@@ -5,6 +5,7 @@
  * several Puppeteer instances and pipes frames straight into ffmpeg, so this
  * is just configuration plus progress reporting.
  */
+import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -29,13 +30,28 @@ const outFile = args.out ?? 'noahs-big-boat.mp4';
 const progress = new Array(workers).fill(0);
 let lastReport = 0;
 
+// Revideo resolves a relative asset src like /vo/line.wav against
+// `<outDir>/../public`, so the output directory has to sit one level inside
+// the project or every audio clip resolves outside it and the film comes out
+// silent. Render into output/ and move the finished file afterwards.
+const renderDir = 'output';
+
 const file = await renderVideo({
   projectFile: path.join(root, 'src/project.ts'),
   settings: {
     outFile,
-    outDir: root,
+    outDir: renderDir,
     workers,
     logProgress: false,
+    // Revideo defaults to its wasm exporter, which encodes in the browser
+    // through mp4-wasm at a fixed low bitrate - that is what puts ringing
+    // around the hard edges of flat cartoon art and outlined text. The ffmpeg
+    // exporter instead streams lossless PNG frames out to ffmpeg, where
+    // scripts/ffmpeg-hq.sh can set a real quality target.
+    projectSettings: {
+      exporter: {name: '@revideo/core/ffmpeg', options: {format: 'mp4'}},
+    },
+    ffmpeg: {ffmpegPath: path.join(root, 'scripts/ffmpeg-hq.sh')},
     puppeteer: {
       args: [
         '--no-sandbox',
@@ -60,4 +76,8 @@ const file = await renderVideo({
   },
 });
 
-console.log(`\ndone: ${file}`);
+const finished = path.join(root, outFile);
+await fs.rename(path.resolve(root, file), finished);
+await fs.rm(path.join(root, renderDir), {recursive: true, force: true});
+
+console.log(`\ndone: ${finished}`);

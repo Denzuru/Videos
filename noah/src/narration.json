@@ -1,0 +1,325 @@
+{
+  "longAgo": {
+    "src": "/vo/longAgo.wav",
+    "duration": 19.722,
+    "lines": [
+      {
+        "id": "longAgo-00",
+        "start": 0,
+        "end": 3.9
+      },
+      {
+        "id": "longAgo-01",
+        "start": 3.9,
+        "end": 6.368
+      },
+      {
+        "id": "longAgo-02",
+        "start": 6.368,
+        "end": 8.628
+      },
+      {
+        "id": "longAgo-03",
+        "start": 8.628,
+        "end": 11.305
+      },
+      {
+        "id": "longAgo-04",
+        "start": 11.305,
+        "end": 14.084
+      },
+      {
+        "id": "longAgo-05",
+        "start": 14.084,
+        "end": 16.823
+      },
+      {
+        "id": "longAgo-06",
+        "start": 16.823,
+        "end": 19.722
+      }
+    ]
+  },
+  "buildABoat": {
+    "src": "/vo/buildABoat.wav",
+    "duration": 17.084,
+    "lines": [
+      {
+        "id": "buildABoat-00",
+        "start": 0,
+        "end": 2.61
+      },
+      {
+        "id": "buildABoat-01",
+        "start": 2.61,
+        "end": 6.205
+      },
+      {
+        "id": "buildABoat-02",
+        "start": 6.205,
+        "end": 8.541
+      },
+      {
+        "id": "buildABoat-03",
+        "start": 8.541,
+        "end": 11.526
+      },
+      {
+        "id": "buildABoat-04",
+        "start": 11.526,
+        "end": 14.963
+      },
+      {
+        "id": "buildABoat-05",
+        "start": 14.963,
+        "end": 17.084
+      }
+    ]
+  },
+  "building": {
+    "src": "/vo/building.wav",
+    "duration": 25.966,
+    "lines": [
+      {
+        "id": "building-00",
+        "start": 0,
+        "end": 2.074
+      },
+      {
+        "id": "building-01",
+        "start": 2.074,
+        "end": 6.488
+      },
+      {
+        "id": "building-02",
+        "start": 6.488,
+        "end": 9.591
+      },
+      {
+        "id": "building-03",
+        "start": 9.591,
+        "end": 12.946
+      },
+      {
+        "id": "building-04",
+        "start": 12.946,
+        "end": 15.813
+      },
+      {
+        "id": "building-05",
+        "start": 15.813,
+        "end": 19.458
+      },
+      {
+        "id": "building-06",
+        "start": 19.458,
+        "end": 23.169
+      },
+      {
+        "id": "building-07",
+        "start": 23.169,
+        "end": 25.966
+      }
+    ]
+  },
+  "twoByTwo": {
+    "src": "/vo/twoByTwo.wav",
+    "duration": 23.484,
+    "lines": [
+      {
+        "id": "twoByTwo-00",
+        "start": 0,
+        "end": 3.235
+      },
+      {
+        "id": "twoByTwo-01",
+        "start": 3.235,
+        "end": 7.624
+      },
+      {
+        "id": "twoByTwo-02",
+        "start": 7.624,
+        "end": 10.872
+      },
+      {
+        "id": "twoByTwo-03",
+        "start": 10.872,
+        "end": 14.497
+      },
+      {
+        "id": "twoByTwo-04",
+        "start": 14.497,
+        "end": 17.314
+      },
+      {
+        "id": "twoByTwo-05",
+        "start": 17.314,
+        "end": 20.491
+      },
+      {
+        "id": "twoByTwo-06",
+        "start": 20.491,
+        "end": 23.484
+      }
+    ]
+  },
+  "theDoor": {
+    "src": "/vo/theDoor.wav",
+    "duration": 14.524,
+    "lines": [
+      {
+        "id": "theDoor-00",
+        "start": 0,
+        "end": 3.232
+      },
+      {
+        "id": "theDoor-01",
+        "start": 3.232,
+        "end": 5.61
+      },
+      {
+        "id": "theDoor-02",
+        "start": 5.61,
+        "end": 8.881
+      },
+      {
+        "id": "theDoor-03",
+        "start": 8.881,
+        "end": 11.215
+      },
+      {
+        "id": "theDoor-04",
+        "start": 11.215,
+        "end": 14.524
+      }
+    ]
+  },
+  "rain": {
+    "src": "/vo/rain.wav",
+    "duration": 25.731,
+    "lines": [
+      {
+        "id": "rain-00",
+        "start": 0,
+        "end": 3.96
+      },
+      {
+        "id": "rain-01",
+        "start": 3.96,
+        "end": 8.632
+      },
+      {
+        "id": "rain-02",
+        "start": 8.632,
+        "end": 11.685
+      },
+      {
+        "id": "rain-03",
+        "start": 11.685,
+        "end": 15.212
+      },
+      {
+        "id": "rain-04",
+        "start": 15.212,
+        "end": 18.699
+      },
+      {
+        "id": "rain-05",
+        "start": 18.699,
+        "end": 23.056
+      },
+      {
+        "id": "rain-06",
+        "start": 23.056,
+        "end": 25.731
+      }
+    ]
+  },
+  "theDove": {
+    "src": "/vo/theDove.wav",
+    "duration": 32.522,
+    "lines": [
+      {
+        "id": "theDove-00",
+        "start": 0,
+        "end": 2.457
+      },
+      {
+        "id": "theDove-01",
+        "start": 2.457,
+        "end": 6.675
+      },
+      {
+        "id": "theDove-02",
+        "start": 6.675,
+        "end": 10.351
+      },
+      {
+        "id": "theDove-03",
+        "start": 10.351,
+        "end": 14.244
+      },
+      {
+        "id": "theDove-04",
+        "start": 14.244,
+        "end": 17.601
+      },
+      {
+        "id": "theDove-05",
+        "start": 17.601,
+        "end": 19.648
+      },
+      {
+        "id": "theDove-06",
+        "start": 19.648,
+        "end": 24.919
+      },
+      {
+        "id": "theDove-07",
+        "start": 24.919,
+        "end": 28.344
+      },
+      {
+        "id": "theDove-08",
+        "start": 28.344,
+        "end": 32.522
+      }
+    ]
+  },
+  "rainbow": {
+    "src": "/vo/rainbow.wav",
+    "duration": 17.398,
+    "lines": [
+      {
+        "id": "rainbow-00",
+        "start": 0,
+        "end": 2.784
+      },
+      {
+        "id": "rainbow-01",
+        "start": 2.784,
+        "end": 4.873
+      },
+      {
+        "id": "rainbow-02",
+        "start": 4.873,
+        "end": 8.328
+      },
+      {
+        "id": "rainbow-03",
+        "start": 8.328,
+        "end": 11.105
+      },
+      {
+        "id": "rainbow-04",
+        "start": 11.105,
+        "end": 14.392
+      },
+      {
+        "id": "rainbow-05",
+        "start": 14.392,
+        "end": 17.398
+      }
+    ]
+  }
+}

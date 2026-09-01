@@ -8,4 +8,8 @@ dist/
 *-[0-9].mp4
 *-audio.wav
 *-visuals.mp4
+narrated.mp4
 smoke*.mp4
+
+# Rebuilt from vo/raw by scripts/build-voiceover.mjs - no credits needed.
+public/vo/

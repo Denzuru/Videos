@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "start": "revideo serve",
-    "render": "node scripts/render.mjs"
+    "render": "node scripts/render.mjs --out=narrated.mp4 && node scripts/mix-music.mjs narrated.mp4 noahs-big-boat.mp4 --switch=115 && rm -f narrated.mp4",
+    "render:silent": "node scripts/render.mjs",
+    "voiceover": "node scripts/build-voiceover.mjs"
   },
   "dependencies": {
     "@fontsource/baloo-2": "^5.0.0",

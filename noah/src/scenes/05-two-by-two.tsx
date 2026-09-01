@@ -21,7 +21,7 @@ import {
   Turtle,
   Zebra,
 } from '../components/creatures';
-import {Caption, PunchWord, punch, say} from '../components/narration';
+import {Caption, PunchWord, makeNarrator, punch} from '../components/narration';
 import {Bird} from '../components/creatures';
 import {Cloud, Hill, SkyBackdrop} from '../components/world';
 import {font, palette} from '../theme';
@@ -101,12 +101,15 @@ export default makeScene2D('two-by-two', function* (view) {
     </>,
   );
 
+  const {begin, speak, untilDone} = makeNarrator(view, caption(), 'twoByTwo');
+
   yield* fadeTransition(0.5);
+  yield* begin();
   yield loop(Infinity, () =>
     chain(ark().position.y(310, 1.1, easeInOutSine), ark().position.y(330, 1.1, easeInOutSine)),
   );
 
-  yield* say(caption(), 'And then, one morning, Noah heard a sound.', 2);
+  yield* speak('And then, one morning, Noah heard a sound.');
 
   // The parade starts here, under the narration, so the field is never empty
   // while there is still talking to do. Each pair walks the full width and
@@ -127,9 +130,9 @@ export default makeScene2D('two-by-two', function* (view) {
       ),
   );
 
-  yield* say(caption(), 'Thump. Flap. Squeak. Roar.', 1.8);
-  yield* punch(word(), 'THE ANIMALS!', 0.8, -5);
-  yield* say(caption(), 'They came from everywhere, all by themselves.', 2.2);
+  yield* speak('Thump. Flap. Squeak. Roar.');
+  yield punch(word(), 'THE ANIMALS!', 0.8, -5);
+  yield* speak('They came from everywhere, all by themselves.');
 
   // Every pair bobs the whole way across.
   for (const [i, pair] of parade().children().entries()) {
@@ -142,10 +145,10 @@ export default makeScene2D('two-by-two', function* (view) {
     );
   }
 
-  yield* punch(word(), 'TWO BY TWO!', 1, 6);
-  yield* say(caption(), 'Two elephants. Two giraffes. Two lions.', 2.2);
-  yield* say(caption(), 'Two of every kind of animal in the world.', 2.4);
-  yield* say(caption(), 'They all walked up the ramp and climbed inside.', 2.4);
-  yield* say(caption(), 'Nobody was left out. Not a single one.', 2.2);
-  yield* waitFor(0.8);
+  yield punch(word(), 'TWO BY TWO!', 1, 6);
+  yield* speak('Two elephants. Two giraffes. Two lions.');
+  yield* speak('Two of every kind of animal in the world.');
+  yield* speak('They all walked up the ramp and climbed inside.');
+  yield* speak('Nobody was left out. Not a single one.');
+  yield* untilDone();
 });

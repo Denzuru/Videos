@@ -11,7 +11,7 @@ import {
   waitFor,
 } from '@revideo/core';
 import {Ark} from '../components/ark';
-import {Caption, PunchWord, punch, say} from '../components/narration';
+import {Caption, PunchWord, makeNarrator, punch} from '../components/narration';
 import {Cloud, Hill, SkyBackdrop} from '../components/world';
 import {palette} from '../theme';
 
@@ -43,30 +43,33 @@ export default makeScene2D('the-door', function* (view) {
     </>,
   );
 
+  const {begin, speak, untilDone} = makeNarrator(view, caption(), 'theDoor');
+
   yield* fadeTransition(0.5);
+  yield* begin();
   yield loop(Infinity, () =>
     chain(ark().position.y(322, 1.2, easeInOutSine), ark().position.y(340, 1.2, easeInOutSine)),
   );
 
-  yield* say(caption(), 'Noah went in. His whole family went in.', 2.2);
-  yield* say(caption(), 'Every animal found its place.', 2);
+  yield* speak('Noah went in. His whole family went in.');
+  yield* speak('Every animal found its place.');
 
   // The door swings shut and the world lands on it.
   yield* all(
     door().scale([1, 1], 0.9, easeOutCubic),
-    say(caption(), 'And then something happened that nobody expected.', 2.4),
+    speak('And then something happened that nobody expected.'),
   );
   yield* chain(
     stage().position.y(16, 0.06),
     stage().position.y(0, 0.12, easeOutBack),
   );
 
-  yield* punch(word(), 'THUD!', 0.6, -8);
+  yield punch(word(), 'THUD!', 0.6, -8);
 
   yield* all(
     gloom().opacity(0.2, 1),
-    say(caption(), 'God shut the door Himself.', 2.2),
+    speak('God shut the door Himself.'),
   );
-  yield* say(caption(), 'Nobody had to hold it. They were safe inside.', 2.6);
-  yield* waitFor(0.4);
+  yield* speak('Nobody had to hold it. They were safe inside.');
+  yield* untilDone();
 });

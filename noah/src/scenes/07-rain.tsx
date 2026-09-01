@@ -11,7 +11,7 @@ import {
   waitFor,
 } from '@revideo/core';
 import {Ark} from '../components/ark';
-import {Caption, PunchWord, punch, say} from '../components/narration';
+import {Caption, PunchWord, makeNarrator, punch} from '../components/narration';
 import {
   Cloud,
   Hill,
@@ -70,17 +70,20 @@ export default makeScene2D('rain', function* (view) {
     </>,
   );
 
+  const {begin, speak, untilDone} = makeNarrator(view, caption(), 'rain');
+
   yield* fadeTransition(0.5);
+  yield* begin();
   yield loop(Infinity, () => swell(swell() + Math.PI * 2, 2.8, linear));
 
-  yield* say(caption(), 'And then Noah felt it. One drop on his nose.', 2.2);
+  yield* speak('And then Noah felt it. One drop on his nose.');
 
   // The sky turns over.
   yield* all(
     storm().opacity(1, 1.6),
     rainA().opacity(1, 1),
     rainB().opacity(1, 1),
-    say(caption(), 'Then two. Then a hundred. Then a million.', 2.3),
+    speak('Then two. Then a hundred. Then a million.'),
   );
 
   // Two offset curtains, so the rain never visibly repeats. The snap back to
@@ -95,8 +98,10 @@ export default makeScene2D('rain', function* (view) {
     yield* rainB().position.y(900, 0.75, linear);
   });
 
-  yield* punch(word(), '40 DAYS!', 0.7, -6);
-  yield* punch(word(), '40 NIGHTS!', 0.7, 6);
+  yield chain(
+    punch(word(), '40 DAYS!', 0.7, -6),
+    punch(word(), '40 NIGHTS!', 0.7, 6),
+  );
 
   yield* chain(flash().opacity(0.8, 0.06), flash().opacity(0, 0.3));
 
@@ -106,7 +111,7 @@ export default makeScene2D('rain', function* (view) {
     land().position.y(700, 4, easeOutCubic),
     land().opacity(0, 4),
     ark().position.y(70, 5, easeOutCubic),
-    say(caption(), 'The water came up, and up, and up.', 2.4),
+    speak('The water came up, and up, and up.'),
   );
 
   yield loop(Infinity, () =>
@@ -116,12 +121,12 @@ export default makeScene2D('rain', function* (view) {
     ),
   );
 
-  yield* say(caption(), 'It covered the fields. It covered the hills.', 2.3);
-  yield* say(caption(), 'But the big boat did exactly what it was built to do.', 2.6);
+  yield* speak('It covered the fields. It covered the hills.');
+  yield* speak('But the big boat did exactly what it was built to do.');
 
-  yield* punch(word(), 'IT FLOATED!', 0.9, -4);
+  yield punch(word(), 'IT FLOATED!', 0.9, -4);
 
-  yield* say(caption(), 'Inside, everyone was warm and dry and safe.', 2.5);
-  yield* say(caption(), 'God was taking care of them the whole time.', 2.5);
-  yield* waitFor(0.5);
+  yield* speak('Inside, everyone was warm and dry and safe.');
+  yield* speak('God was taking care of them the whole time.');
+  yield* untilDone();
 });

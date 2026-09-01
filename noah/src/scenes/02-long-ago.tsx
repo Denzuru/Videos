@@ -13,7 +13,7 @@ import {
   waitFor,
 } from '@revideo/core';
 import {Noah} from '../components/creatures';
-import {Caption, PunchWord, punch, say} from '../components/narration';
+import {Caption, PunchWord, makeNarrator, punch} from '../components/narration';
 import {Cloud, Confetti, Hill, SkyBackdrop, Sun} from '../components/world';
 import {palette} from '../theme';
 
@@ -86,12 +86,15 @@ export default makeScene2D('long-ago', function* (view) {
     </>,
   );
 
+  const {begin, speak, untilDone} = makeNarrator(view, caption(), 'longAgo');
+
   yield* fadeTransition(0.5);
+  yield* begin();
   yield loop(Infinity, () => rays().rotation(rays().rotation() + 360, 30, linear));
 
   yield* all(
     sequence(0.12, ...town().children().map(v => v.scale(1, 0.45, easeOutBack))),
-    say(caption(), 'A long, long time ago, the world was full of people.', 2.2),
+    speak('A long, long time ago, the world was full of people.'),
   );
 
   // Bouncing crowd.
@@ -105,16 +108,16 @@ export default makeScene2D('long-ago', function* (view) {
     );
   }
 
-  yield* say(caption(), 'God made every single one of them.', 2);
+  yield* speak('God made every single one of them.');
 
   yield* all(
     gloom().opacity(0.55, 1.2),
-    say(caption(), 'But they forgot how to be kind.', 2.2),
+    speak('But they forgot how to be kind.'),
   );
-  yield* say(caption(), 'They were mean, and they would not stop.', 2.2);
-  yield* say(caption(), 'And it made God very, very sad.', 2.2);
+  yield* speak('They were mean, and they would not stop.');
+  yield* speak('And it made God very, very sad.');
 
-  yield* say(caption(), 'But there was one man who still listened.', 2);
+  yield* speak('But there was one man who still listened.');
 
   // The lights come back on for Noah.
   yield* all(
@@ -125,7 +128,7 @@ export default makeScene2D('long-ago', function* (view) {
     confetti().opacity(1, 0.3),
     confetti().scale(1, 0.8, easeOutCubic),
   );
-  yield* punch(word(), 'NOAH!', 0.9, -6);
+  yield punch(word(), 'NOAH!', 0.9, -6);
 
   yield loop(Infinity, () =>
     chain(noah().scale(1.05, 0.6, easeInOutSine), noah().scale(1, 0.6, easeInOutSine)),
@@ -135,6 +138,6 @@ export default makeScene2D('long-ago', function* (view) {
   );
   yield confetti().opacity(0, 1.2);
 
-  yield* say(caption(), 'Noah loved God, and God loved Noah.', 2.4);
-  yield* waitFor(0.4);
+  yield* speak('Noah loved God, and God loved Noah.');
+  yield* untilDone();
 });

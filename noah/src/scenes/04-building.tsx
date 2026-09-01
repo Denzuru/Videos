@@ -13,7 +13,7 @@ import {
 } from '@revideo/core';
 import {Ark} from '../components/ark';
 import {Noah} from '../components/creatures';
-import {Caption, PunchWord, punch, say} from '../components/narration';
+import {Caption, PunchWord, makeNarrator, punch} from '../components/narration';
 import {Cloud, Confetti, Hill, SkyBackdrop} from '../components/world';
 import {palette} from '../theme';
 
@@ -69,9 +69,12 @@ export default makeScene2D('building', function* (view) {
     </>,
   );
 
-  yield* fadeTransition(0.5);
+  const {begin, speak, untilDone} = makeNarrator(view, caption(), 'building');
 
-  yield* say(caption(), 'So Noah picked up his hammer.', 1.7);
+  yield* fadeTransition(0.5);
+  yield* begin();
+
+  yield* speak('So Noah picked up his hammer.');
 
   // Planks slam into place, and the whole picture kicks on each hit.
   yield* all(
@@ -93,11 +96,13 @@ export default makeScene2D('building', function* (view) {
         stage().position.y(0, 0.09),
       ]),
     ),
-    say(caption(), 'Bang. Tap. Saw. Bang.', 1.6),
+    speak('Bang. Tap. Saw. Bang.'),
   );
 
-  yield* punch(word(), 'BONK!', 0.5, -9);
-  yield* punch(word(), 'TAP TAP!', 0.5, 7);
+  yield chain(
+    punch(word(), 'BONK!', 0.5, -9),
+    punch(word(), 'TAP TAP!', 0.5, 7),
+  );
 
   // The ark itself arrives.
   yield* all(
@@ -106,7 +111,7 @@ export default makeScene2D('building', function* (view) {
     ark().scale(1.08, 0.6, easeOutBack),
     confetti().opacity(1, 0.3),
     confetti().scale(1, 0.9, easeOutCubic),
-    say(caption(), 'And slowly, a boat began to grow.', 2.2),
+    speak('And slowly, a boat began to grow.'),
   );
   yield* all(ark().scale(1.02, 0.3), confetti().opacity(0, 1));
 
@@ -114,13 +119,13 @@ export default makeScene2D('building', function* (view) {
     chain(noah().position.y(320, 0.55, easeInOutSine), noah().position.y(340, 0.55, easeInOutSine)),
   );
 
-  yield* say(caption(), 'It took Noah years and years and years.', 2.3);
-  yield* say(caption(), 'People walked past and laughed at him.', 2.2);
-  yield* say(caption(), '"A boat? Out here? There is no water!"', 2.4);
+  yield* speak('It took Noah years and years and years.');
+  yield* speak('People walked past and laughed at him.');
+  yield* speak('"A boat? Out here? There is no water!"');
 
-  yield* punch(word(), 'HE KEPT GOING', 0.9, -4);
+  yield punch(word(), 'HE KEPT GOING', 0.9, -4);
 
-  yield* say(caption(), 'But Noah trusted God more than he minded the laughing.', 2.8);
-  yield* say(caption(), 'So he kept building. Every single day.', 2.3);
-  yield* waitFor(0.3);
+  yield* speak('But Noah trusted God more than he minded the laughing.');
+  yield* speak('So he kept building. Every single day.');
+  yield* untilDone();
 });

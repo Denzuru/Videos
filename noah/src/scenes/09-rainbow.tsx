@@ -13,7 +13,7 @@ import {
   waitFor,
 } from '@revideo/core';
 import {Elephant, Giraffe, Lion, Noah} from '../components/creatures';
-import {Caption, PunchWord, punch, say} from '../components/narration';
+import {Caption, PunchWord, makeNarrator, punch} from '../components/narration';
 import {
   Cloud,
   Confetti,
@@ -79,7 +79,10 @@ export default makeScene2D('rainbow', function* (view) {
     </>,
   );
 
+  const {begin, speak, untilDone} = makeNarrator(view, caption(), 'rainbow');
+
   yield* fadeTransition(0.5);
+  yield* begin();
   yield loop(Infinity, () => rays().rotation(rays().rotation() + 360, 30, linear));
 
   for (const [i, member] of cast().children().entries()) {
@@ -92,8 +95,8 @@ export default makeScene2D('rainbow', function* (view) {
     );
   }
 
-  yield* say(caption(), 'Noah stepped onto dry ground and said thank you.', 2.5);
-  yield* say(caption(), 'And God made him a promise.', 2);
+  yield* speak('Noah stepped onto dry ground and said thank you.');
+  yield* speak('And God made him a promise.');
 
   // The bow sweeps in, band by band.
   yield* all(
@@ -108,16 +111,16 @@ export default makeScene2D('rainbow', function* (view) {
   );
   yield confetti().opacity(0, 1.6);
 
-  yield* punch(word(), 'A RAINBOW!', 0.9, -5);
+  yield punch(word(), 'A RAINBOW!', 0.9, -5);
 
   yield loop(Infinity, () =>
     chain(bow().scale(0.985, 1.6, easeInOutSine), bow().scale(1, 1.6, easeInOutSine)),
   );
 
-  yield* say(caption(), 'God said: never again a flood like this one.', 2.6);
-  yield* say(caption(), 'And He gave the sky a rainbow to prove it.', 2.5);
-  yield* say(caption(), 'So every time you see one, remember what it means.', 2.8);
-  yield* say(caption(), 'It means God said something, and God meant it.', 2.8);
+  yield* speak('God said: never again a flood like this one.');
+  yield* speak('And He gave the sky a rainbow to prove it.');
+  yield* speak('So every time you see one, remember what it means.');
+  yield* speak('It means God said something, and God meant it.');
 
   // Ending card.
   yield* all(
@@ -131,5 +134,5 @@ export default makeScene2D('rainbow', function* (view) {
   );
   yield* waitFor(2.6);
   yield* all(closing().opacity(0, 1.2), confetti().opacity(0, 1.2));
-  yield* waitFor(0.6);
+  yield* untilDone();
 });

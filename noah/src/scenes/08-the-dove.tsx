@@ -14,7 +14,7 @@ import {
 } from '@revideo/core';
 import {Ark} from '../components/ark';
 import {Bird, Elephant, Giraffe, Lion, Monkey, Noah} from '../components/creatures';
-import {Caption, PunchWord, punch, say} from '../components/narration';
+import {Caption, PunchWord, makeNarrator, punch} from '../components/narration';
 import {
   Cloud,
   Confetti,
@@ -107,7 +107,10 @@ export default makeScene2D('the-dove', function* (view) {
     </>,
   );
 
+  const {begin, speak, untilDone} = makeNarrator(view, caption(), 'theDove');
+
   yield* fadeTransition(0.5);
+  yield* begin();
   yield loop(Infinity, () => swell(swell() + Math.PI * 2, 4.2, linear));
   yield loop(Infinity, () => rays().rotation(rays().rotation() + 360, 30, linear));
   yield loop(Infinity, () =>
@@ -117,16 +120,16 @@ export default makeScene2D('the-dove', function* (view) {
     ),
   );
 
-  yield* say(caption(), 'Then, one day, the rain stopped.', 1.9);
+  yield* speak('Then, one day, the rain stopped.');
 
   yield* all(
     storm().opacity(0, 2.2),
     sun().opacity(1, 1.4),
     sun().scale(1, 1.2, easeOutBack),
-    say(caption(), 'The sun came out. But water was still everywhere.', 2.5),
+    speak('The sun came out. But water was still everywhere.'),
   );
 
-  yield* say(caption(), 'So Noah opened a window and sent out a little dove.', 2.7);
+  yield* speak('So Noah opened a window and sent out a little dove.');
 
   // Out, and back with nothing.
   yield* all(
@@ -137,7 +140,7 @@ export default makeScene2D('the-dove', function* (view) {
     all(dove().position([780, -330], 1.5, easeOutCubic), dove().rotation(-8, 1.5)),
     all(dove().position([140, -180], 1.4, easeInOutSine), dove().rotation(0, 1.4)),
   );
-  yield* say(caption(), 'She came back. There was nowhere dry to land.', 2.5);
+  yield* speak('She came back. There was nowhere dry to land.');
 
   // Out again, and back with an olive leaf.
   yield* chain(
@@ -148,23 +151,23 @@ export default makeScene2D('the-dove', function* (view) {
   yield* all(
     dove().position([140, -180], 1.5, easeInOutSine),
     dove().rotation(0, 1.5),
-    say(caption(), 'Noah waited. Then he sent her out again.', 2.3),
+    speak('Noah waited. Then he sent her out again.'),
   );
 
-  yield* punch(word(), 'A LEAF!', 0.8, -7);
-  yield* say(caption(), 'A tiny green leaf. Which meant something huge.', 2.5);
+  yield punch(word(), 'A LEAF!', 0.8, -7);
+  yield* speak('A tiny green leaf. Which meant something huge.');
 
   // Land.
   yield* all(
     peak().position.y(500, 2, easeOutCubic),
-    say(caption(), 'Somewhere out there, things were growing again.', 2.5),
+    speak('Somewhere out there, things were growing again.'),
   );
 
   yield* all(
     confetti().opacity(1, 0.3),
     confetti().scale(1, 0.9, easeOutCubic),
   );
-  yield* punch(word(), 'LAND!', 0.9, 5);
+  yield punch(word(), 'LAND!', 0.9, 5);
   yield confetti().opacity(0, 1.4);
 
   yield* all(
@@ -174,7 +177,7 @@ export default makeScene2D('the-dove', function* (view) {
         .children()
         .map(member => member.scale(1, 0.5, easeOutBack)),
     ),
-    say(caption(), 'The door swung open, and everybody spilled out.', 2.6),
+    speak('The door swung open, and everybody spilled out.'),
   );
 
   for (const [i, member] of crowd().children().entries()) {
@@ -185,6 +188,6 @@ export default makeScene2D('the-dove', function* (view) {
     });
   }
 
-  yield* say(caption(), 'Elephants. Giraffes. Lions. Every single one.', 2.4);
-  yield* waitFor(0.4);
+  yield* speak('Elephants. Giraffes. Lions. Every single one.');
+  yield* untilDone();
 });

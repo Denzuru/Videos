@@ -47,13 +47,20 @@ export const font = {
   body: 'Nunito, sans-serif',
 };
 
-/** Big chunky title type with a heavy ink outline, comic-book style. */
+/**
+ * Big chunky title type with a heavy ink outline, comic-book style.
+ *
+ * `lineJoin: 'round'` matters here: the default miter join grows long spikes
+ * where an outline turns a sharp corner, which at this stroke width reads as
+ * the letters bleeding.
+ */
 export const punchText = {
   fontFamily: font.display,
   fontWeight: 800,
   fill: palette.cream,
   stroke: palette.ink,
-  lineWidth: 14,
+  lineWidth: 13,
+  lineJoin: 'round' as const,
   strokeFirst: true,
   textAlign: 'center' as const,
 };
@@ -65,7 +72,10 @@ export const narrationText = {
   fontSize: 58,
   fill: palette.cream,
   stroke: palette.ink,
-  lineWidth: 10,
+  // Thinner than the title outline in proportion to the type size, so the
+  // counters inside letters like a and e stay open at reading size.
+  lineWidth: 8,
+  lineJoin: 'round' as const,
   strokeFirst: true,
   textAlign: 'center' as const,
   lineHeight: 78,
