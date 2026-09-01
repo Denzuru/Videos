@@ -1,0 +1,382 @@
+{
+  "favourite": {
+    "src": "/vo/favourite.wav",
+    "duration": 20.924,
+    "lines": [
+      {
+        "id": "favourite-00",
+        "start": 0,
+        "end": 3.166
+      },
+      {
+        "id": "favourite-01",
+        "start": 3.166,
+        "end": 6.785
+      },
+      {
+        "id": "favourite-02",
+        "start": 6.785,
+        "end": 10.409
+      },
+      {
+        "id": "favourite-03",
+        "start": 10.409,
+        "end": 13.135
+      },
+      {
+        "id": "favourite-04",
+        "start": 13.135,
+        "end": 15.401
+      },
+      {
+        "id": "favourite-05",
+        "start": 15.401,
+        "end": 18.986
+      },
+      {
+        "id": "favourite-06",
+        "start": 18.986,
+        "end": 20.924
+      }
+    ]
+  },
+  "dreams": {
+    "src": "/vo/dreams.wav",
+    "duration": 22.596,
+    "lines": [
+      {
+        "id": "dreams-00",
+        "start": 0,
+        "end": 2.361
+      },
+      {
+        "id": "dreams-01",
+        "start": 2.361,
+        "end": 6.83
+      },
+      {
+        "id": "dreams-02",
+        "start": 6.83,
+        "end": 11.631
+      },
+      {
+        "id": "dreams-03",
+        "start": 11.631,
+        "end": 16.505
+      },
+      {
+        "id": "dreams-04",
+        "start": 16.505,
+        "end": 18.846
+      },
+      {
+        "id": "dreams-05",
+        "start": 18.846,
+        "end": 22.596
+      }
+    ]
+  },
+  "the-pit": {
+    "src": "/vo/the-pit.wav",
+    "duration": 24.346,
+    "lines": [
+      {
+        "id": "the-pit-00",
+        "start": 0,
+        "end": 3.184
+      },
+      {
+        "id": "the-pit-01",
+        "start": 3.184,
+        "end": 6.884
+      },
+      {
+        "id": "the-pit-02",
+        "start": 6.884,
+        "end": 10.487
+      },
+      {
+        "id": "the-pit-03",
+        "start": 10.487,
+        "end": 13.999
+      },
+      {
+        "id": "the-pit-04",
+        "start": 13.999,
+        "end": 17.986
+      },
+      {
+        "id": "the-pit-05",
+        "start": 17.986,
+        "end": 21.436
+      },
+      {
+        "id": "the-pit-06",
+        "start": 21.436,
+        "end": 24.346
+      }
+    ]
+  },
+  "potiphar": {
+    "src": "/vo/potiphar.wav",
+    "duration": 19.801,
+    "lines": [
+      {
+        "id": "potiphar-00",
+        "start": 0,
+        "end": 3.805
+      },
+      {
+        "id": "potiphar-01",
+        "start": 3.805,
+        "end": 7.248
+      },
+      {
+        "id": "potiphar-02",
+        "start": 7.248,
+        "end": 10.344
+      },
+      {
+        "id": "potiphar-03",
+        "start": 10.344,
+        "end": 13.062
+      },
+      {
+        "id": "potiphar-04",
+        "start": 13.062,
+        "end": 17.261
+      },
+      {
+        "id": "potiphar-05",
+        "start": 17.261,
+        "end": 19.801
+      }
+    ]
+  },
+  "prison": {
+    "src": "/vo/prison.wav",
+    "duration": 20.767,
+    "lines": [
+      {
+        "id": "prison-00",
+        "start": 0,
+        "end": 3.048
+      },
+      {
+        "id": "prison-01",
+        "start": 3.048,
+        "end": 7.068
+      },
+      {
+        "id": "prison-02",
+        "start": 7.068,
+        "end": 10.331
+      },
+      {
+        "id": "prison-03",
+        "start": 10.331,
+        "end": 14.358
+      },
+      {
+        "id": "prison-04",
+        "start": 14.358,
+        "end": 16.977
+      },
+      {
+        "id": "prison-05",
+        "start": 16.977,
+        "end": 20.767
+      }
+    ]
+  },
+  "pharaohs-dream": {
+    "src": "/vo/pharaohs-dream.wav",
+    "duration": 25.313,
+    "lines": [
+      {
+        "id": "pharaohs-dream-00",
+        "start": 0,
+        "end": 3.478
+      },
+      {
+        "id": "pharaohs-dream-01",
+        "start": 3.478,
+        "end": 6.55
+      },
+      {
+        "id": "pharaohs-dream-02",
+        "start": 6.55,
+        "end": 10.059
+      },
+      {
+        "id": "pharaohs-dream-03",
+        "start": 10.059,
+        "end": 13.137
+      },
+      {
+        "id": "pharaohs-dream-04",
+        "start": 13.137,
+        "end": 15.271
+      },
+      {
+        "id": "pharaohs-dream-05",
+        "start": 15.271,
+        "end": 20.453
+      },
+      {
+        "id": "pharaohs-dream-06",
+        "start": 20.453,
+        "end": 25.313
+      }
+    ]
+  },
+  "second-in-egypt": {
+    "src": "/vo/second-in-egypt.wav",
+    "duration": 20.846,
+    "lines": [
+      {
+        "id": "second-in-egypt-00",
+        "start": 0,
+        "end": 3.683
+      },
+      {
+        "id": "second-in-egypt-01",
+        "start": 3.683,
+        "end": 6.834
+      },
+      {
+        "id": "second-in-egypt-02",
+        "start": 6.834,
+        "end": 9.729
+      },
+      {
+        "id": "second-in-egypt-03",
+        "start": 9.729,
+        "end": 14.494
+      },
+      {
+        "id": "second-in-egypt-04",
+        "start": 14.494,
+        "end": 17.675
+      },
+      {
+        "id": "second-in-egypt-05",
+        "start": 17.675,
+        "end": 20.846
+      }
+    ]
+  },
+  "the-brothers-come": {
+    "src": "/vo/the-brothers-come.wav",
+    "duration": 17.868,
+    "lines": [
+      {
+        "id": "the-brothers-come-00",
+        "start": 0,
+        "end": 2.405
+      },
+      {
+        "id": "the-brothers-come-01",
+        "start": 2.405,
+        "end": 5.832
+      },
+      {
+        "id": "the-brothers-come-02",
+        "start": 5.832,
+        "end": 9.557
+      },
+      {
+        "id": "the-brothers-come-03",
+        "start": 9.557,
+        "end": 13.217
+      },
+      {
+        "id": "the-brothers-come-04",
+        "start": 13.217,
+        "end": 15.546
+      },
+      {
+        "id": "the-brothers-come-05",
+        "start": 15.546,
+        "end": 17.868
+      }
+    ]
+  },
+  "i-am-joseph": {
+    "src": "/vo/i-am-joseph.wav",
+    "duration": 25.313,
+    "lines": [
+      {
+        "id": "i-am-joseph-00",
+        "start": 0,
+        "end": 3.715
+      },
+      {
+        "id": "i-am-joseph-01",
+        "start": 3.715,
+        "end": 7.302
+      },
+      {
+        "id": "i-am-joseph-02",
+        "start": 7.302,
+        "end": 11.307
+      },
+      {
+        "id": "i-am-joseph-03",
+        "start": 11.307,
+        "end": 15.69
+      },
+      {
+        "id": "i-am-joseph-04",
+        "start": 15.69,
+        "end": 19.219
+      },
+      {
+        "id": "i-am-joseph-05",
+        "start": 19.219,
+        "end": 22.166
+      },
+      {
+        "id": "i-am-joseph-06",
+        "start": 22.166,
+        "end": 25.313
+      }
+    ]
+  },
+  "reunion": {
+    "src": "/vo/reunion.wav",
+    "duration": 18.756,
+    "lines": [
+      {
+        "id": "reunion-00",
+        "start": 0,
+        "end": 2.935
+      },
+      {
+        "id": "reunion-01",
+        "start": 2.935,
+        "end": 6.753
+      },
+      {
+        "id": "reunion-02",
+        "start": 6.753,
+        "end": 10.328
+      },
+      {
+        "id": "reunion-03",
+        "start": 10.328,
+        "end": 15.086
+      },
+      {
+        "id": "reunion-04",
+        "start": 15.086,
+        "end": 17.353
+      },
+      {
+        "id": "reunion-05",
+        "start": 17.353,
+        "end": 18.756
+      }
+    ]
+  }
+}

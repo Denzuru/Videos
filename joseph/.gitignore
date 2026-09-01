@@ -1,0 +1,15 @@
+node_modules/
+output/
+dist/
+*.log
+
+# Revideo render intermediates: per-worker chunks, the split audio track and
+# the visuals-only pass. Only the joined file is worth keeping.
+*-[0-9].mp4
+*-audio.wav
+*-visuals.mp4
+narrated.mp4
+smoke*.mp4
+
+# Rebuilt from vo/raw by scripts/build-voiceover.mjs - no credits needed.
+public/vo/
