@@ -59,10 +59,17 @@ const filter = [
   `[a][b]acrossfade=d=${CROSSFADE}:c1=tri:c2=tri[bed]`,
   `[bed]atrim=0:${filmLength},volume=${BED_LEVEL},` +
     `afade=t=in:st=0:d=2,afade=t=out:st=${Math.max(0, filmLength - 4)}:d=4[music]`,
-  // Split the voice: one copy is heard, the other only steers the ducking.
-  `[0:a]asplit=2[voice][key]`,
+  // Pad the voice out to the length of the picture before anything else.
+  // The narration stops well before the film does - the closing cards run in
+  // silence - and `amix` below ends with its first input, so an unpadded voice
+  // track silently truncates the film to the last word spoken.
+  `[0:a]apad,atrim=0:${filmLength},asetpts=N/SR/TB,asplit=2[voice][key]`,
   `[music][key]sidechaincompress=threshold=0.03:ratio=6:attack=25:release=450:makeup=1[ducked]`,
-  `[voice][ducked]amix=inputs=2:duration=first:normalize=0,alimiter=limit=0.95[out]`,
+  // Normalise to the level the platforms play at. Without this the mix lands
+  // around -25 LUFS and the film sounds thin next to everything else in the
+  // feed, since YouTube, TikTok and Instagram all normalise to about -14.
+  `[voice][ducked]amix=inputs=2:duration=first:normalize=0,` +
+    `loudnorm=I=-14:TP=-1.5:LRA=11,alimiter=limit=0.97[out]`,
 ].join(';');
 
 await run('ffmpeg', [
