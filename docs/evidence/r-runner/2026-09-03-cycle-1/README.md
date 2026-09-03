@@ -7,8 +7,8 @@ Reviewers should replay rather than trust this page.
 
 | File | What it is |
 |---|---|
-| `test-output.txt` | Full console output of `./run.sh test`: 45 test blocks, 569 expectations, 0 failures (re-run after cycle-2 hardening) |
-| `commands-and-output.md` | Exact commands and console output for five runs and one replay |
+| `test-output.txt` | Full console output of `./run.sh test`: 49 test blocks, 609 expectations, 0 failures (re-run after contract alignment, with CODEX_CORE_ROOT set so the Codex assertion ran) |
+| `commands-and-output.md` | Exact commands and console output for five runs and one replay (regenerated after contract alignment) |
 | `guard-staged-output.txt` | Guard run over the 114 staged files of the first lane commit: clean |
 | `renv-restore-offline-log.txt` | Restore of the lockfile into an empty project library from the local renv cache |
 | `runs/ev-locked-0001/` | Confirmed synthetic plan: SUCCEEDED, full analysis record |
@@ -35,10 +35,13 @@ The replay against `ev-locked-0001` will report MATCH when outputs are
 identical; `code.revision` will differ once the lane is committed and is
 reported as INFO, not as a mismatch.
 
+## Cross-lane
+
+The Codex core review with its probe output is in `docs/reviews/`. All four
+committed manifest fixtures pass Codex's `assertRunBundleManifest` at commit 0400cc8.
+
 ## Limits
 
 - The CRAN network path of `renv::restore()` was not exercised (proxy denies
   CRAN in the build sandbox). The offline restore from cache was.
-- Codex's contracts were not available in this repository, so the manifest is
-  a draft against the Build Plan field list.
 - The original v0.1.0 archive was not supplied; no baseline fingerprint exists yet.

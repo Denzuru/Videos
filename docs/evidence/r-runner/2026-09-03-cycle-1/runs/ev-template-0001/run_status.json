@@ -2,8 +2,8 @@
   "run_id": "ev-template-0001",
   "run_state": "BLOCKED",
   "data_classification": "REAL",
-  "started_at": "2026-09-03T06:10:13Z",
-  "completed_at": "2026-09-03T06:10:13Z",
+  "started_at": "2026-09-03T11:15:56Z",
+  "completed_at": "2026-09-03T11:15:56Z",
   "stages": [
     {
       "id": "environment",

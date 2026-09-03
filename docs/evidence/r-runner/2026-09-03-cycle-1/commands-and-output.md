@@ -1,9 +1,9 @@
-# Commands and console output, Project Firdous R runner, cycle 1 (2026-09-03T06:09:59Z)
+# Commands and console output, Project Firdous R runner, cycle 1, regenerated after contract alignment (2026-09-03T11:14:45Z)
 
-Working directory: runner/r. Git revision at time of run: ede9655d8c624b3c0443e3dd0b8c96197beace22 (working tree contained the uncommitted lane files).
+Working directory: runner/r. Git revision at time of run: 5da691e04023584d10da47ded60ec6e53fc849a1 (working tree contained the uncommitted alignment changes).
 
 ```
-$ ./run.sh run --config config/synthetic_locked.yml --run-id ev-locked-0001 --out /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs
+$ ./run.sh run --config config/synthetic_locked.yml --run-id ev-locked-0001 --out <out>
 Project Firdous analysis run
 Analysis record: <out>/ev-locked-0001
 
@@ -29,7 +29,7 @@ exit=0
 ```
 
 ```
-$ ./run.sh run --config config/synthetic_draft.yml --run-id ev-draft-0001 --out /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs
+$ ./run.sh run --config config/synthetic_draft.yml --run-id ev-draft-0001 --out <out>
 Project Firdous analysis run
 Analysis record: <out>/ev-draft-0001
 
@@ -58,7 +58,7 @@ exit=1
 ```
 
 ```
-$ ./run.sh run --config tests/fixtures/config_malformed_values.yml --run-id ev-malformed-0001 --out /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs
+$ ./run.sh run --config tests/fixtures/config_malformed_values.yml --run-id ev-malformed-0001 --out <out>
 Project Firdous analysis run
 Analysis record: <out>/ev-malformed-0001
 
@@ -85,7 +85,7 @@ exit=1
 ```
 
 ```
-$ ./run.sh run --config tests/fixtures/config_reconciliation_problems.yml --run-id ev-recon-0001 --out /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs
+$ ./run.sh run --config tests/fixtures/config_reconciliation_problems.yml --run-id ev-recon-0001 --out <out>
 Project Firdous analysis run
 Analysis record: <out>/ev-recon-0001
 
@@ -112,7 +112,7 @@ exit=1
 ```
 
 ```
-$ ./run.sh run --config config/firdous_template_BLOCKED.yml --run-id ev-template-0001 --out /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs
+$ ./run.sh run --config config/firdous_template_BLOCKED.yml --run-id ev-template-0001 --out <out>
 Project Firdous analysis run
 Analysis record: <out>/ev-template-0001
 
@@ -136,7 +136,7 @@ exit=1
 ```
 
 ```
-$ ./run.sh replay --reference /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs/ev-locked-0001/manifest.json --run-id ev-replay-0001 --out /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs
+$ ./run.sh replay --reference <out>/ev-locked-0001/manifest.json --run-id ev-replay-0001 --out <out>
 Project Firdous analysis run
 Analysis record: <out>/ev-replay-0001
 
@@ -166,6 +166,6 @@ exit=0
 ```
 
 ```
-$ ./run.sh run --run-id ev-locked-seed2 --seed 1 --out /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs   # different seed, same config
+$ ./run.sh run --run-id ev-locked-seed2 --seed 1 --out <out> --quiet   # different seed, same config
 exit=0
 ```

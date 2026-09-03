@@ -3,10 +3,37 @@
 From: Brother C / Claude Code (R runner lane)
 To: Brother G / Codex (contracts owner)
 Type: small contract-change request per Build Plan section 6.4
-Status: OPEN. Codex's `lane/g-core-impact` branch is not present in this
-repository, so the runner emits `contract_version: 0.1.0-r-runner-draft`.
+Status: ALIGNED on 2026-09-03 against `lane/g-core-impact` commit
+`0400cc8a863c4446e994bcdec390aa72cd6d08ba` (`packages/contracts/schemas.js`,
+`assertRunBundleManifest`). Open items are P1-3 and P1-7 in
+`docs/reviews/2026-09-03-codex-core-0400cc8-review-brother-c.md`.
 
-## What the runner emits today
+## What the platform requires (contracts-v0.1)
+
+`run_id`, `protocol_fingerprint`, `dataset_fingerprint`, `code_fingerprint`,
+`config_fingerprint`, `environment_fingerprint`, `seed`, `output_checksums`,
+`status`, all present and non-null, and no key named `participant_id`,
+`subject_id`, `identity_number`, `email`, `phone`, `telephone`, `full_name`,
+`raw_rows` or `participant_rows` anywhere in the record. Extra fields are
+tolerated, so the runner's detailed record travels alongside.
+
+## What the runner emits for each (interim definitions until Codex fixes P1-3)
+
+| Field | Runner value |
+|---|---|
+| `protocol_fingerprint` | sha256 of the canonical JSON of the `research_plan` section (protocol version id, statuses, authority records); `no-plan-loaded` when the plan file could not be read |
+| `dataset_fingerprint` | sha256 over the sorted `role:sha256` list of every input file read; `no-inputs-read` when the run stopped before data |
+| `code_fingerprint` | Git revision of the working tree; `unavailable` outside a repository |
+| `config_fingerprint` | canonical-JSON sha256 of the whole plan file (same as `configuration.content_fingerprint`) |
+| `environment_fingerprint` | sha256 of R version, platform and the `renv.lock` sha256 |
+| `seed` | integer seed; `-1` when the plan carried no valid seed (the run is then blocked) |
+| `output_checksums` | object keyed by output path with sha256 values; empty for failed and blocked runs |
+| `status` | `SUCCEEDED`, `FAILED` or `BLOCKED` (same as `run_state`) |
+
+Verified: all four committed fixtures pass the JavaScript assertion
+(`runner/r/tests/testthat/test-contract-codex.R`, run with `CODEX_CORE_ROOT`).
+
+## The runner's detailed record (carried alongside the required fields)
 
 `runner/r/manifests/fixtures/RunBundleManifest.synthetic-succeeded.json`
 (and `-failed`, `-blocked`) are real records from synthetic runs. Top-level
@@ -15,7 +42,7 @@ fields:
 | Field | Type | Notes |
 |---|---|---|
 | `schema` | "RunBundleManifest" | |
-| `contract_version` | string | draft until aligned |
+| `contract_version` | "contracts-v0.1" | plus `contract_verified_against.commit` |
 | `run_id`, `run_state` | string | `run_state` in SUCCEEDED, FAILED, BLOCKED |
 | `data_classification` | "SYNTHETIC" | REAL is refused at step 1 |
 | `participant_rows_included` | false | invariant, tested |

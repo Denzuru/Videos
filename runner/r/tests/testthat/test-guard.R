@@ -21,8 +21,8 @@ test_that("clean synthetic fixtures and configs pass the guard (F06)", {
 
 test_that("direct-identifier headers and non-synthetic identifiers are rejected (F06)", {
   repo <- make_repo()
-  a <- put(repo, "runner/r/data/synthetic/bad_header.csv", c("participant_id,surname,dob,value", "SYN-0001,X,1980-01-01,1"))
-  b <- put(repo, "runner/r/data/synthetic/bad_ids.csv", c("participant_id,value", "P-1001,1", "SYN-0002,2"))
+  a <- put(repo, "runner/r/data/synthetic/bad_header.csv", c("study_id,surname,dob,value", "SYN-0001,X,1980-01-01,1"))
+  b <- put(repo, "runner/r/data/synthetic/bad_ids.csv", c("study_id,value", "P-1001,1", "SYN-0002,2"))
   f <- scan(repo, c(a, b))
   expect_true("HEADER_DIRECT_IDENTIFIER" %in% f$rule)
   expect_true("ID_NOT_SYNTHETIC" %in% f$rule)
@@ -32,9 +32,9 @@ test_that("national identity numbers, emails and phone numbers in data files are
   repo <- make_repo()
   luhn_ok <- "8001015009087"   # a widely published EXAMPLE identity number; passes the check digit
   expect_true(luhn_valid(luhn_ok))
-  a <- put(repo, "runner/r/data/synthetic/idnum.csv", c("participant_id,value,note", paste0("SYN-0001,1,", luhn_ok)))
-  b <- put(repo, "runner/r/data/synthetic/contact.csv", c("participant_id,value,contact", "SYN-0001,1,someone@example.org", "SYN-0002,2,0821234567"))
-  c_ <- put(repo, "runner/r/data/synthetic/not_an_id.csv", c("participant_id,value,note", "SYN-0001,1,1234567890123"))  # fails check digit
+  a <- put(repo, "runner/r/data/synthetic/idnum.csv", c("study_id,value,note", paste0("SYN-0001,1,", luhn_ok)))
+  b <- put(repo, "runner/r/data/synthetic/contact.csv", c("study_id,value,contact", "SYN-0001,1,someone@example.org", "SYN-0002,2,0821234567"))
+  c_ <- put(repo, "runner/r/data/synthetic/not_an_id.csv", c("study_id,value,note", "SYN-0001,1,1234567890123"))  # fails check digit
   f <- scan(repo, c(a, b, c_))
   expect_true("ID_NATIONAL_ID_NUMBER" %in% f$rule[f$path == a])
   expect_true("ID_EMAIL_ADDRESS" %in% f$rule[f$path == b])
@@ -54,9 +54,9 @@ test_that("secrets are rejected in any text file (F06)", {
 
 test_that("prohibited paths are rejected even when content is unreadable (F06)", {
   repo <- make_repo()
-  a <- put(repo, "runner/r/data/real/participants.csv", c("participant_id", "SYN-0001"))
+  a <- put(repo, "runner/r/data/real/participants.csv", c("study_id", "SYN-0001"))
   b <- put(repo, "runner/r/data/synthetic/.env", "SECRET=1")
-  c_ <- put(repo, "runner/r/other/table.csv", c("participant_id", "SYN-0001"))
+  c_ <- put(repo, "runner/r/other/table.csv", c("study_id", "SYN-0001"))
   d <- put(repo, "runner/r/data/synthetic/export.xlsx", "not really binary")
   e <- put(repo, "apps/web/.env.local", "X=1")
   f <- scan(repo, c(a, b, c_, d, e))
@@ -74,4 +74,10 @@ test_that("the guard report tells the committer what happens and what to do", {
   expect_match(txt[1], "1 problem\\(s\\) found")
   expect_true(any(grepl("Nothing has been committed or changed", txt)))
   expect_equal(guard_report_text(scan(repo, character(0))), "Restricted-data guard: no problems found.")
+})
+
+test_that("a participant_id column header in a synthetic fixture is still checked for the synthetic pattern", {
+  repo <- make_repo()
+  a <- put(repo, "runner/r/data/synthetic/legacy.csv", c("participant_id,value", "REAL-1,1"))
+  expect_true("ID_NOT_SYNTHETIC" %in% scan(repo, a)$rule)
 })

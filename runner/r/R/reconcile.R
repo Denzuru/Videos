@@ -31,6 +31,9 @@ reconcile_participants_assays <- function(participants, assays, exceptions,
   valid_exceptions <- data.frame(participant_id = character(0), target = character(0),
                                  exception_type = character(0), stringsAsFactors = FALSE)
   if (!is.null(exceptions) && nrow(exceptions) > 0) {
+    if (id_col %in% names(exceptions) && !("participant_id" %in% names(exceptions))) {
+      names(exceptions)[names(exceptions) == id_col] <- "participant_id"   # internal name only
+    }
     need <- c("participant_id", "target", "exception_type", "reason", "approved_by", "approval_reference")
     missing_cols <- setdiff(need, names(exceptions))
     if (length(missing_cols) > 0) {

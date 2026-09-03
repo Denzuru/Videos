@@ -2,8 +2,8 @@
   "run_id": "ev-recon-0001",
   "run_state": "FAILED",
   "data_classification": "SYNTHETIC",
-  "started_at": "2026-09-03T06:10:10Z",
-  "completed_at": "2026-09-03T06:10:11Z",
+  "started_at": "2026-09-03T11:14:55Z",
+  "completed_at": "2026-09-03T11:14:55Z",
   "stages": [
     {
       "id": "environment",

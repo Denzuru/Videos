@@ -1,8 +1,20 @@
 {
   "schema": "RunBundleManifest",
-  "contract_version": "0.1.0-r-runner-draft",
+  "contract_version": "contracts-v0.1",
+  "contract_verified_against": {
+    "lane": "codex lane/g-core-impact",
+    "commit": "0400cc8a863c4446e994bcdec390aa72cd6d08ba"
+  },
   "run_id": "ev-draft-0001",
   "run_state": "BLOCKED",
+  "protocol_fingerprint": "6c4824f24ffe83e6f34083c64e77a73ebad559f895c37c19e505123c7e9e0b11",
+  "dataset_fingerprint": "ecef33b4f0b68dd29fed4c3c42df4c62bb956b68046ca52d82a2f31bb7154619",
+  "code_fingerprint": "5da691e04023584d10da47ded60ec6e53fc849a1",
+  "config_fingerprint": "fb451aeaa59a4078a5a6e16eeb4aa9179fbd1b714ec46134af5156186fe49130",
+  "environment_fingerprint": "2d7aa7646cb1d5c8f6883b65b37a42b6ba32c90be202a657cf502d45aa42dac7",
+  "seed": 20260903,
+  "output_checksums": {},
+  "status": "BLOCKED",
   "data_classification": "SYNTHETIC",
   "participant_rows_included": false,
   "project": {
@@ -34,8 +46,8 @@
     "processing_location_approved": true
   },
   "timing": {
-    "started_at": "2026-09-03T06:10:03Z",
-    "completed_at": "2026-09-03T06:10:04Z"
+    "started_at": "2026-09-03T11:14:49Z",
+    "completed_at": "2026-09-03T11:14:50Z"
   },
   "runner": {
     "name": "project-firdous-r-runner",
@@ -89,15 +101,15 @@
     ]
   },
   "code": {
-    "revision": "ede9655d8c624b3c0443e3dd0b8c96197beace22",
+    "revision": "5da691e04023584d10da47ded60ec6e53fc849a1",
     "branch": "claude/firdous-r-runner-mhwc2j",
-    "working_tree_clean": true,
+    "working_tree_clean": false,
     "available": true
   },
   "configuration": {
     "path": "synthetic_draft.yml",
-    "sha256": "f760246689e97649a06432a176d4a5f7cafb557a51a9a722638c7bf07f99e71c",
-    "content_fingerprint": "f29e186087d528738549cee5455c9e5587bcfe4a0f034dac1c7611e607626539",
+    "sha256": "6968eea655accd7253eb30cf872447fe46cc1465af51bd52b5846450e5610e91",
+    "content_fingerprint": "fb451aeaa59a4078a5a6e16eeb4aa9179fbd1b714ec46134af5156186fe49130",
     "config_version": "0.1.1",
     "seed": 20260903,
     "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380"
@@ -107,25 +119,25 @@
     {
       "role": "participant",
       "path": "data/synthetic/participants.csv",
-      "sha256": "bb74c864b5e9363c3d858e227d94e72ba93847385a895a18b4ab500520f822fb",
+      "sha256": "41dd9f6a884e677c753d204cfc61fd27e8c00f4a9ea232a056fc9b3b26acddec",
       "rows": 24,
-      "columns": ["participant_id", "synthetic_group", "synthetic_age"],
+      "columns": ["study_id", "synthetic_group", "synthetic_age"],
       "participant_rows_included": false
     },
     {
       "role": "assay",
       "path": "data/synthetic/assays.csv",
-      "sha256": "beb97facec6cf5922be1c2bad31e80df380fb6a2199799c7b6e0ddd0f7b384c7",
+      "sha256": "36f69e44ad7c7281c4aef5b7a3f8ef0441606240cc24c35a71678ddcdb155cf7",
       "rows": 71,
-      "columns": ["participant_id", "target", "value", "synthetic_batch"],
+      "columns": ["study_id", "target", "value", "synthetic_batch"],
       "participant_rows_included": false
     },
     {
       "role": "approved-exceptions",
       "path": "data/synthetic/approved_exceptions.csv",
-      "sha256": "15cce642d5bad89fc0a5b25dd04fd138b0abb369476812e131449ce2632d9632",
+      "sha256": "9f519f263360f2713afad78336d10a399edac7b61f83d9b10dbf34135db47b0e",
       "rows": 1,
-      "columns": ["participant_id", "target", "exception_type", "reason", "approved_by", "approval_reference"],
+      "columns": ["study_id", "target", "exception_type", "reason", "approved_by", "approval_reference"],
       "participant_rows_included": false
     }
   ],
@@ -172,24 +184,24 @@
       "id": "environment",
       "researcher_label": "Checking the analysis environment",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T06:10:03Z",
-      "ended_at": "2026-09-03T06:10:04Z",
+      "started_at": "2026-09-03T11:14:49Z",
+      "ended_at": "2026-09-03T11:14:49Z",
       "support_reference": null
     },
     {
       "id": "data",
       "researcher_label": "Checking that your data structure is ready",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T06:10:04Z",
-      "ended_at": "2026-09-03T06:10:04Z",
+      "started_at": "2026-09-03T11:14:49Z",
+      "ended_at": "2026-09-03T11:14:49Z",
       "support_reference": null
     },
     {
       "id": "plan",
       "researcher_label": "Confirming the approved analysis plan",
       "state": "BLOCKED",
-      "started_at": "2026-09-03T06:10:04Z",
-      "ended_at": "2026-09-03T06:10:04Z",
+      "started_at": "2026-09-03T11:14:49Z",
+      "ended_at": "2026-09-03T11:14:50Z",
       "support_reference": "FR-20260903-d1fa5a-PLAN_PROTOCOL_NOT_LOCKED"
     },
     {
@@ -212,8 +224,8 @@
       "id": "record",
       "researcher_label": "Saving the reproducibility record",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T06:10:04Z",
-      "ended_at": "2026-09-03T06:10:04Z",
+      "started_at": "2026-09-03T11:14:50Z",
+      "ended_at": "2026-09-03T11:14:50Z",
       "support_reference": null
     }
   ],
@@ -274,7 +286,7 @@
     {
       "path": "support/technical_log.txt",
       "kind": "support_only",
-      "sha256": "45c84d89b9cf3e8f8b3b7bbddec3359968f78d996b93db26f429b271666dd63d"
+      "sha256": "9ba03f70750b56a8b07b56d603e866d1d6fc6fcb3cb9a4c6e1e0bcb55c38ccb0"
     }
   ],
   "local_only_files": [],

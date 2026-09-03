@@ -1,4 +1,4 @@
-"participant_id","target","value","synthetic_batch"
+"study_id","target","value","synthetic_batch"
 "SYN-0001","SYN-miR-A","ND","batch-2"
 "SYN-0001","SYN-miR-B","","batch-2"
 "SYN-0001","SYN-miR-C","12,5","batch-2"

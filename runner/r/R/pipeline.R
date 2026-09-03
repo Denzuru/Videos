@@ -71,14 +71,17 @@ run_pipeline <- function(config_path, out_root = NULL, run_id = NULL, seed = NUL
 # ---- stage 1: environment ---------------------------------------------------
 stage_environment <- function(ctx) {
   ctx$cfg <- load_config(ctx$config_path)
-  ctx$seed <- ctx$seed_override %||% cfg_get(ctx$cfg, "stages.seed")
-  if (is.null(ctx$seed)) stop_firdous("CONFIG_INVALID", list(detail = "no seed is recorded under stages.seed"))
-  ctx$seed <- as.integer(ctx$seed)
   # Refuse anything that is not declared synthetic before touching any file.
   if (!identical(toupper(ctx$cfg$data_classification %||% ""), "SYNTHETIC")) {
     stop_firdous("PLAN_REAL_DATA_NOT_PERMITTED",
                  list(classification = ctx$cfg$data_classification %||% "(not recorded)"))
   }
+  seed <- ctx$seed_override %||% cfg_get(ctx$cfg, "stages.seed")
+  seed_int <- suppressWarnings(as.integer(seed))
+  if (is.null(seed) || length(seed_int) != 1 || is.na(seed_int)) {
+    stop_firdous("CONFIG_INVALID", list(detail = "the recorded random seed under stages.seed is missing or is not a whole number"))
+  }
+  ctx$seed <- seed_int
   ctx$environment <- collect_environment(ctx$root)
   ctx$git <- git_info(ctx$root)
   log_support(ctx, "R: ", R.version.string, "; platform: ", R.version$platform)

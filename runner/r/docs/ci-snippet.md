@@ -17,8 +17,8 @@ r-runner:
       run: cd runner/r && Rscript scripts/guard_restricted_data.R --all --report guard-report.json
     - name: Environment matches lockfile
       run: cd runner/r && Rscript -e 'source("R/utils.R"); source_runner(getwd()); m <- lockfile_mismatches(getwd()); if (length(m)) stop(paste(m, collapse="; "))'
-    - name: Tests
-      run: cd runner/r && ./run.sh test
+    - name: Tests (set CODEX_CORE_ROOT to the core checkout so the contract assertion runs)
+      run: cd runner/r && CODEX_CORE_ROOT=$GITHUB_WORKSPACE ./run.sh test
     - name: Synthetic run and replay
       run: |
         cd runner/r

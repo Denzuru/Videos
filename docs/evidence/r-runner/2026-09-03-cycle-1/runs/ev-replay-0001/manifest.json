@@ -1,8 +1,24 @@
 {
   "schema": "RunBundleManifest",
-  "contract_version": "0.1.0-r-runner-draft",
+  "contract_version": "contracts-v0.1",
+  "contract_verified_against": {
+    "lane": "codex lane/g-core-impact",
+    "commit": "0400cc8a863c4446e994bcdec390aa72cd6d08ba"
+  },
   "run_id": "ev-replay-0001",
   "run_state": "SUCCEEDED",
+  "protocol_fingerprint": "a4d00a1894c62d8477e981ad81af7c4c81be7f097219ed35e0a2eda44ab4bd56",
+  "dataset_fingerprint": "ecef33b4f0b68dd29fed4c3c42df4c62bb956b68046ca52d82a2f31bb7154619",
+  "code_fingerprint": "5da691e04023584d10da47ded60ec6e53fc849a1",
+  "config_fingerprint": "70f02ff46ac8f67994b87038439c50d4be4bfc3da16290df50a8f0924b242a08",
+  "environment_fingerprint": "2d7aa7646cb1d5c8f6883b65b37a42b6ba32c90be202a657cf502d45aa42dac7",
+  "seed": 20260903,
+  "output_checksums": {
+    "outputs/data_readiness_summary.csv": "1caa5fff88d20db1ca09f8034e92563aaca35eee65a1936f0ca6a2d65582c2f7",
+    "outputs/group_counts.csv": "9c7bab723f5f9c523607659f9b4708a1ac35d549034a474fbad903d43e44182c",
+    "outputs/target_summary_by_group.csv": "647c3bf7de2245858ff1aa80c060df4e1a1b0c2cdf14ce3af153707c379bee33"
+  },
+  "status": "SUCCEEDED",
   "data_classification": "SYNTHETIC",
   "participant_rows_included": false,
   "project": {
@@ -34,8 +50,8 @@
     "processing_location_approved": true
   },
   "timing": {
-    "started_at": "2026-09-03T06:10:16Z",
-    "completed_at": "2026-09-03T06:10:17Z"
+    "started_at": "2026-09-03T11:15:01Z",
+    "completed_at": "2026-09-03T11:15:02Z"
   },
   "runner": {
     "name": "project-firdous-r-runner",
@@ -89,15 +105,15 @@
     ]
   },
   "code": {
-    "revision": "ede9655d8c624b3c0443e3dd0b8c96197beace22",
+    "revision": "5da691e04023584d10da47ded60ec6e53fc849a1",
     "branch": "claude/firdous-r-runner-mhwc2j",
-    "working_tree_clean": true,
+    "working_tree_clean": false,
     "available": true
   },
   "configuration": {
     "path": "synthetic_locked.yml",
-    "sha256": "c11def09d654529b023a4452f4c01ef89646a76bd9b76278c909f6f921d441a1",
-    "content_fingerprint": "f4e8ce2b535d1608aecd4ddeb07ddd4ffe31b4d2709a83bf7588b00130010c64",
+    "sha256": "b54bd7ccbb08d8141d7ce1b40f3b3db32e874998dc089d086a5560e68dcc56d0",
+    "content_fingerprint": "70f02ff46ac8f67994b87038439c50d4be4bfc3da16290df50a8f0924b242a08",
     "config_version": "0.1.1",
     "seed": 20260903,
     "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380"
@@ -114,25 +130,25 @@
     {
       "role": "participant",
       "path": "data/synthetic/participants.csv",
-      "sha256": "bb74c864b5e9363c3d858e227d94e72ba93847385a895a18b4ab500520f822fb",
+      "sha256": "41dd9f6a884e677c753d204cfc61fd27e8c00f4a9ea232a056fc9b3b26acddec",
       "rows": 24,
-      "columns": ["participant_id", "synthetic_group", "synthetic_age"],
+      "columns": ["study_id", "synthetic_group", "synthetic_age"],
       "participant_rows_included": false
     },
     {
       "role": "assay",
       "path": "data/synthetic/assays.csv",
-      "sha256": "beb97facec6cf5922be1c2bad31e80df380fb6a2199799c7b6e0ddd0f7b384c7",
+      "sha256": "36f69e44ad7c7281c4aef5b7a3f8ef0441606240cc24c35a71678ddcdb155cf7",
       "rows": 71,
-      "columns": ["participant_id", "target", "value", "synthetic_batch"],
+      "columns": ["study_id", "target", "value", "synthetic_batch"],
       "participant_rows_included": false
     },
     {
       "role": "approved-exceptions",
       "path": "data/synthetic/approved_exceptions.csv",
-      "sha256": "15cce642d5bad89fc0a5b25dd04fd138b0abb369476812e131449ce2632d9632",
+      "sha256": "9f519f263360f2713afad78336d10a399edac7b61f83d9b10dbf34135db47b0e",
       "rows": 1,
-      "columns": ["participant_id", "target", "exception_type", "reason", "approved_by", "approval_reference"],
+      "columns": ["study_id", "target", "exception_type", "reason", "approved_by", "approval_reference"],
       "participant_rows_included": false
     }
   ],
@@ -212,48 +228,48 @@
       "id": "environment",
       "researcher_label": "Checking the analysis environment",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T06:10:16Z",
-      "ended_at": "2026-09-03T06:10:16Z",
+      "started_at": "2026-09-03T11:15:01Z",
+      "ended_at": "2026-09-03T11:15:01Z",
       "support_reference": null
     },
     {
       "id": "data",
       "researcher_label": "Checking that your data structure is ready",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T06:10:16Z",
-      "ended_at": "2026-09-03T06:10:17Z",
+      "started_at": "2026-09-03T11:15:01Z",
+      "ended_at": "2026-09-03T11:15:01Z",
       "support_reference": null
     },
     {
       "id": "plan",
       "researcher_label": "Confirming the approved analysis plan",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T06:10:17Z",
-      "ended_at": "2026-09-03T06:10:17Z",
+      "started_at": "2026-09-03T11:15:01Z",
+      "ended_at": "2026-09-03T11:15:01Z",
       "support_reference": null
     },
     {
       "id": "analysis",
       "researcher_label": "Running the approved analysis",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T06:10:17Z",
-      "ended_at": "2026-09-03T06:10:17Z",
+      "started_at": "2026-09-03T11:15:01Z",
+      "ended_at": "2026-09-03T11:15:01Z",
       "support_reference": null
     },
     {
       "id": "outputs",
       "researcher_label": "Checking outputs before saving",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T06:10:17Z",
-      "ended_at": "2026-09-03T06:10:17Z",
+      "started_at": "2026-09-03T11:15:01Z",
+      "ended_at": "2026-09-03T11:15:02Z",
       "support_reference": null
     },
     {
       "id": "record",
       "researcher_label": "Saving the reproducibility record",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T06:10:17Z",
-      "ended_at": "2026-09-03T06:10:17Z",
+      "started_at": "2026-09-03T11:15:02Z",
+      "ended_at": "2026-09-03T11:15:02Z",
       "support_reference": null
     }
   ],
@@ -275,7 +291,7 @@
     {
       "path": "support/technical_log.txt",
       "kind": "support_only",
-      "sha256": "b6e6d50a7f22dfe39fdb25cba54636a651a824d1ee8c3d9b6d395fc6f2a9f9ea"
+      "sha256": "1b056d204f2798b3684bcfbb59977537d1e743eb5ecfa7f783e37e213664a91d"
     }
   ],
   "local_only_files": [],

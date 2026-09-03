@@ -9,6 +9,10 @@ scope:
   max_text_bytes: 5000000
 
 synthetic_id_pattern: "^SYN-[0-9]{4}$"
+# Column names treated as the study identifier. Synthetic fixtures use
+# study_id so that they also pass the Codex core guard, which treats a
+# participant_id column header in any CSV as a real-data marker.
+synthetic_id_columns: [study_id, participant_id, subject_id]
 
 allow_paths:
   - runner/r/config/guard_rules.yml

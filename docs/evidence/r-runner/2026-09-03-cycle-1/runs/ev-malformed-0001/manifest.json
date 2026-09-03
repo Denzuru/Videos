@@ -1,8 +1,20 @@
 {
   "schema": "RunBundleManifest",
-  "contract_version": "0.1.0-r-runner-draft",
+  "contract_version": "contracts-v0.1",
+  "contract_verified_against": {
+    "lane": "codex lane/g-core-impact",
+    "commit": "0400cc8a863c4446e994bcdec390aa72cd6d08ba"
+  },
   "run_id": "ev-malformed-0001",
   "run_state": "FAILED",
+  "protocol_fingerprint": "a4d00a1894c62d8477e981ad81af7c4c81be7f097219ed35e0a2eda44ab4bd56",
+  "dataset_fingerprint": "8a4699aa600c392e2f2061a91e21a62d0053d13c969fdcd7143bb73a4c867e25",
+  "code_fingerprint": "5da691e04023584d10da47ded60ec6e53fc849a1",
+  "config_fingerprint": "cc86ed24454327ef3b6ecb5b9182ee810869bcab246dd9af14f9d9ddfca50c48",
+  "environment_fingerprint": "2d7aa7646cb1d5c8f6883b65b37a42b6ba32c90be202a657cf502d45aa42dac7",
+  "seed": 20260903,
+  "output_checksums": {},
+  "status": "FAILED",
   "data_classification": "SYNTHETIC",
   "participant_rows_included": false,
   "project": {
@@ -34,8 +46,8 @@
     "processing_location_approved": true
   },
   "timing": {
-    "started_at": "2026-09-03T06:10:07Z",
-    "completed_at": "2026-09-03T06:10:08Z"
+    "started_at": "2026-09-03T11:14:52Z",
+    "completed_at": "2026-09-03T11:14:53Z"
   },
   "runner": {
     "name": "project-firdous-r-runner",
@@ -89,15 +101,15 @@
     ]
   },
   "code": {
-    "revision": "ede9655d8c624b3c0443e3dd0b8c96197beace22",
+    "revision": "5da691e04023584d10da47ded60ec6e53fc849a1",
     "branch": "claude/firdous-r-runner-mhwc2j",
-    "working_tree_clean": true,
+    "working_tree_clean": false,
     "available": true
   },
   "configuration": {
     "path": "config_malformed_values.yml",
-    "sha256": "5022b8aae141d7442f8d697d2776f763ca68ab5d8cf89e377e65ecf20908cb85",
-    "content_fingerprint": "bfc947cea16e2dcb662ad38a81e2707c35526dfcabd275474d934eec772ec688",
+    "sha256": "f05d6fd58af29ddfbee097e65169d9ee383f211aae31f5cdbc9a3f68deb02590",
+    "content_fingerprint": "cc86ed24454327ef3b6ecb5b9182ee810869bcab246dd9af14f9d9ddfca50c48",
     "config_version": "0.1.1",
     "seed": 20260903,
     "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380"
@@ -107,25 +119,25 @@
     {
       "role": "participant",
       "path": "data/synthetic/participants.csv",
-      "sha256": "bb74c864b5e9363c3d858e227d94e72ba93847385a895a18b4ab500520f822fb",
+      "sha256": "41dd9f6a884e677c753d204cfc61fd27e8c00f4a9ea232a056fc9b3b26acddec",
       "rows": 24,
-      "columns": ["participant_id", "synthetic_group", "synthetic_age"],
+      "columns": ["study_id", "synthetic_group", "synthetic_age"],
       "participant_rows_included": false
     },
     {
       "role": "assay",
       "path": "tests/fixtures/assays_malformed_values.csv",
-      "sha256": "11eee377fd80f3202911e4fcb2b51c4128010ef15ddbac00850330bafd6dd734",
+      "sha256": "452bb013eb85aaba0aab747b1afa43ab7f88ec4bb5925de8b5f7ba3b684a7d81",
       "rows": 71,
-      "columns": ["participant_id", "target", "value", "synthetic_batch"],
+      "columns": ["study_id", "target", "value", "synthetic_batch"],
       "participant_rows_included": false
     },
     {
       "role": "approved-exceptions",
       "path": "data/synthetic/approved_exceptions.csv",
-      "sha256": "15cce642d5bad89fc0a5b25dd04fd138b0abb369476812e131449ce2632d9632",
+      "sha256": "9f519f263360f2713afad78336d10a399edac7b61f83d9b10dbf34135db47b0e",
       "rows": 1,
-      "columns": ["participant_id", "target", "exception_type", "reason", "approved_by", "approval_reference"],
+      "columns": ["study_id", "target", "exception_type", "reason", "approved_by", "approval_reference"],
       "participant_rows_included": false
     }
   ],
@@ -160,16 +172,16 @@
       "id": "environment",
       "researcher_label": "Checking the analysis environment",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T06:10:07Z",
-      "ended_at": "2026-09-03T06:10:08Z",
+      "started_at": "2026-09-03T11:14:52Z",
+      "ended_at": "2026-09-03T11:14:52Z",
       "support_reference": null
     },
     {
       "id": "data",
       "researcher_label": "Checking that your data structure is ready",
       "state": "FAILED",
-      "started_at": "2026-09-03T06:10:08Z",
-      "ended_at": "2026-09-03T06:10:08Z",
+      "started_at": "2026-09-03T11:14:52Z",
+      "ended_at": "2026-09-03T11:14:53Z",
       "support_reference": "FR-20260903-ff68af-DATA_VALUES_MALFORMED"
     },
     {
@@ -200,8 +212,8 @@
       "id": "record",
       "researcher_label": "Saving the reproducibility record",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T06:10:08Z",
-      "ended_at": "2026-09-03T06:10:08Z",
+      "started_at": "2026-09-03T11:14:53Z",
+      "ended_at": "2026-09-03T11:14:53Z",
       "support_reference": null
     }
   ],
@@ -251,7 +263,7 @@
     {
       "path": "support/technical_log.txt",
       "kind": "support_only",
-      "sha256": "6d0774a0ebb7633f8664e9b805ec98ef4ac0f619ec0e22817dc53e29e72004bc"
+      "sha256": "5243b226fd8f36204bf92e9a06febb638a524dc7fbc3636c62df345726ad0bf7"
     }
   ],
   "local_only_files": [

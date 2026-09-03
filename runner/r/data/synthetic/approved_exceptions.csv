@@ -1,2 +1,2 @@
-"participant_id","target","exception_type","reason","approved_by","approval_reference"
+"study_id","target","exception_type","reason","approved_by","approval_reference"
 "SYN-0024","SYN-miR-C","missing_assay","synthetic example: assay failed quality control","SYN supervisor","SYN-EXC-0001"

@@ -22,6 +22,7 @@ test_that("a fully locked synthetic configuration runs end to end and leaves a c
   expect_true(m$environment$renv_lockfile_present)
   expect_true(m$code$available)
   expect_equal(m$configuration$seed, 20260903)
+  expect_equal(m$seed, 20260903); expect_equal(m$status, "SUCCEEDED")
   expect_equal(m$analysis$scientific_claim, "none")
   expect_equal(m$researcher_status$state, "SUCCEEDED")
   expect_true(file.exists(file.path(res$run_dir, "researcher_summary.md")))

@@ -61,7 +61,7 @@ they are mapped in as new analysis kinds (see `baseline/v0.1.0/README.md`).
 | F02 participant/assay reconciliation | `R/reconcile.R` | Orphan assays, missing required assays, duplicate keys, duplicate participants and approved exceptions. Counts go to the researcher; identifier-level detail stays in the run's `local/` folder and is never returned. |
 | F03 schema lock | `R/schema_lock.R` | Runs only when data are declared synthetic, `protocol_status` and `schema_status` are `LOCKED`, required authority records exist, governance is approved, the location is approved and no decision is unresolved. |
 | F04 reproducible environment | `renv.lock`, `run.sh restore` | Explicit renv snapshot; the environment step blocks when installed runtime packages differ from the lockfile. Restore proof in `docs/evidence/r-runner`. |
-| F05 complete analysis record | `R/manifest.R` | `manifest.json` (RunBundleManifest): R, platform, packages, lockfile hash, Git revision, config and seed fingerprints, input and output checksums, permitted logs, stages, researcher status. Written for failed and blocked runs too. |
+| F05 complete analysis record | `R/manifest.R` | `manifest.json` (RunBundleManifest, contracts-v0.1 fields plus detail): R, platform, packages, lockfile hash, Git revision, protocol, dataset, config, environment and seed fingerprints, input and output checksums, permitted logs, stages, researcher status. Written for failed and blocked runs too. |
 | F06 restricted-data guard | `R/guard.R`, `config/guard_rules.yml` | Staged-file, CI and explicit-path scans for identifiers, secrets and prohibited paths. `scripts/install_git_hooks.sh` installs it as a pre-commit hook. |
 | F07 independent replay | `R/replay.R`, `run.sh replay` | Re-runs from a reference record and reports MATCH or MISMATCH with the differing fields. |
 
@@ -72,7 +72,7 @@ run.sh                 one-command entry point
 R/                     runner modules (messages, stages, checks, manifest, guard, replay)
 scripts/               command-line entry points used by run.sh
 config/                synthetic plans, the BLOCKED template for the real study, guard rules
-data/synthetic/        committed synthetic fixtures (SYN-#### identifiers only)
+data/synthetic/        committed synthetic fixtures (study_id column, SYN-#### identifiers only)
 tests/                 testthat suite and negative fixtures
 manifests/fixtures/    example RunBundleManifest and run status records
 baseline/v0.1.0/       reserved for the original archive fingerprint
@@ -97,7 +97,8 @@ docs/                  message catalogue, CI snippet
 
 - Real data are refused at step 1 regardless of the rest of the plan.
 - The analysis stage is a placeholder until verified scripts are supplied.
-- The manifest contract version is a runner draft pending alignment with
-  the Codex contracts package (`docs/protocol/r-runner-decisions.md`).
+- The manifest carries the `contracts-v0.1` fields verified against the
+  Codex core at commit 0400cc8; what the protocol and dataset fingerprints
+  hash is interim until Codex confirms (`docs/protocol/contract-alignment-request-runbundle.md`).
 - The CRAN network restore of `renv.lock` could not be exercised in the
   build sandbox; the offline restore from the local cache was.

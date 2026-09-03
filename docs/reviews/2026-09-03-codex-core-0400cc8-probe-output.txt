@@ -1,0 +1,10 @@
+PROBE1 failed-manifest ingest status: 201 | result attached to FAILED bundle status: 201 | results stored: 1
+PROBE1b BLOCKED manifest: 201 | unknown status string: 201
+PROBE2 ingest with APPROVED plan lacking authority_id/location: 201 | run-request allowed: true
+PROBE3 manifest with foreign dataset/protocol fingerprints accepted: 201
+PROBE4 LOCKED via transitionProtocol with unresolved decisions: LOCKED unresolved: [ 'primary-outcome' ]
+PROBE4b protocolGate afterwards: false
+PROBE5 today.analysis_status: "PENDING_APPROVAL"
+PROBE6 R manifest rejected: CONTRACT_INVALID Analysis record is missing protocol_fingerprint
+PROBE6b R manifest + nine flat fields accepted (nested detail tolerated)
+PROBE7 identifier VALUES accepted by key-only check: yes

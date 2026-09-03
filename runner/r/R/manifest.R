@@ -6,7 +6,16 @@
 # includes participant rows.
 
 MANIFEST_SCHEMA <- "RunBundleManifest"
-MANIFEST_CONTRACT_VERSION <- "0.1.0-r-runner-draft"
+MANIFEST_CONTRACT_VERSION <- "contracts-v0.1"
+# Field names verified against packages/contracts/schemas.js in the Codex core
+# candidate (branch lane/g-core-impact, commit 0400cc8a863c4446e994bcdec390aa72cd6d08ba).
+CODEX_CONTRACT_COMMIT <- "0400cc8a863c4446e994bcdec390aa72cd6d08ba"
+CODEX_REQUIRED_FIELDS <- c("run_id", "protocol_fingerprint", "dataset_fingerprint", "code_fingerprint",
+                           "config_fingerprint", "environment_fingerprint", "seed", "output_checksums", "status")
+# Keys the Codex contract rejects anywhere in an analysis record (assertNoRestrictedData).
+CODEX_RESTRICTED_KEYS <- c("participant_id", "participantid", "subject_id", "subjectid", "identity_number",
+                           "identitynumber", "email", "phone", "telephone", "full_name", "fullname",
+                           "raw_rows", "participant_rows")
 RUNNER_VERSION <- "0.1.1-synthetic"
 
 RUNTIME_PACKAGES <- c("jsonlite", "digest", "yaml")
@@ -60,19 +69,63 @@ lockfile_mismatches <- function(root) {
   out
 }
 
+# Fingerprints in the shape the platform ingests. What each one hashes is
+# documented in docs/protocol/contract-alignment-request-runbundle.md.
+contract_fingerprints <- function(ctx) {
+  cfg <- ctx$cfg
+  inputs <- ctx$inputs %||% list()
+  input_sha <- sort(vapply(inputs, function(i) paste0(i$role, ":", i$sha256), character(1)))
+  outputs <- ctx$output_records %||% list()
+  checksums <- setNames(lapply(outputs, function(o) o$sha256), vapply(outputs, function(o) o$path, character(1)))
+  env <- ctx$environment
+  list(
+    # Sentinel strings (never null) keep failed and blocked records ingestible
+    # as failure records; the platform requires every field to be present.
+    protocol_fingerprint = if (is.null(cfg)) "no-plan-loaded" else sha256_string(to_canonical_json(cfg$research_plan)),
+    dataset_fingerprint = if (length(input_sha)) sha256_string(paste(input_sha, collapse = "\n")) else "no-inputs-read",
+    code_fingerprint = if (!is.null(ctx$git) && isTRUE(ctx$git$available)) ctx$git$revision else "unavailable",
+    config_fingerprint = if (is.null(cfg)) "no-plan-loaded" else config_fingerprint(cfg),
+    environment_fingerprint = sha256_string(paste(R.version.string, R.version$platform,
+      if (is.null(env)) sha256_file(file.path(ctx$root, "renv.lock")) %||% "no-lockfile" else env$renv_lockfile_sha256 %||% "no-lockfile", sep = "|")),
+    seed = if (is.null(ctx$seed) || is.na(ctx$seed)) -1L else ctx$seed,   # -1 = no valid seed recorded
+    output_checksums = if (length(checksums)) checksums else structure(list(), names = character(0)),
+    status = ctx$run_state
+  )
+}
+
+# Mirror of the Codex key-based restricted-data rule so the runner fails its
+# own tests before the platform would reject the record.
+restricted_keys_present <- function(x, path = "") {
+  out <- character(0)
+  if (is.list(x)) {
+    nms <- names(x)
+    for (i in seq_along(x)) {
+      key <- if (!is.null(nms) && nzchar(nms[i])) nms[i] else paste0("[", i, "]")
+      here <- if (nzchar(path)) paste0(path, ".", key) else key
+      if (tolower(key) %in% CODEX_RESTRICTED_KEYS) out <- c(out, here)
+      out <- c(out, restricted_keys_present(x[[i]], here))
+    }
+  }
+  out
+}
+
 build_manifest <- function(ctx) {
   cfg <- ctx$cfg
+  fp <- contract_fingerprints(ctx)
   stages <- lapply(ctx$stages, function(s) {
     list(id = s$id, researcher_label = s$label, state = s$state,
          started_at = s$started_at, ended_at = s$ended_at,
          support_reference = s$support_reference)
   })
   status <- ctx$researcher_status
-  list(
+  c(list(
     schema = MANIFEST_SCHEMA,
     contract_version = MANIFEST_CONTRACT_VERSION,
+    contract_verified_against = list(lane = "codex lane/g-core-impact", commit = CODEX_CONTRACT_COMMIT),
     run_id = ctx$run_id,
-    run_state = ctx$run_state,
+    run_state = ctx$run_state),
+    fp[setdiff(names(fp), "run_id")],
+    list(
     data_classification = if (is.null(cfg)) NA_character_ else toupper(cfg$data_classification %||% NA_character_),
     participant_rows_included = FALSE,
     project = if (is.null(cfg)) NULL else list(
@@ -109,11 +162,12 @@ build_manifest <- function(ctx) {
     unresolved_decisions = ctx$unresolved_decisions %||% list(),
     logs = ctx$log_records %||% list(),
     local_only_files = ctx$local_files %||% list()
-  )
+  ))
 }
 
 # Fields every manifest must carry for the record to be considered complete.
 MANIFEST_REQUIRED_PATHS <- c(
+  CODEX_REQUIRED_FIELDS,
   "schema", "contract_version", "run_id", "run_state", "data_classification",
   "participant_rows_included", "timing.started_at", "timing.completed_at",
   "runner.name", "runner.version",

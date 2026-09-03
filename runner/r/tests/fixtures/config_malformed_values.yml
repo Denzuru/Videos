@@ -60,11 +60,11 @@ data:
   participants_file: data/synthetic/participants.csv
   assays_file: tests/fixtures/assays_malformed_values.csv
   exceptions_file: data/synthetic/approved_exceptions.csv
-  participant_id_column: participant_id
+  participant_id_column: study_id
   participant_id_pattern: "^SYN-[0-9]{4}$"
   assay_target_column: target
   assay_value_column: value
-  required_participant_columns: [participant_id, synthetic_group, synthetic_age]
+  required_participant_columns: [study_id, synthetic_group, synthetic_age]
   value_representations:
     missing_tokens: ["NA"]
     below_detection_tokens: ["<LOD"]

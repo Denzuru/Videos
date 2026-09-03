@@ -83,11 +83,12 @@ guard_scan <- function(paths, rules, root, repo_root = root) {
       bad <- intersect(header, tolower(unlist(rules$identifier_headers %||% list())))
       if (length(bad)) add(rel, "HEADER_DIRECT_IDENTIFIER", 1,
                            paste0("column name(s) suggest direct identifiers: ", paste(bad, collapse = ", ")))
-      idcol <- match("participant_id", header)
-      if (!is.na(idcol) && !is.null(rules$synthetic_id_pattern)) {
+      id_cols <- intersect(tolower(unlist(rules$synthetic_id_columns %||% list("participant_id"))), header)
+      if (length(id_cols) && !is.null(rules$synthetic_id_pattern)) {
         df <- tryCatch(utils::read.csv(abs, colClasses = "character", check.names = FALSE), error = function(e) NULL)
-        if (!is.null(df) && "participant_id" %in% names(df)) {
-          nbad <- sum(!grepl(rules$synthetic_id_pattern, df$participant_id))
+        if (!is.null(df)) {
+          idc <- names(df)[tolower(names(df)) %in% id_cols][1]
+          nbad <- sum(!grepl(rules$synthetic_id_pattern, df[[idc]]))
           if (nbad > 0) add(rel, "ID_NOT_SYNTHETIC", NA,
                             sprintf("%d participant identifier(s) do not match the synthetic pattern %s", nbad, rules$synthetic_id_pattern))
         }
