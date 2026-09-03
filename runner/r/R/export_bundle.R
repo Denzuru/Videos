@@ -50,3 +50,44 @@ write_bundle_request <- function(run_dir, path = file.path(run_dir, "bundle_requ
   write_json_file(req, path)
   invisible(path)
 }
+
+# Proposed result records, one per approved aggregate output, in the shape the
+# platform's POST /projects/:id/results accepts (assertResultArtifact). They are
+# proposals: currentness is PENDING_REVIEW and the platform refuses anything
+# else. Only aggregate metadata travels (row and column counts, checksum);
+# never table contents.
+export_result_proposals <- function(run_dir, project_id = NULL) {
+  req <- export_bundle_request(run_dir, project_id = project_id)
+  m <- req$manifest
+  if (!identical(m$status, "SUCCEEDED")) return(list())
+  lapply(m$outputs, function(o) {
+    name <- sub("^outputs/", "", o$path)
+    list(
+      id = paste0(m$run_id, ":", sub("\\.[^.]+$", "", name)),
+      project_id = req$project_id,
+      run_id = m$run_id,
+      artifact_type = "TABLE",
+      currentness = "PENDING_REVIEW",
+      plain_language_summary = result_summary_text(name, o, m),
+      aggregate_metadata = list(rows = o$rows, columns = length(o$columns %||% list()),
+                                sha256 = o$sha256, kind = o$kind,
+                                analysis_kind = m$analysis$kind, scientific_claim = m$analysis$scientific_claim)
+    )
+  })
+}
+
+result_summary_text <- function(name, output, manifest) {
+  what <- switch(name,
+    "group_counts.csv" = "the number of participants in each group",
+    "target_summary_by_group.csv" = "descriptive summaries (count, mean, spread, range) for each target within each group",
+    "data_readiness_summary.csv" = "counts describing the data check: rows read, values observed, missing or below detection, and exceptions applied",
+    paste0("the aggregate table '", name, "'"))
+  paste0("An aggregate table of ", what, ", produced on ", tolower(manifest$data_classification %||% "synthetic"),
+         " data by the analysis record ", manifest$run_id, ". No statistical test was applied and no scientific claim is made.")
+}
+
+write_result_proposals <- function(run_dir, path = file.path(run_dir, "result_proposals.json"), ...) {
+  props <- export_result_proposals(run_dir, ...)
+  write_json_file(props, path)
+  invisible(path)
+}

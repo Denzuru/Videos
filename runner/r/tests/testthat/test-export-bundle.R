@@ -83,3 +83,46 @@ test_that("the exported request is ingested by the Codex core handler when the c
   expect_equal(r$pending_status, 422)
   expect_match(r$pending_title, "waiting for approval")
 })
+
+test_that("result proposals are review-first, aggregate-only and absent for failed runs", {
+  res <- run_quiet(LOCKED, run_id = "t-export-results")
+  props <- export_result_proposals(res$run_dir)
+  expect_length(props, 3)
+  expect_true(all(vapply(props, function(p) p$currentness == "PENDING_REVIEW", logical(1))))
+  expect_true(all(vapply(props, function(p) p$artifact_type == "TABLE", logical(1))))
+  expect_true(all(vapply(props, function(p) grepl("No statistical test was applied", p$plain_language_summary), logical(1))))
+  expect_length(restricted_keys_present(props), 0)
+  expect_false(any(grepl("SYN-[0-9]{4}", unlist(props))))
+  res2 <- run_quiet(MALFORMED, run_id = "t-export-results-failed")
+  expect_length(export_result_proposals(res2$run_dir), 0)
+})
+
+test_that("Journey 5 seam: record ingested, then each proposed result is saved for review by the Codex handler", {
+  root <- Sys.getenv("CODEX_CORE_ROOT", "")
+  skip_if(!nzchar(root) || !file.exists(file.path(root, "apps", "api", "src", "http.js")), "CODEX_CORE_ROOT not set")
+  skip_if(Sys.which("node") == "", "node not available")
+  res <- run_quiet(LOCKED, run_id = "t-journey5")
+  req_path <- write_bundle_request(res$run_dir); props_path <- write_result_proposals(res$run_dir)
+  script <- tempfile(fileext = ".mjs")
+  writeLines(c(
+    sprintf("import { ResearchStore } from '%s/packages/database/store.js';", root),
+    sprintf("import { createResearchService } from '%s/apps/api/src/service.js';", root),
+    sprintf("import { createApiHandler } from '%s/apps/api/src/http.js';", root),
+    "import { readFileSync } from 'node:fs';",
+    sprintf("const body = JSON.parse(readFileSync('%s', 'utf8')); const props = JSON.parse(readFileSync('%s', 'utf8'));", req_path, props_path),
+    "const store = new ResearchStore({ runPlans: [{ id: body.run_plan_id, project_id: body.project_id, protocol_id: 'SYN-PROTOCOL-v1', dataset_version_id: 'SYN-DATASET-v1', state: 'APPROVED', authority_id: 'SYN-AUTH-0002', processing_location_approved: true }] });",
+    "const h = createApiHandler({ store, service: createResearchService({ store }) }); const actor = { id: 'r-runner', project_ids: [body.project_id] };",
+    "const ingest = await h({ method: 'POST', path: `/projects/${body.project_id}/run-bundles`, actor, body });",
+    "const results = []; for (const result of props) results.push((await h({ method: 'POST', path: `/projects/${body.project_id}/results`, actor, body: { project_id: body.project_id, result } })).status);",
+    "const view = await h({ method: 'GET', path: `/projects/${body.project_id}/results`, actor });",
+    "console.log(JSON.stringify({ ingest: ingest.status, results, stored: store.state.results.length, statuses: view.body.items.map(i => i.status), raw_enum_leak: /PENDING_REVIEW|currentness/.test(JSON.stringify(view.body)) }));"
+  ), script)
+  out <- system2("node", script, stdout = TRUE, stderr = TRUE)
+  expect_equal(attr(out, "status") %||% 0L, 0L, info = paste(out, collapse = "\n"))
+  r <- jsonlite::fromJSON(tail(out, 1))
+  expect_equal(r$ingest, 201)
+  expect_equal(r$results, c(201, 201, 201))
+  expect_equal(r$stored, 3)
+  expect_true(all(r$statuses == "Needs review"))
+  expect_false(r$raw_enum_leak)
+})

@@ -21,3 +21,6 @@ path <- tryCatch(
                        project_id = opt$project_id, run_plan_id = opt$run_plan_id),
   error = function(e) report_failure_and_quit(e, basename(run_dir)))
 cat("Ingestion request written to", path, "\n")
+props <- tryCatch(write_result_proposals(run_dir, project_id = opt$project_id),
+                  error = function(e) report_failure_and_quit(e, basename(run_dir)))
+cat("Result proposals written to", props, "\n")
