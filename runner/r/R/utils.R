@@ -12,7 +12,7 @@ runner_root <- function() {
 source_runner <- function(root = runner_root()) {
   files <- c("utils.R", "messages.R", "conditions.R", "io.R", "assay_typing.R",
              "reconcile.R", "schema_lock.R", "analysis.R", "output_guard.R",
-             "manifest.R", "stages.R", "pipeline.R", "guard.R", "replay.R")
+             "manifest.R", "stages.R", "pipeline.R", "guard.R", "replay.R", "export_bundle.R")
   for (f in files) {
     p <- file.path(root, "R", f)
     if (!file.exists(p)) stop("runner module missing: ", p)

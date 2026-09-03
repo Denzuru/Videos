@@ -6,6 +6,7 @@
 #   ./run.sh replay --reference PATH/manifest.json   replay and compare (F07)
 #   ./run.sh test                 run the test suite
 #   ./run.sh guard [--staged|--all|--paths ...]      restricted-data guard (F06)
+#   ./run.sh export RUN_DIR       write RUN_DIR/bundle_request.json, the platform ingestion request
 #   ./run.sh restore              restore the recorded R environment with renv (F04)
 #   ./run.sh fingerprint PATH     fingerprint the original v0.1.0 archive before remediation
 #
@@ -20,7 +21,8 @@ case "$cmd" in
   replay)      exec Rscript scripts/replay.R "$@" ;;
   test)        exec Rscript scripts/run_tests.R "$@" ;;
   guard)       exec Rscript scripts/guard_restricted_data.R "${@:---staged}" ;;
+  export)      exec Rscript scripts/export_bundle.R "$@" ;;
   restore)     exec Rscript -e 'renv::restore(prompt = FALSE); renv::status()' ;;
   fingerprint) exec Rscript scripts/fingerprint_baseline.R "$@" ;;
-  *) echo "Unknown command: $cmd"; sed -n '2,12p' "$0"; exit 2 ;;
+  *) echo "Unknown command: $cmd"; sed -n '2,13p' "$0"; exit 2 ;;
 esac

@@ -56,9 +56,11 @@ run_stage <- function(ctx, stage_id, fn) {
         log_support(ctx, "warning in ", stage_id, ": ", conditionMessage(w))
         invokeRestart("muffleWarning")
       }),
-    firdous_failure = function(f) list(ok = FALSE, failure = f),
-    error = function(e) list(ok = FALSE, failure = firdous_failure(
-      "UNEXPECTED_ERROR", list(stage_label = s$label), technical = conditionMessage(e)))
+    error = function(e) {
+      if (inherits(e, "firdous_failure")) return(list(ok = FALSE, failure = e))
+      list(ok = FALSE, failure = firdous_failure(
+        "UNEXPECTED_ERROR", list(stage_label = s$label), technical = conditionMessage(e)))
+    }
   )
 
   if (isTRUE(result$ok)) {

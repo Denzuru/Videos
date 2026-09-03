@@ -15,7 +15,7 @@ $ git bundle verify firdouscore0400cc8.bundle          -> okay, complete history
 $ node --test $(find tests -name '*.test.js' -print)   -> 42 passed, 0 failed
 $ node scripts/verify-no-restricted-data.js            -> passed
 $ node scripts/verify-migrations.js                    -> passed for 4 migrations and 13 tables
-$ node probe.mjs   (reviewer probes, output in 2026-09-03-codex-core-0400cc8-probe-output.txt)
+$ node probe.mjs   (reviewer probes: 2026-09-03-codex-core-0400cc8-probes.mjs, output in 2026-09-03-codex-core-0400cc8-probe-output.txt; Codex can run the same file against its fixes)
 $ node scripts/verify-no-restricted-data.js run from the R runner repository root
 $ cd runner/r && CODEX_CORE_ROOT=<checkout> ./run.sh test  -> 49 blocks, 609 expectations, 0 failed
 ```

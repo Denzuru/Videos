@@ -16,6 +16,7 @@ cd runner/r
 ./run.sh test            # run the test suite
 ./run.sh guard --all     # restricted-data and secret guard over tracked files in scope
 ./run.sh replay --reference <analysis record>/manifest.json
+./run.sh export <analysis record>   # write bundle_request.json, the platform ingestion request
 ./run.sh restore         # restore the recorded R environment (renv)
 ./run.sh fingerprint PATH_TO_V0.1.0_ARCHIVE
 ```
@@ -64,6 +65,7 @@ they are mapped in as new analysis kinds (see `baseline/v0.1.0/README.md`).
 | F05 complete analysis record | `R/manifest.R` | `manifest.json` (RunBundleManifest, contracts-v0.1 fields plus detail): R, platform, packages, lockfile hash, Git revision, protocol, dataset, config, environment and seed fingerprints, input and output checksums, permitted logs, stages, researcher status. Written for failed and blocked runs too. |
 | F06 restricted-data guard | `R/guard.R`, `config/guard_rules.yml` | Staged-file, CI and explicit-path scans for identifiers, secrets and prohibited paths. `scripts/install_git_hooks.sh` installs it as a pre-commit hook. |
 | F07 independent replay | `R/replay.R`, `run.sh replay` | Re-runs from a reference record and reports MATCH or MISMATCH with the differing fields. |
+| Platform hand-off | `R/export_bundle.R`, `run.sh export` | Packages a record as the `POST /projects/:id/run-bundles` request; proven against the Codex API handler in the test suite when `CODEX_CORE_ROOT` is set. |
 
 ## Layout
 

@@ -275,6 +275,16 @@ Raw R errors never appear in these fields; they go to the support log only.
 - Other work can continue: yes
 - Work preserved: yes
 
+### This analysis record cannot be linked to an analysis plan
+
+- Support code: `EXPORT_PLAN_UNKNOWN` (stopped, action needed)
+- What happened: The record does not say which project and analysis plan it belongs to, so it cannot be saved to the platform.
+- Why it matters: Every saved analysis record must be traceable to the approved plan it ran under.
+- Next action: Start the analysis again from the approved analysis plan, or ask research support to supply the project and plan identifiers.
+- Who can resolve it: Research support (quote the support reference).
+- Other work can continue: yes
+- Work preserved: yes
+
 ### The reproducibility record could not be saved
 
 - Support code: `RECORD_WRITE_FAILED` (stopped, action needed)

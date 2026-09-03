@@ -281,6 +281,15 @@ MESSAGES <- list(
     resolving_role = ROLE_GOVERNANCE,
     can_continue_elsewhere = TRUE, work_preserved = TRUE),
 
+  EXPORT_PLAN_UNKNOWN = list(
+    state = "FAILED",
+    plain_language_title = "This analysis record cannot be linked to an analysis plan",
+    plain_language_summary = "The record does not say which project and analysis plan it belongs to, so it cannot be saved to the platform.",
+    why_it_matters = "Every saved analysis record must be traceable to the approved plan it ran under.",
+    next_action = "Start the analysis again from the approved analysis plan, or ask research support to supply the project and plan identifiers.",
+    resolving_role = ROLE_SUPPORT,
+    can_continue_elsewhere = TRUE, work_preserved = TRUE),
+
   # ---- record and catch-all -----------------------------------------------
   RECORD_WRITE_FAILED = list(
     state = "FAILED",

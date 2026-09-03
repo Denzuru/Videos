@@ -51,9 +51,10 @@ run_pipeline <- function(config_path, out_root = NULL, run_id = NULL, seed = NUL
   }
 
   # The record stage always runs.
-  rec <- run_stage(ctx, "record", function(c) tryCatch(stage_record_write(c),
-    firdous_failure = function(f) stop(f),
-    error = function(e) stop_firdous("RECORD_WRITE_FAILED", list(), technical = conditionMessage(e))))
+  rec <- run_stage(ctx, "record", function(c) tryCatch(stage_record_write(c), error = function(e) {
+    if (inherits(e, "firdous_failure")) stop(e)
+    stop_firdous("RECORD_WRITE_FAILED", list(), technical = conditionMessage(e))
+  }))
   if (identical(rec, FALSE)) {
     # Recording failed: the run cannot be trusted as complete.
     ctx$run_state <- "FAILED"
@@ -228,9 +229,10 @@ stage_plan <- function(ctx) {
 
 # ---- stage 4: analysis -------------------------------------------------------
 stage_analysis <- function(ctx) {
-  res <- tryCatch(run_analysis_stage(ctx),
-    firdous_failure = function(f) stop(f),
-    error = function(e) stop_firdous("ANALYSIS_STAGE_FAILED", list(), technical = conditionMessage(e)))
+  res <- tryCatch(run_analysis_stage(ctx), error = function(e) {
+    if (inherits(e, "firdous_failure")) stop(e)
+    stop_firdous("ANALYSIS_STAGE_FAILED", list(), technical = conditionMessage(e))
+  })
   ctx$analysis_result <- res
   res
 }

@@ -7,7 +7,7 @@ Reviewers should replay rather than trust this page.
 
 | File | What it is |
 |---|---|
-| `test-output.txt` | Full console output of `./run.sh test`: 49 test blocks, 609 expectations, 0 failures (re-run after contract alignment, with CODEX_CORE_ROOT set so the Codex assertion ran) |
+| `test-output.txt` | Full console output of `./run.sh test`: 54 test blocks, 0 failures (re-run after the export adapter and code-review fixes, with CODEX_CORE_ROOT set so the Codex assertion and ingestion tests ran) |
 | `commands-and-output.md` | Exact commands and console output for five runs and one replay (regenerated after contract alignment) |
 | `guard-staged-output.txt` | Guard run over the 114 staged files of the first lane commit: clean |
 | `renv-restore-offline-log.txt` | Restore of the lockfile into an empty project library from the local renv cache |
@@ -38,7 +38,8 @@ reported as INFO, not as a mismatch.
 ## Cross-lane
 
 The Codex core review with its probe output is in `docs/reviews/`. All four
-committed manifest fixtures pass Codex's `assertRunBundleManifest` at commit 0400cc8.
+committed manifest fixtures pass Codex's `assertRunBundleManifest` at commit 0400cc8, and a
+real exported record is ingested (201) by their API handler in `test-export-bundle.R`.
 
 ## Limits
 

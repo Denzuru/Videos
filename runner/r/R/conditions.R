@@ -4,7 +4,7 @@
 
 firdous_failure <- function(code, values = list(), findings = list(), technical = NULL) {
   structure(
-    class = c("firdous_failure", "condition"),
+    class = c("firdous_failure", "error", "condition"),
     list(
       message = paste0("firdous_failure: ", code),
       call = NULL,
