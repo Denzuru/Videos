@@ -7,8 +7,9 @@ Reviewers should replay rather than trust this page.
 
 | File | What it is |
 |---|---|
-| `test-output.txt` | Full console output of `./run.sh test`: 43 test blocks, 556 expectations, 0 failures |
+| `test-output.txt` | Full console output of `./run.sh test`: 45 test blocks, 569 expectations, 0 failures (re-run after cycle-2 hardening) |
 | `commands-and-output.md` | Exact commands and console output for five runs and one replay |
+| `guard-staged-output.txt` | Guard run over the 114 staged files of the first lane commit: clean |
 | `renv-restore-offline-log.txt` | Restore of the lockfile into an empty project library from the local renv cache |
 | `runs/ev-locked-0001/` | Confirmed synthetic plan: SUCCEEDED, full analysis record |
 | `runs/ev-replay-0001/` | Replay of the above: verdict MATCH, identical output checksums |

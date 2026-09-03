@@ -15,6 +15,8 @@ revisited by the convergence operator or Brother D.
 | DEC-R-008 | Guard scope in `--all` mode is `runner/`, `packages/test-fixtures/`, `docs/`; `--staged` scans every staged file | Other paths belong to other lanes; the staged mode still protects the whole repository at commit time. | Adopted |
 | DEC-R-009 | No files written under `packages/test-fixtures` | Requires agreement with the contracts owner. Fixtures live in `runner/r/manifests/fixtures` until then. | Open, needs Codex |
 | DEC-R-010 | Real data refused at step 1 by classification, before any file is opened | Defence in depth ahead of the real-data readiness gate (Build Plan 12.5). | Adopted |
+| DEC-R-012 | The staged guard scans the working-tree content of staged paths | Matches common pre-commit practice; a partially staged file is scanned in full, which is the safer direction. | Adopted |
+| DEC-R-013 | Data-structure and run-setting decisions (`data`, `stages`, `outputs`) are checked for unresolved values before any file is opened | A BLOCKED value representation or output list means the checks would be guessing; the researcher sees "decisions are needed" with the custodian named rather than a confusing file error. | Adopted |
 | DEC-R-011 | Descriptive placeholder output is identical across seeds | It contains no stochastic step. The seed is still set and recorded so later stochastic methods are reproducible. | Documented limitation |
 
 ## Requests to other lanes

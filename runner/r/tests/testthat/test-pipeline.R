@@ -206,3 +206,34 @@ test_that("an unexpected R error never reaches the researcher as raw text", {
   expect_false(grepl("operator|atomic", summary))
   expect_true(nzchar(res$researcher_status$support_reference))
 })
+
+test_that("unresolved data-structure decisions stop the run before any file is opened", {
+  p <- temp_config(function(c) { c$data$value_representations$below_detection_tokens <- "BLOCKED"; c })
+  res <- run_quiet(p, run_id = "t-data-unresolved")
+  expect_equal(res$run_state, "BLOCKED")
+  expect_equal(res$researcher_status$code, "PLAN_DECISIONS_UNRESOLVED")
+  expect_match(res$researcher_status$plain_language_summary, "How below-detection values are written in the data")
+  m <- read_json_file(res$manifest_path)
+  expect_length(m$inputs, 0)
+  expect_equal(m$unresolved_decisions[[1]]$field, "data.value_representations.below_detection_tokens")
+})
+
+test_that("the one-command entry point returns exit status 0 on success and 1 otherwise", {
+  skip_if(Sys.which("Rscript") == "", "Rscript not on PATH")
+  out_root <- tempfile("cli-")
+  run_cli <- function(...) {
+    system2("Rscript", c(file.path(RUNNER_ROOT, "scripts", "run_pipeline.R"), "--quiet", "--out", out_root, ...),
+            stdout = NULL, stderr = NULL)
+  }
+  expect_equal(run_cli("--config", LOCKED, "--run-id", "cli-ok"), 0L)
+  expect_equal(run_cli("--config", DRAFT, "--run-id", "cli-blocked"), 1L)
+  expect_equal(run_cli("--config", MALFORMED, "--run-id", "cli-failed"), 1L)
+  expect_equal(run_cli("--config", "/no/such/plan.yml", "--run-id", "cli-noconfig"), 1L)
+  expect_true(file.exists(file.path(out_root, "cli-noconfig", "manifest.json")))   # a record exists even then
+  expect_equal(read_json_file(file.path(out_root, "cli-noconfig", "run_status.json"))$researcher_status$code, "CONFIG_MISSING")
+  rep <- system2("Rscript", c(file.path(RUNNER_ROOT, "scripts", "replay.R"), "--quiet", "--out", out_root,
+                              "--reference", file.path(out_root, "cli-ok", "manifest.json"), "--run-id", "cli-replay"),
+                 stdout = NULL, stderr = NULL)
+  expect_equal(rep, 0L)
+  expect_equal(read_json_file(file.path(out_root, "cli-replay", "replay_report.json"))$verdict, "MATCH")
+})

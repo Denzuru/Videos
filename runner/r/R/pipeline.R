@@ -51,7 +51,9 @@ run_pipeline <- function(config_path, out_root = NULL, run_id = NULL, seed = NUL
   }
 
   # The record stage always runs.
-  rec <- run_stage(ctx, "record", stage_record_write)
+  rec <- run_stage(ctx, "record", function(c) tryCatch(stage_record_write(c),
+    firdous_failure = function(f) stop(f),
+    error = function(e) stop_firdous("RECORD_WRITE_FAILED", list(), technical = conditionMessage(e))))
   if (identical(rec, FALSE)) {
     # Recording failed: the run cannot be trusted as complete.
     ctx$run_state <- "FAILED"
@@ -98,6 +100,21 @@ stage_data <- function(ctx) {
   cfg <- ctx$cfg
   dcfg <- cfg$data
   findings <- list()
+
+  # Data-structure and run-setting decisions (custodian-owned) must be resolved
+  # before any file is opened; otherwise the checks would be guessing.
+  unresolved <- c(find_unresolved(cfg$data, "data"), find_unresolved(cfg$stages, "stages"),
+                  find_unresolved(cfg$outputs, "outputs"))
+  unresolved <- setdiff(unresolved, "data.exceptions_file")   # the exceptions file is optional
+  if (length(unresolved)) {
+    labels <- vapply(unresolved, function(x) decision_label(x)$label, character(1))
+    ctx$unresolved_decisions <- lapply(unresolved, function(x)
+      list(field = x, decision = decision_label(x)$label, resolving_role = decision_label(x)$role))
+    stop_firdous("PLAN_DECISIONS_UNRESOLVED",
+                 list(count = length(unresolved), decisions = paste(labels, collapse = "; ")),
+                 findings = list(new_finding("PLAN_DECISIONS_UNRESOLVED",
+                   list(count = length(unresolved), decisions = paste(labels, collapse = "; ")))))
+  }
 
   read_input <- function(role, rel, required = TRUE) {
     path <- resolve_data_path(ctx$root, rel)
