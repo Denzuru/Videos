@@ -42,7 +42,7 @@ to_canonical_json <- function(x) {
 sort_keys <- function(x) {
   if (is.list(x)) {
     if (!is.null(names(x)) && all(nzchar(names(x)))) {
-      x <- x[order(names(x))]
+      x <- x[order(names(x), method = "radix")]   # locale-independent
     }
     return(lapply(x, sort_keys))
   }

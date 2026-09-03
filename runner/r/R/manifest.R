@@ -23,7 +23,7 @@ RUNTIME_PACKAGES <- c("jsonlite", "digest", "yaml")
 collect_environment <- function(root) {
   si <- utils::sessionInfo()
   pkgs <- c(si$otherPkgs, si$loadedOnly)
-  pkg_records <- lapply(sort(names(pkgs)), function(nm) {
+  pkg_records <- lapply(sort(names(pkgs), method = "radix"), function(nm) {
     p <- pkgs[[nm]]
     list(name = nm, version = as.character(p$Version),
          source = p$Repository %||% (if (identical(p$Priority, "base")) "base" else "unknown"))
@@ -76,7 +76,7 @@ lockfile_mismatches <- function(root) {
 contract_fingerprints <- function(ctx) {
   cfg <- ctx$cfg
   inputs <- ctx$inputs %||% list()
-  input_sha <- sort(vapply(inputs, function(i) paste0(i$role, ":", i$sha256), character(1)))
+  input_sha <- sort(vapply(inputs, function(i) paste0(i$role, ":", i$sha256), character(1)), method = "radix")
   outputs <- ctx$output_records %||% list()
   checksums <- setNames(lapply(outputs, function(o) o$sha256), vapply(outputs, function(o) o$path, character(1)))
   env <- ctx$environment

@@ -19,7 +19,7 @@ register_analysis_kind <- function(id, label, run, declared_outputs, requires_pa
   invisible(id)
 }
 
-analysis_kinds <- function() sort(ls(.analysis_registry))
+analysis_kinds <- function() sort(ls(.analysis_registry), method = "radix")
 
 get_analysis_kind <- function(id) {
   if (is.null(id) || !exists(id, envir = .analysis_registry, inherits = FALSE)) return(NULL)

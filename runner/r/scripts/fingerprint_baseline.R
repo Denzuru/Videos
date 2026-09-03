@@ -10,7 +10,7 @@ Sys.setenv(FIRDOUS_RUNNER_ROOT = root)
 source(file.path(root, "R", "utils.R")); source_runner(root)
 target <- normalizePath(args[1], mustWork = TRUE)
 files <- if (dir.exists(target)) list.files(target, recursive = TRUE, full.names = TRUE, all.files = TRUE) else target
-members <- lapply(sort(files), function(f) list(
+members <- lapply(sort(files, method = "radix"), function(f) list(
   path = if (dir.exists(target)) sub(paste0("^", target, "/?"), "", f) else basename(f),
   bytes = file.info(f)$size, sha256 = sha256_file(f)))
 record <- list(

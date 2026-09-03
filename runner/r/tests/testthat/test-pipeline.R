@@ -270,3 +270,26 @@ test_that("the record-stage redaction catches an identifier that slips into a re
   expect_equal(red$value$a, "participant [identifier removed] and [identifier removed]")
   expect_equal(red$value$b$d, "[identifier removed]")
 })
+
+test_that("fingerprints and output checksums do not depend on the collation locale", {
+  # Mixed-case group and target names expose locale-dependent ordering.
+  pp <- read_csv_character(file.path(RUNNER_ROOT, "data", "synthetic", "participants.csv"))
+  pp$synthetic_group <- ifelse(pp$synthetic_group == "A", "a", "B")
+  aa <- read_csv_character(file.path(RUNNER_ROOT, "data", "synthetic", "assays.csv"))
+  aa$target <- sub("SYN-miR-B", "syn-mir-b", aa$target)
+  tp <- tempfile(fileext = ".csv"); ta <- tempfile(fileext = ".csv"); write.csv(pp, tp, row.names = FALSE); write.csv(aa, ta, row.names = FALSE)
+  cfgp <- temp_config(function(c) { c$data$participants_file <- tp; c$data$assays_file <- ta
+    c$analysis_plan$target_panel <- list("SYN-miR-A", "syn-mir-b", "SYN-miR-C"); c$analysis_plan$exploratory_targets <- c$analysis_plan$target_panel; c })
+  old <- Sys.getlocale("LC_COLLATE"); on.exit(Sys.setlocale("LC_COLLATE", old))
+  utf <- suppressWarnings(Sys.setlocale("LC_COLLATE", "C.UTF-8"))
+  skip_if(!nzchar(utf), "C.UTF-8 collation not available")
+  res_utf <- run_quiet(cfgp, run_id = "t-loc-utf")
+  Sys.setlocale("LC_COLLATE", "C")
+  res_c <- run_quiet(cfgp, run_id = "t-loc-c")
+  mu <- read_json_file(res_utf$manifest_path); mc <- read_json_file(res_c$manifest_path)
+  expect_equal(mu$run_state, "SUCCEEDED"); expect_equal(mc$run_state, "SUCCEEDED")
+  expect_identical(mu$config_fingerprint, mc$config_fingerprint)
+  expect_identical(mu$dataset_fingerprint, mc$dataset_fingerprint)
+  expect_identical(mu$output_checksums, mc$output_checksums)
+  expect_equal(replay_compare(mu, mc)$verdict, "MATCH")
+})

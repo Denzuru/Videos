@@ -48,9 +48,9 @@ run_synthetic_descriptive <- function(ctx) {
 
   # 1. Participants per group (aggregate only)
   grp <- participants[[group_col]]
-  group_counts <- as.data.frame(table(group = grp), stringsAsFactors = FALSE)
+  group_counts <- as.data.frame(table(group = factor(grp, levels = sort(unique(grp), method = "radix"))), stringsAsFactors = FALSE)
   names(group_counts) <- c("group", "n_participants")
-  group_counts <- group_counts[order(group_counts$group), , drop = FALSE]
+  group_counts <- group_counts[order(group_counts$group, method = "radix"), , drop = FALSE]
   group_counts$n_participants <- as.integer(group_counts$n_participants)
 
   # 2. Descriptive summary per target and group, observed values only.
@@ -58,7 +58,7 @@ run_synthetic_descriptive <- function(ctx) {
   assays$group <- unname(lookup[assays[[id_col]]])
   assays <- assays[!is.na(assays$group), , drop = FALSE]
   keys <- unique(assays[, c(target_col, "group")])
-  keys <- keys[order(keys[[target_col]], keys$group), , drop = FALSE]
+  keys <- keys[order(keys[[target_col]], keys$group, method = "radix"), , drop = FALSE]
   rows <- lapply(seq_len(nrow(keys)), function(i) {
     sub <- assays[assays[[target_col]] == keys[[target_col]][i] & assays$group == keys$group[i], , drop = FALSE]
     obs <- sub$value_numeric[sub$value_status == "observed"]
