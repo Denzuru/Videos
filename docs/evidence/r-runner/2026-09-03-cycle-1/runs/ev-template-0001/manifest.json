@@ -35,13 +35,13 @@
     "processing_location_approved": false
   },
   "timing": {
-    "started_at": "2026-09-03T11:15:56Z",
-    "completed_at": "2026-09-03T11:15:56Z"
+    "started_at": "2026-09-03T13:54:00Z",
+    "completed_at": "2026-09-03T13:54:00Z"
   },
   "runner": {
     "name": "project-firdous-r-runner",
     "version": "0.1.1-synthetic",
-    "command": "run_pipeline.R --config config/firdous_template_BLOCKED.yml --run-id ev-template-0001 --out /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs --quiet"
+    "command": "run_pipeline.R --config config/firdous_template_BLOCKED.yml --run-id ev-template-0001 --out /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs"
   },
   "environment": null,
   "code": null,
@@ -51,7 +51,8 @@
     "content_fingerprint": "3091b55f83629649ff8957ba22ae53674ed9f6de04165543c77dfe2a53854d29",
     "config_version": "0.1.1",
     "seed": null,
-    "seed_fingerprint": null
+    "seed_fingerprint": null,
+    "participant_id_pattern": "BLOCKED"
   },
   "analysis": null,
   "inputs": [],
@@ -62,8 +63,8 @@
       "id": "environment",
       "researcher_label": "Checking the analysis environment",
       "state": "BLOCKED",
-      "started_at": "2026-09-03T11:15:56Z",
-      "ended_at": "2026-09-03T11:15:56Z",
+      "started_at": "2026-09-03T13:54:00Z",
+      "ended_at": "2026-09-03T13:54:00Z",
       "support_reference": "FR-20260903-068333-PLAN_REAL_DATA_NOT_PERMITTED"
     },
     {
@@ -102,14 +103,14 @@
       "id": "record",
       "researcher_label": "Saving the reproducibility record",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:15:56Z",
-      "ended_at": "2026-09-03T11:15:56Z",
+      "started_at": "2026-09-03T13:54:00Z",
+      "ended_at": "2026-09-03T13:54:00Z",
       "support_reference": null
     }
   ],
   "researcher_status": {
     "code": "PLAN_REAL_DATA_NOT_PERMITTED",
-    "state": "BLOCKED",
+    "state": "[identifier removed]",
     "plain_language_title": "This version of the runner works with synthetic data only",
     "plain_language_summary": "The analysis plan describes the data as 'REAL'. This runner is approved for synthetic (made-up) data only.",
     "why_it_matters": "Real participant data may only be processed once ethics approval, data-custodian authority, an approved processing location and a confirmed research plan are all in place and verified.",
@@ -123,7 +124,7 @@
   "findings": [
     {
       "code": "PLAN_REAL_DATA_NOT_PERMITTED",
-      "state": "BLOCKED",
+      "state": "[identifier removed]",
       "plain_language_title": "This version of the runner works with synthetic data only",
       "plain_language_summary": "The analysis plan describes the data as 'REAL'. This runner is approved for synthetic (made-up) data only.",
       "why_it_matters": "Real participant data may only be processed once ethics approval, data-custodian authority, an approved processing location and a confirmed research plan are all in place and verified.",
@@ -140,7 +141,7 @@
     {
       "path": "support/technical_log.txt",
       "kind": "support_only",
-      "sha256": "b63dcc83bf07c38aa631e1834d65671565247a6b53232b97f15aa2bd03181931"
+      "sha256": "a23c1ab7263e64d254f7d54f75219a9006957fc864e59f7fb0e0771546f04ec8"
     }
   ],
   "local_only_files": [],
@@ -156,5 +157,6 @@
     "code.branch",
     "code.working_tree_clean",
     "configuration.seed"
-  ]
+  ],
+  "identifier_redactions": 2
 }

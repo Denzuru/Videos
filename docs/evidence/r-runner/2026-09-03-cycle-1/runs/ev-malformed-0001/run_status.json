@@ -2,8 +2,8 @@
   "run_id": "ev-malformed-0001",
   "run_state": "FAILED",
   "data_classification": "SYNTHETIC",
-  "started_at": "2026-09-03T11:14:52Z",
-  "completed_at": "2026-09-03T11:14:53Z",
+  "started_at": "2026-09-03T13:53:54Z",
+  "completed_at": "2026-09-03T13:53:55Z",
   "stages": [
     {
       "id": "environment",
@@ -52,7 +52,7 @@
     "code": "DATA_VALUES_MALFORMED",
     "state": "FAILED",
     "plain_language_title": "Some measured values could not be interpreted",
-    "plain_language_summary": "7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: 'ND' (text where a number was expected); '' (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).",
+    "plain_language_summary": "7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: text of 2 character(s) (text where a number was expected); an empty cell (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).",
     "why_it_matters": "The runner will not guess what these values mean. Guessing could silently turn a missing or below-detection result into a number, which would change the analysis.",
     "next_action": "Decide with the data custodian how each of these should be written. Approved representations are: missing = 'NA'; below detection = '<LOD'; numbers written with a decimal point. Then update the file and start again.",
     "resolving_role": "The data custodian or the person who prepared the data file.",
@@ -66,7 +66,7 @@
       "code": "DATA_VALUES_MALFORMED",
       "state": "FAILED",
       "plain_language_title": "Some measured values could not be interpreted",
-      "plain_language_summary": "7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: 'ND' (text where a number was expected); '' (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).",
+      "plain_language_summary": "7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: text of 2 character(s) (text where a number was expected); an empty cell (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).",
       "why_it_matters": "The runner will not guess what these values mean. Guessing could silently turn a missing or below-detection result into a number, which would change the analysis.",
       "next_action": "Decide with the data custodian how each of these should be written. Approved representations are: missing = 'NA'; below detection = '<LOD'; numbers written with a decimal point. Then update the file and start again.",
       "resolving_role": "The data custodian or the person who prepared the data file.",

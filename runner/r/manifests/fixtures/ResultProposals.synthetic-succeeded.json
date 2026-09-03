@@ -1,0 +1,50 @@
+[
+  {
+    "id": "ev-locked-0001:data_readiness_summary",
+    "project_id": "SYN-PROJECT-FIRDOUS",
+    "run_id": "ev-locked-0001",
+    "artifact_type": "TABLE",
+    "currentness": "PENDING_REVIEW",
+    "plain_language_summary": "An aggregate table of counts describing the data check: rows read, values observed, missing or below detection, and exceptions applied, produced on synthetic data by the analysis record ev-locked-0001. No statistical test was applied and no scientific claim is made.",
+    "aggregate_metadata": {
+      "rows": 9,
+      "columns": 2,
+      "sha256": "1caa5fff88d20db1ca09f8034e92563aaca35eee65a1936f0ca6a2d65582c2f7",
+      "kind": "aggregate_table",
+      "analysis_kind": "SYNTHETIC_DESCRIPTIVE_PLACEHOLDER",
+      "scientific_claim": "none"
+    }
+  },
+  {
+    "id": "ev-locked-0001:group_counts",
+    "project_id": "SYN-PROJECT-FIRDOUS",
+    "run_id": "ev-locked-0001",
+    "artifact_type": "TABLE",
+    "currentness": "PENDING_REVIEW",
+    "plain_language_summary": "An aggregate table of the number of participants in each group, produced on synthetic data by the analysis record ev-locked-0001. No statistical test was applied and no scientific claim is made.",
+    "aggregate_metadata": {
+      "rows": 2,
+      "columns": 2,
+      "sha256": "9c7bab723f5f9c523607659f9b4708a1ac35d549034a474fbad903d43e44182c",
+      "kind": "aggregate_table",
+      "analysis_kind": "SYNTHETIC_DESCRIPTIVE_PLACEHOLDER",
+      "scientific_claim": "none"
+    }
+  },
+  {
+    "id": "ev-locked-0001:target_summary_by_group",
+    "project_id": "SYN-PROJECT-FIRDOUS",
+    "run_id": "ev-locked-0001",
+    "artifact_type": "TABLE",
+    "currentness": "PENDING_REVIEW",
+    "plain_language_summary": "An aggregate table of descriptive summaries (count, mean, spread, range) for each target within each group, produced on synthetic data by the analysis record ev-locked-0001. No statistical test was applied and no scientific claim is made.",
+    "aggregate_metadata": {
+      "rows": 6,
+      "columns": 11,
+      "sha256": "647c3bf7de2245858ff1aa80c060df4e1a1b0c2cdf14ce3af153707c379bee33",
+      "kind": "aggregate_table",
+      "analysis_kind": "SYNTHETIC_DESCRIPTIVE_PLACEHOLDER",
+      "scientific_claim": "none"
+    }
+  }
+]

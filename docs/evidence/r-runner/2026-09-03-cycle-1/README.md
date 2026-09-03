@@ -7,9 +7,9 @@ Reviewers should replay rather than trust this page.
 
 | File | What it is |
 |---|---|
-| `test-output.txt` | Full console output of `./run.sh test`: 54 test blocks, 0 failures (re-run after the export adapter and code-review fixes, with CODEX_CORE_ROOT set so the Codex assertion and ingestion tests ran) |
+| `test-output.txt` | Full console output of `./run.sh test`: 64 test blocks, 696 expectations, 0 failures (re-run after the security-review fixes, with CODEX_CORE_ROOT set so the Codex assertion and ingestion tests ran) |
 | `commands-and-output.md` | Exact commands and console output for five runs and one replay (regenerated after contract alignment) |
-| `guard-staged-output.txt` | Guard run over the 114 staged files of the first lane commit: clean |
+| `guard-staged-output.txt` | Latest staged guard run: clean (the first lane commit scanned 114 files clean) |
 | `renv-restore-offline-log.txt` | Restore of the lockfile into an empty project library from the local renv cache |
 | `runs/ev-locked-0001/` | Confirmed synthetic plan: SUCCEEDED, full analysis record |
 | `runs/ev-replay-0001/` | Replay of the above: verdict MATCH, identical output checksums |
@@ -34,6 +34,12 @@ cd runner/r
 The replay against `ev-locked-0001` will report MATCH when outputs are
 identical; `code.revision` will differ once the lane is committed and is
 reported as INFO, not as a mismatch.
+
+## Security
+
+`docs/reviews/2026-09-03-r-runner-security-review-brother-c.md`: two Medium
+findings identified and fixed on the branch (token leak into the record; guard
+skipping uninspectable files), with regression tests.
 
 ## Cross-lane
 

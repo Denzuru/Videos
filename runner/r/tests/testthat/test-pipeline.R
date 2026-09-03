@@ -238,3 +238,28 @@ test_that("the one-command entry point returns exit status 0 on success and 1 ot
   expect_equal(rep, 0L)
   expect_equal(read_json_file(file.path(out_root, "cli-replay", "replay_report.json"))$verdict, "MATCH")
 })
+
+test_that("identifier-shaped or free-text content in a value column never reaches the returned record", {
+  # Build an assay file whose value column carries a study identifier and a name-like string.
+  a <- read_csv_character(file.path(RUNNER_ROOT, "data", "synthetic", "assays.csv"))
+  a$value[1] <- "SYN-0142"; a$value[2] <- "see note for Mrs Naidoo"; a$value[3] <- "8001015009087"
+  tmp <- tempfile(fileext = ".csv"); write.csv(a, tmp, row.names = FALSE)
+  p <- temp_config(function(c) { c$data$assays_file <- tmp; c })
+  res <- run_quiet(p, run_id = "t-value-leak")
+  expect_equal(res$run_state, "FAILED")
+  expect_equal(res$researcher_status$code, "DATA_VALUES_MALFORMED")
+  texts <- read_run_files(res$run_dir)
+  joined <- paste(unlist(texts), collapse = "\n")
+  expect_false(grepl("SYN-0142|Naidoo|8001015009087", joined))
+  expect_match(res$researcher_status$plain_language_summary, "mixed text and symbols of 8 character|text of 23 character|a long number of 13 character")
+  m <- read_json_file(res$manifest_path)
+  expect_equal(m$identifier_redactions, 0)   # masked at source, nothing left to redact
+})
+
+test_that("the record-stage redaction catches an identifier that slips into a researcher message", {
+  res <- run_quiet(LOCKED, run_id = "t-redact")
+  red <- redact_identifiers(list(a = "participant SYN-0001 and SYN-0002", b = list(c = "clean", d = "SYN-0003")), "SYN-[0-9]{4}")
+  expect_equal(red$count, 3)
+  expect_equal(red$value$a, "participant [identifier removed] and [identifier removed]")
+  expect_equal(red$value$b$d, "[identifier removed]")
+})

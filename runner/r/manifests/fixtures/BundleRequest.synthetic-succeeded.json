@@ -1,0 +1,344 @@
+{
+  "project_id": "SYN-PROJECT-FIRDOUS",
+  "run_plan_id": "SYN-RUNPLAN-0001",
+  "manifest": {
+    "schema": "RunBundleManifest",
+    "contract_version": "contracts-v0.1",
+    "contract_verified_against": {
+      "lane": "codex lane/g-core-impact",
+      "commit": "0400cc8a863c4446e994bcdec390aa72cd6d08ba"
+    },
+    "run_id": "ev-locked-0001",
+    "run_state": "SUCCEEDED",
+    "protocol_fingerprint": "a4d00a1894c62d8477e981ad81af7c4c81be7f097219ed35e0a2eda44ab4bd56",
+    "dataset_fingerprint": "ecef33b4f0b68dd29fed4c3c42df4c62bb956b68046ca52d82a2f31bb7154619",
+    "code_fingerprint": "e131070cc2684b910a37aafe6e5bca8dbc4fbb3e",
+    "config_fingerprint": "70f02ff46ac8f67994b87038439c50d4be4bfc3da16290df50a8f0924b242a08",
+    "environment_fingerprint": "2d7aa7646cb1d5c8f6883b65b37a42b6ba32c90be202a657cf502d45aa42dac7",
+    "seed": 20260903,
+    "output_checksums": {
+      "outputs/data_readiness_summary.csv": "1caa5fff88d20db1ca09f8034e92563aaca35eee65a1936f0ca6a2d65582c2f7",
+      "outputs/group_counts.csv": "9c7bab723f5f9c523607659f9b4708a1ac35d549034a474fbad903d43e44182c",
+      "outputs/target_summary_by_group.csv": "647c3bf7de2245858ff1aa80c060df4e1a1b0c2cdf14ce3af153707c379bee33"
+    },
+    "status": "SUCCEEDED",
+    "data_classification": "SYNTHETIC",
+    "participant_rows_included": false,
+    "project": {
+      "project_id": "SYN-PROJECT-FIRDOUS",
+      "run_plan_id": "SYN-RUNPLAN-0001",
+      "label": "Synthetic alpha run plan (no scientific content)"
+    },
+    "research_plan": {
+      "protocol_version_id": "SYN-PROTOCOL-v1",
+      "protocol_status": "LOCKED",
+      "schema_status": "LOCKED",
+      "authority_records": [
+        {
+          "role": "principal_researcher",
+          "reference": "SYN-AUTH-0001",
+          "recorded_at": "2026-09-01"
+        },
+        {
+          "role": "supervisor",
+          "reference": "SYN-AUTH-0002",
+          "recorded_at": "2026-09-01"
+        }
+      ]
+    },
+    "governance": {
+      "approval_status": "APPROVED",
+      "approval_reference": "SYN-GOV-0001",
+      "processing_location": "synthetic-local-workstation",
+      "processing_location_approved": true
+    },
+    "timing": {
+      "started_at": "2026-09-03T13:53:46Z",
+      "completed_at": "2026-09-03T13:53:47Z"
+    },
+    "runner": {
+      "name": "project-firdous-r-runner",
+      "version": "0.1.1-synthetic",
+      "command": "run_pipeline.R --config config/synthetic_locked.yml --run-id ev-locked-0001 --out /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs"
+    },
+    "environment": {
+      "r_version": "R version 4.3.3 (2024-02-29)",
+      "r_version_short": "4.3.3",
+      "platform": "x86_64-pc-linux-gnu",
+      "os": "Linux 6.18.44-fc-v24",
+      "locale": "C.UTF-8",
+      "base_r_only": false,
+      "packages": [
+        {
+          "name": "compiler",
+          "version": "4.3.3",
+          "source": "base"
+        },
+        {
+          "name": "digest",
+          "version": "0.6.34",
+          "source": "CRAN"
+        },
+        {
+          "name": "renv",
+          "version": "1.0.3",
+          "source": "CRAN"
+        },
+        {
+          "name": "tools",
+          "version": "4.3.3",
+          "source": "base"
+        },
+        {
+          "name": "yaml",
+          "version": "2.3.8",
+          "source": "CRAN"
+        },
+        {
+          "name": "jsonlite",
+          "version": "1.8.8",
+          "source": "installed"
+        }
+      ],
+      "renv_lockfile_present": true,
+      "renv_lockfile_sha256": "3b549e3e0ad12415722c8923d9eb3156ed090f8327d3ea94cb332424ed15c948",
+      "library_paths": [
+        "/home/user/Videos/runner/r/renv/library/R-4.3/x86_64-pc-linux-gnu",
+        "/root/.cache/R/renv/sandbox/R-4.3/x86_64-pc-linux-gnu/9a444a72"
+      ]
+    },
+    "code": {
+      "revision": "e131070cc2684b910a37aafe6e5bca8dbc4fbb3e",
+      "branch": "claude/firdous-r-runner-mhwc2j",
+      "working_tree_clean": false,
+      "available": true
+    },
+    "configuration": {
+      "path": "synthetic_locked.yml",
+      "sha256": "b54bd7ccbb08d8141d7ce1b40f3b3db32e874998dc089d086a5560e68dcc56d0",
+      "content_fingerprint": "70f02ff46ac8f67994b87038439c50d4be4bfc3da16290df50a8f0924b242a08",
+      "config_version": "0.1.1",
+      "seed": 20260903,
+      "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380",
+      "participant_id_pattern": "^SYN-[0-9]{4}$"
+    },
+    "analysis": {
+      "kind": "SYNTHETIC_DESCRIPTIVE_PLACEHOLDER",
+      "scientific_claim": "none",
+      "note": "Descriptive aggregates on synthetic data only. No statistical test was applied and no analytical decision was made by the runner.",
+      "outputs_written": [
+        "group_counts.csv",
+        "target_summary_by_group.csv",
+        "data_readiness_summary.csv"
+      ],
+      "groups": 2,
+      "targets": 3
+    },
+    "inputs": [
+      {
+        "role": "participant",
+        "path": "data/synthetic/participants.csv",
+        "sha256": "41dd9f6a884e677c753d204cfc61fd27e8c00f4a9ea232a056fc9b3b26acddec",
+        "rows": 24,
+        "columns": [
+          "study_id",
+          "synthetic_group",
+          "synthetic_age"
+        ],
+        "participant_rows_included": false
+      },
+      {
+        "role": "assay",
+        "path": "data/synthetic/assays.csv",
+        "sha256": "36f69e44ad7c7281c4aef5b7a3f8ef0441606240cc24c35a71678ddcdb155cf7",
+        "rows": 71,
+        "columns": [
+          "study_id",
+          "target",
+          "value",
+          "synthetic_batch"
+        ],
+        "participant_rows_included": false
+      },
+      {
+        "role": "approved-exceptions",
+        "path": "data/synthetic/approved_exceptions.csv",
+        "sha256": "9f519f263360f2713afad78336d10a399edac7b61f83d9b10dbf34135db47b0e",
+        "rows": 1,
+        "columns": [
+          "study_id",
+          "target",
+          "exception_type",
+          "reason",
+          "approved_by",
+          "approval_reference"
+        ],
+        "participant_rows_included": false
+      }
+    ],
+    "outputs": [
+      {
+        "path": "outputs/data_readiness_summary.csv",
+        "sha256": "1caa5fff88d20db1ca09f8034e92563aaca35eee65a1936f0ca6a2d65582c2f7",
+        "bytes": 237,
+        "kind": "aggregate_table",
+        "approved": true,
+        "rows": 9,
+        "columns": [
+          "metric",
+          "value"
+        ]
+      },
+      {
+        "path": "outputs/group_counts.csv",
+        "sha256": "9c7bab723f5f9c523607659f9b4708a1ac35d549034a474fbad903d43e44182c",
+        "bytes": 43,
+        "kind": "aggregate_table",
+        "approved": true,
+        "rows": 2,
+        "columns": [
+          "group",
+          "n_participants"
+        ]
+      },
+      {
+        "path": "outputs/target_summary_by_group.csv",
+        "sha256": "647c3bf7de2245858ff1aa80c060df4e1a1b0c2cdf14ce3af153707c379bee33",
+        "bytes": 607,
+        "kind": "aggregate_table",
+        "approved": true,
+        "rows": 6,
+        "columns": [
+          "target",
+          "group",
+          "n_participants",
+          "n_observed",
+          "n_missing",
+          "n_below_detection",
+          "mean",
+          "sd",
+          "median",
+          "min",
+          "max"
+        ]
+      }
+    ],
+    "checks": {
+      "environment": {
+        "lockfile_enforced": true,
+        "lockfile_consistent": true,
+        "mismatches": []
+      },
+      "assay_typing": {
+        "total": 71,
+        "observed": 65,
+        "missing": 3,
+        "below_detection": 3,
+        "malformed": 0,
+        "out_of_range": 0
+      },
+      "reconciliation": {
+        "participants": 24,
+        "assay_rows": 71,
+        "required_targets": 3,
+        "orphan_assay_rows": 0,
+        "missing_required_assays": 0,
+        "duplicate_assay_keys": 0,
+        "duplicate_participants": 0,
+        "approved_exceptions_applied": 1
+      },
+      "research_plan_gate": {
+        "data_classification": "SYNTHETIC",
+        "protocol_status": "LOCKED",
+        "schema_status": "LOCKED",
+        "governance_approval_status": "APPROVED",
+        "processing_location_approved": true,
+        "unresolved_decisions": 0,
+        "authority_roles_present": [
+          "principal_researcher",
+          "supervisor"
+        ]
+      },
+      "output_guard": {
+        "files_checked": 3,
+        "approved": 3,
+        "quarantined": 0
+      }
+    },
+    "stages": [
+      {
+        "id": "environment",
+        "researcher_label": "Checking the analysis environment",
+        "state": "SUCCEEDED",
+        "started_at": "2026-09-03T13:53:46Z",
+        "ended_at": "2026-09-03T13:53:47Z",
+        "support_reference": null
+      },
+      {
+        "id": "data",
+        "researcher_label": "Checking that your data structure is ready",
+        "state": "SUCCEEDED",
+        "started_at": "2026-09-03T13:53:47Z",
+        "ended_at": "2026-09-03T13:53:47Z",
+        "support_reference": null
+      },
+      {
+        "id": "plan",
+        "researcher_label": "Confirming the approved analysis plan",
+        "state": "SUCCEEDED",
+        "started_at": "2026-09-03T13:53:47Z",
+        "ended_at": "2026-09-03T13:53:47Z",
+        "support_reference": null
+      },
+      {
+        "id": "analysis",
+        "researcher_label": "Running the approved analysis",
+        "state": "SUCCEEDED",
+        "started_at": "2026-09-03T13:53:47Z",
+        "ended_at": "2026-09-03T13:53:47Z",
+        "support_reference": null
+      },
+      {
+        "id": "outputs",
+        "researcher_label": "Checking outputs before saving",
+        "state": "SUCCEEDED",
+        "started_at": "2026-09-03T13:53:47Z",
+        "ended_at": "2026-09-03T13:53:47Z",
+        "support_reference": null
+      },
+      {
+        "id": "record",
+        "researcher_label": "Saving the reproducibility record",
+        "state": "SUCCEEDED",
+        "started_at": "2026-09-03T13:53:47Z",
+        "ended_at": "2026-09-03T13:53:47Z",
+        "support_reference": null
+      }
+    ],
+    "researcher_status": {
+      "code": "RUN_SUCCEEDED",
+      "state": "SUCCEEDED",
+      "plain_language_title": "Your analysis finished and the record was saved",
+      "plain_language_summary": "All steps completed. The approved outputs and the reproducibility record are saved together in the analysis record.",
+      "why_it_matters": "You can now review the results knowing exactly which data version, plan and settings produced them.",
+      "next_action": "Review the outputs. If anything looks unexpected, the analysis record shows how each result was produced.",
+      "resolving_role": null,
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-7d2eb1-OK"
+    },
+    "findings": [],
+    "unresolved_decisions": [],
+    "logs": [
+      {
+        "path": "support/technical_log.txt",
+        "kind": "support_only",
+        "sha256": "e21a5e2f1ad94aada562d1f51f86d6cd1022532cd83aec8bcb21e5facbd4c318"
+      }
+    ],
+    "local_only_files": [],
+    "record_complete": true,
+    "record_missing_fields": [],
+    "identifier_redactions": 0
+  }
+}

@@ -21,6 +21,12 @@ luhn_valid <- function(s) {
   total %% 10 == 0
 }
 
+has_utf16_bom <- function(path) {
+  con <- file(path, "rb"); on.exit(close(con))
+  b <- readBin(con, "raw", n = 2)
+  length(b) == 2 && (identical(b, as.raw(c(0xff, 0xfe))) || identical(b, as.raw(c(0xfe, 0xff))))
+}
+
 is_probably_binary <- function(path, max_bytes = 8000) {
   con <- file(path, "rb"); on.exit(close(con))
   bytes <- readBin(con, "raw", n = max_bytes)
@@ -47,7 +53,11 @@ guard_scan <- function(paths, rules, root, repo_root = root) {
   for (rel in paths) {
     if (rel %in% allow) next
     abs <- file.path(repo_root, rel)
-    if (!file.exists(abs) || dir.exists(abs)) next
+    if (dir.exists(abs)) next
+    if (!file.exists(abs)) {
+      add(rel, "FILE_NOT_INSPECTED", NA, "The file named by git could not be opened, so it was not inspected. Rename it using plain characters or ask research support.")
+      next
+    }
 
     # Path rules apply whether or not the content is readable.
     for (pr in rules$path_rules) {
@@ -59,10 +69,23 @@ guard_scan <- function(paths, rules, root, repo_root = root) {
       }
     }
 
-    size <- file.info(abs)$size
-    if (is.na(size) || size > (rules$scope$max_text_bytes %||% 5e6)) next
-    if (size == 0 || is_probably_binary(abs)) next
     ftype <- guard_file_type(rel)
+    size <- file.info(abs)$size
+    if (is.na(size) || size > (rules$scope$max_text_bytes %||% 5e6)) {
+      if (ftype != "other") add(rel, "FILE_NOT_INSPECTED", NA,
+        sprintf("The file is larger than the %d-byte inspection limit, so its content was not checked. Large data files may not enter the repository.", as.integer(rules$scope$max_text_bytes %||% 5e6)))
+      next
+    }
+    if (size == 0) next
+    if (has_utf16_bom(abs)) {
+      add(rel, "FILE_NOT_INSPECTED", NA, "The file is UTF-16 encoded, which the guard cannot read. Save it as UTF-8 and try again.")
+      next
+    }
+    if (is_probably_binary(abs)) {
+      if (ftype != "other") add(rel, "FILE_NOT_INSPECTED", NA,
+        "The file has a text extension but contains binary content, so it could not be inspected. Save it as plain UTF-8 text.")
+      next
+    }
     lines <- tryCatch(readLines(abs, warn = FALSE, encoding = "UTF-8"), error = function(e) character(0))
 
     for (cr in rules$content_rules) {
@@ -98,15 +121,30 @@ guard_scan <- function(paths, rules, root, repo_root = root) {
   findings
 }
 
+# Paths are read NUL-separated (-z) so that names with spaces, quotes,
+# backslashes or non-ASCII characters arrive verbatim rather than C-quoted;
+# a quoted name would otherwise fail to resolve and escape inspection.
+git_paths_z <- function(repo_root, args) {
+  tmp <- tempfile(); on.exit(unlink(tmp))
+  status <- suppressWarnings(system2("git", c("-C", shQuote(repo_root), args), stdout = tmp, stderr = FALSE))
+  if (!identical(status, 0L) || !file.exists(tmp)) return(character(0))
+  raw <- readBin(tmp, "raw", n = file.info(tmp)$size)
+  if (!length(raw)) return(character(0))
+  zeros <- which(raw == as.raw(0))
+  starts <- c(1L, zeros + 1L); ends <- c(zeros - 1L, length(raw))
+  parts <- vapply(seq_along(starts), function(i) {
+    if (ends[i] < starts[i]) return("")
+    p <- rawToChar(raw[starts[i]:ends[i]]); Encoding(p) <- "UTF-8"; p
+  }, character(1))
+  parts[nzchar(parts)]
+}
+
 git_staged_files <- function(repo_root) {
-  out <- suppressWarnings(system2("git", c("-C", shQuote(repo_root), "diff", "--cached", "--name-only", "--diff-filter=ACMR"),
-                                  stdout = TRUE, stderr = FALSE))
-  out[nzchar(out)]
+  git_paths_z(repo_root, c("diff", "--cached", "--name-only", "--diff-filter=ACMR", "-z"))
 }
 
 git_tracked_files <- function(repo_root, prefixes = NULL) {
-  out <- suppressWarnings(system2("git", c("-C", shQuote(repo_root), "ls-files"), stdout = TRUE, stderr = FALSE))
-  out <- out[nzchar(out)]
+  out <- git_paths_z(repo_root, c("ls-files", "-z"))
   if (!is.null(prefixes) && length(prefixes)) {
     keep <- Reduce(`|`, lapply(prefixes, function(p) startsWith(out, p)))
     out <- out[keep]

@@ -3,7 +3,7 @@
 Status: Stopped, action needed
 
 ## What happened
-7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: 'ND' (text where a number was expected); '' (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).
+7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: text of 2 character(s) (text where a number was expected); an empty cell (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).
 
 ## Why it matters
 The runner will not guess what these values mean. Guessing could silently turn a missing or below-detection result into a number, which would change the analysis.
@@ -18,7 +18,7 @@ Decide with the data custodian how each of these should be written. Approved rep
 The data custodian or the person who prepared the data file.
 
 ## All items found in this attempt
-- Some measured values could not be interpreted: 7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: 'ND' (text where a number was expected); '' (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).
+- Some measured values could not be interpreted: 7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: text of 2 character(s) (text where a number was expected); an empty cell (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).
 - Some measured values are outside the approved range: 1 value(s) in the 'value' column fall outside the approved range of 0 to 45.
 
 ## Steps

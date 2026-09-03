@@ -1,7 +1,8 @@
 Project Firdous R runner: technical log (support use only)
 run_id: ev-template-0001
-[2026-09-03T11:15:56Z] stage start: environment
-[2026-09-03T11:15:56Z] stage blocked: environment code=PLAN_REAL_DATA_NOT_PERMITTED
-[2026-09-03T11:15:56Z] stage start: record
-[2026-09-03T11:15:56Z] manifest fields not populated: environment.r_version, environment.platform, environment.os, environment.packages, environment.renv_lockfile_present, environment.renv_lockfile_sha256, code.revision, code.branch, code.working_tree_clean, configuration.seed
-[2026-09-03T11:15:56Z] stage ok: record
+[2026-09-03T13:54:00Z] stage start: environment
+[2026-09-03T13:54:00Z] stage blocked: environment code=PLAN_REAL_DATA_NOT_PERMITTED
+[2026-09-03T13:54:00Z] stage start: record
+[2026-09-03T13:54:00Z] leak self-check: 2 identifier-shaped value(s) redacted from the researcher record
+[2026-09-03T13:54:00Z] manifest fields not populated: environment.r_version, environment.platform, environment.os, environment.packages, environment.renv_lockfile_present, environment.renv_lockfile_sha256, code.revision, code.branch, code.working_tree_clean, configuration.seed
+[2026-09-03T13:54:00Z] stage ok: record

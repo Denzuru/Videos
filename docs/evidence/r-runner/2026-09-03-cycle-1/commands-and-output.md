@@ -1,6 +1,6 @@
-# Commands and console output, Project Firdous R runner, cycle 1, regenerated after contract alignment (2026-09-03T11:14:45Z)
+# Commands and console output, Project Firdous R runner, cycle 1, regenerated after the security-review fixes (2026-09-03T13:53:45Z)
 
-Working directory: runner/r. Git revision at time of run: 5da691e04023584d10da47ded60ec6e53fc849a1 (working tree contained the uncommitted alignment changes).
+Working directory: runner/r. Git revision at time of run: e131070cc2684b910a37aafe6e5bca8dbc4fbb3e (working tree contained the uncommitted fixes).
 
 ```
 $ ./run.sh run --config config/synthetic_locked.yml --run-id ev-locked-0001 --out <out>
@@ -72,7 +72,7 @@ Step 6 of 6  Saving the reproducibility record ...
 The analysis stopped at step 2: Checking that your data structure is ready.
 
 Some measured values could not be interpreted
-  What happened:     7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: 'ND' (text where a number was expected); '' (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).
+  What happened:     7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: text of 2 character(s) (text where a number was expected); an empty cell (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).
   Why it matters:    The runner will not guess what these values mean. Guessing could silently turn a missing or below-detection result into a number, which would change the analysis.
   Your work is safe: nothing entered or produced earlier has been changed.
   Next action:       Decide with the data custodian how each of these should be written. Approved representations are: missing = 'NA'; below detection = '<LOD'; numbers written with a decimal point. Then update the file and start again.
@@ -167,5 +167,12 @@ exit=0
 
 ```
 $ ./run.sh run --run-id ev-locked-seed2 --seed 1 --out <out> --quiet   # different seed, same config
+exit=0
+```
+
+```
+$ ./run.sh export <out>/ev-locked-0001
+Ingestion request written to <out>/ev-locked-0001/bundle_request.json 
+Result proposals written to <out>/ev-locked-0001/result_proposals.json 
 exit=0
 ```

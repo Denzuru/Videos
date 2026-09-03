@@ -19,6 +19,10 @@ allow_paths:
   - runner/r/R/guard.R
   - runner/r/tests/testthat/test-guard.R
 
+# Files the guard cannot inspect (unreadable names, UTF-16, binary content
+# behind a text extension, or larger than max_text_bytes) are reported as
+# FILE_NOT_INSPECTED and fail the run. The guard never reports clean for a
+# file it did not read.
 path_rules:
   - id: PATH_REAL_DATA_DIR
     pattern: "(^|/)(real|raw|export|exports|participant_data|identified|phi|pii)(/|$)"

@@ -1,11 +1,11 @@
 Project Firdous R runner: technical log (support use only)
 run_id: ev-recon-0001
-[2026-09-03T11:14:55Z] stage start: environment
-[2026-09-03T11:14:55Z] R: R version 4.3.3 (2024-02-29); platform: x86_64-pc-linux-gnu
-[2026-09-03T11:14:55Z] git: 5da691e04023584d10da47ded60ec6e53fc849a1
-[2026-09-03T11:14:55Z] stage ok: environment
-[2026-09-03T11:14:55Z] stage start: data
-[2026-09-03T11:14:55Z] data findings: DATA_ORPHAN_ASSAYS, DATA_MISSING_ASSAYS, DATA_DUPLICATE_KEYS
-[2026-09-03T11:14:55Z] stage failed: data code=DATA_ORPHAN_ASSAYS
-[2026-09-03T11:14:55Z] stage start: record
-[2026-09-03T11:14:55Z] stage ok: record
+[2026-09-03T13:53:57Z] stage start: environment
+[2026-09-03T13:53:57Z] R: R version 4.3.3 (2024-02-29); platform: x86_64-pc-linux-gnu
+[2026-09-03T13:53:57Z] git: e131070cc2684b910a37aafe6e5bca8dbc4fbb3e
+[2026-09-03T13:53:57Z] stage ok: environment
+[2026-09-03T13:53:57Z] stage start: data
+[2026-09-03T13:53:57Z] data findings: DATA_ORPHAN_ASSAYS, DATA_MISSING_ASSAYS, DATA_DUPLICATE_KEYS
+[2026-09-03T13:53:57Z] stage failed: data code=DATA_ORPHAN_ASSAYS
+[2026-09-03T13:53:57Z] stage start: record
+[2026-09-03T13:53:58Z] stage ok: record

@@ -250,14 +250,19 @@ stage_outputs <- function(ctx) {
 stage_record_write <- function(ctx) {
   ctx$completed_at <- now_utc()
   # Leak self-check on everything that could be returned or read by a person.
+  # Files already on disk (support log, outputs, checks) are quarantined when
+  # they match; text still to be written (manifest, status, summary) is
+  # redacted in memory before it is serialised.
   id_pattern <- if (!is.null(ctx$cfg)) ctx$cfg$data$participant_id_pattern else NULL
+  ctx$redactions <- 0L
   returned <- c(file.path(ctx$run_dir, "support", "technical_log.txt"),
-                list.files(file.path(ctx$run_dir, "outputs"), full.names = TRUE),
-                list.files(file.path(ctx$run_dir, "checks"), full.names = TRUE))
-  if (!is.null(id_pattern)) {
+                list.files(file.path(ctx$run_dir, "outputs"), full.names = TRUE, recursive = TRUE),
+                list.files(file.path(ctx$run_dir, "checks"), full.names = TRUE, recursive = TRUE))
+  if (!is.null(id_pattern) && nzchar(id_pattern)) {
+    scan_pattern <- sub("\\$$", "", sub("^\\^", "", id_pattern))   # match anywhere inside text
     for (p in returned) {
       txt <- tryCatch(readLines(p, warn = FALSE), error = function(e) character(0))
-      if (any(grepl(id_pattern, txt))) {
+      if (any(grepl(scan_pattern, txt))) {
         log_support(ctx, "leak self-check: identifier pattern found in ", basename(p), "; file quarantined")
         q <- file.path(ctx$run_dir, "local", "quarantined_outputs"); dir.create(q, showWarnings = FALSE, recursive = TRUE)
         file.rename(p, file.path(q, basename(p)))
@@ -266,6 +271,17 @@ stage_record_write <- function(ctx) {
           list(file = basename(p)), make_support_reference(ctx$run_id, "OUTPUT_CONTAINS_PARTICIPANT_ROWS"))
         ctx$output_records <- Filter(function(r) basename(r$path) != basename(p), ctx$output_records %||% list())
       }
+    }
+    red <- redact_identifiers(list(status = ctx$researcher_status, findings = ctx$finding_statuses %||% list(),
+                                   unresolved = ctx$unresolved_decisions %||% list(), analysis = ctx$analysis_result),
+                              scan_pattern)
+    ctx$redactions <- red$count
+    if (red$count > 0) {
+      ctx$researcher_status <- red$value$status
+      ctx$finding_statuses <- red$value$findings
+      ctx$unresolved_decisions <- red$value$unresolved
+      ctx$analysis_result <- red$value$analysis
+      log_support(ctx, "leak self-check: ", red$count, " identifier-shaped value(s) redacted from the researcher record")
     }
   }
   # The record step is the last one; mark it complete so the files it writes
@@ -279,6 +295,7 @@ stage_record_write <- function(ctx) {
   if (length(miss)) log_support(ctx, "manifest fields not populated: ", paste(miss, collapse = ", "))
   manifest$record_complete <- length(miss) == 0
   manifest$record_missing_fields <- as.list(miss)
+  manifest$identifier_redactions <- ctx$redactions %||% 0L
   write_json_file(manifest, file.path(ctx$run_dir, "manifest.json"))
 
   status <- list(
@@ -350,4 +367,22 @@ print_outcome <- function(ctx) {
   say(ctx, "")
   say(ctx, "Support reference: ", st$support_reference %||% "(none)")
   say(ctx, "Details for support: ", file.path(ctx$run_dir, "support", "technical_log.txt"))
+}
+
+
+# Replace identifier-shaped substrings inside every character value of a
+# nested list. Returns the cleaned value and how many replacements were made.
+redact_identifiers <- function(x, pattern, replacement = "[identifier removed]") {
+  count <- 0L
+  walk <- function(v) {
+    if (is.character(v)) {
+      hits <- gregexpr(pattern, v)
+      n <- sum(vapply(hits, function(h) sum(h > 0), integer(1)))
+      if (n > 0) { count <<- count + n; v <- gsub(pattern, replacement, v) }
+      return(v)
+    }
+    if (is.list(v)) return(lapply(v, walk))
+    v
+  }
+  list(value = walk(x), count = count)
 }

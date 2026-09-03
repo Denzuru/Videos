@@ -30,7 +30,17 @@ test_that("typing findings speak in research language and show approved forms (F
   expect_equal(f[[1]]$code, "DATA_VALUES_MALFORMED")
   st <- build_researcher_status(f[[1]]$code, f[[1]]$values, "FR-TEST")
   expect_match(st$plain_language_summary, "1 value\\(s\\) in the 'value' column")
-  expect_match(st$plain_language_summary, "'ND' \\(text where a number was expected\\)")
+  expect_match(st$plain_language_summary, "text of 2 character\\(s\\) \\(text where a number was expected\\)")
   expect_match(st$next_action, "missing = 'NA'")
   expect_match(st$next_action, "below detection = '<LOD'")
+})
+
+test_that("only short numeric-shaped tokens are ever echoed to the researcher", {
+  expect_equal(mask_token("12,5"), "'12,5'")
+  expect_equal(mask_token(" 23.10"), "' 23.10'")
+  expect_equal(mask_token(""), "an empty cell")
+  expect_equal(mask_token("Undetermined"), "text of 12 character(s)")
+  expect_equal(mask_token("SYN-0142"), "mixed text and symbols of 8 character(s)")
+  expect_equal(mask_token("8001015009087"), "a long number of 13 character(s)")
+  expect_equal(mask_token("123456789"), "a long number of 9 character(s)")
 })

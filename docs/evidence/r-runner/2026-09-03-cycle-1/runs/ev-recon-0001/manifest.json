@@ -9,7 +9,7 @@
   "run_state": "FAILED",
   "protocol_fingerprint": "a4d00a1894c62d8477e981ad81af7c4c81be7f097219ed35e0a2eda44ab4bd56",
   "dataset_fingerprint": "39350b5e53ba56ada4294da38352a7d191b1d077fd95022c4661ff66ba64b72e",
-  "code_fingerprint": "5da691e04023584d10da47ded60ec6e53fc849a1",
+  "code_fingerprint": "e131070cc2684b910a37aafe6e5bca8dbc4fbb3e",
   "config_fingerprint": "69cbe456b270899c8fbd25928d1c8aa3880042236886ff7203cad5a209ad192d",
   "environment_fingerprint": "2d7aa7646cb1d5c8f6883b65b37a42b6ba32c90be202a657cf502d45aa42dac7",
   "seed": 20260903,
@@ -46,8 +46,8 @@
     "processing_location_approved": true
   },
   "timing": {
-    "started_at": "2026-09-03T11:14:55Z",
-    "completed_at": "2026-09-03T11:14:55Z"
+    "started_at": "2026-09-03T13:53:57Z",
+    "completed_at": "2026-09-03T13:53:58Z"
   },
   "runner": {
     "name": "project-firdous-r-runner",
@@ -59,7 +59,7 @@
     "r_version_short": "4.3.3",
     "platform": "x86_64-pc-linux-gnu",
     "os": "Linux 6.18.44-fc-v24",
-    "locale": "C",
+    "locale": "C.UTF-8",
     "base_r_only": false,
     "packages": [
       {
@@ -101,7 +101,7 @@
     ]
   },
   "code": {
-    "revision": "5da691e04023584d10da47ded60ec6e53fc849a1",
+    "revision": "e131070cc2684b910a37aafe6e5bca8dbc4fbb3e",
     "branch": "claude/firdous-r-runner-mhwc2j",
     "working_tree_clean": false,
     "available": true
@@ -112,7 +112,8 @@
     "content_fingerprint": "69cbe456b270899c8fbd25928d1c8aa3880042236886ff7203cad5a209ad192d",
     "config_version": "0.1.1",
     "seed": 20260903,
-    "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380"
+    "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380",
+    "participant_id_pattern": "^SYN-[0-9]{4}$"
   },
   "analysis": null,
   "inputs": [
@@ -172,16 +173,16 @@
       "id": "environment",
       "researcher_label": "Checking the analysis environment",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:14:55Z",
-      "ended_at": "2026-09-03T11:14:55Z",
+      "started_at": "2026-09-03T13:53:57Z",
+      "ended_at": "2026-09-03T13:53:57Z",
       "support_reference": null
     },
     {
       "id": "data",
       "researcher_label": "Checking that your data structure is ready",
       "state": "FAILED",
-      "started_at": "2026-09-03T11:14:55Z",
-      "ended_at": "2026-09-03T11:14:55Z",
+      "started_at": "2026-09-03T13:53:57Z",
+      "ended_at": "2026-09-03T13:53:57Z",
       "support_reference": "FR-20260903-33d3d0-DATA_ORPHAN_ASSAYS"
     },
     {
@@ -212,8 +213,8 @@
       "id": "record",
       "researcher_label": "Saving the reproducibility record",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:14:55Z",
-      "ended_at": "2026-09-03T11:14:55Z",
+      "started_at": "2026-09-03T13:53:57Z",
+      "ended_at": "2026-09-03T13:53:58Z",
       "support_reference": null
     }
   ],
@@ -276,7 +277,7 @@
     {
       "path": "support/technical_log.txt",
       "kind": "support_only",
-      "sha256": "89f72caa6f56dc9fad3354a6664aa5335bc5a5dd9beaa2cea0061d09d0a67d02"
+      "sha256": "704e1bc852406045d4e3d2349e345bf71a7b27010d35d7c4f767a3053992c3f0"
     }
   ],
   "local_only_files": [
@@ -297,5 +298,6 @@
     }
   ],
   "record_complete": true,
-  "record_missing_fields": []
+  "record_missing_fields": [],
+  "identifier_redactions": 0
 }

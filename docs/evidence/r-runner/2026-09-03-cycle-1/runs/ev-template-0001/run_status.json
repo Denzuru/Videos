@@ -2,8 +2,8 @@
   "run_id": "ev-template-0001",
   "run_state": "BLOCKED",
   "data_classification": "REAL",
-  "started_at": "2026-09-03T11:15:56Z",
-  "completed_at": "2026-09-03T11:15:56Z",
+  "started_at": "2026-09-03T13:54:00Z",
+  "completed_at": "2026-09-03T13:54:00Z",
   "stages": [
     {
       "id": "environment",
@@ -50,7 +50,7 @@
   ],
   "researcher_status": {
     "code": "PLAN_REAL_DATA_NOT_PERMITTED",
-    "state": "BLOCKED",
+    "state": "[identifier removed]",
     "plain_language_title": "This version of the runner works with synthetic data only",
     "plain_language_summary": "The analysis plan describes the data as 'REAL'. This runner is approved for synthetic (made-up) data only.",
     "why_it_matters": "Real participant data may only be processed once ethics approval, data-custodian authority, an approved processing location and a confirmed research plan are all in place and verified.",
@@ -64,7 +64,7 @@
   "findings": [
     {
       "code": "PLAN_REAL_DATA_NOT_PERMITTED",
-      "state": "BLOCKED",
+      "state": "[identifier removed]",
       "plain_language_title": "This version of the runner works with synthetic data only",
       "plain_language_summary": "The analysis plan describes the data as 'REAL'. This runner is approved for synthetic (made-up) data only.",
       "why_it_matters": "Real participant data may only be processed once ethics approval, data-custodian authority, an approved processing location and a confirmed research plan are all in place and verified.",

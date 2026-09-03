@@ -29,6 +29,17 @@ malformed_reason <- function(token) {
   "not a recognised number or approved representation"
 }
 
+# A token may be shown verbatim only when it cannot carry identity: at most
+# 8 characters drawn from digits, decimal and sign punctuation, comparison
+# symbols and spaces. Everything else is described, not echoed.
+mask_token <- function(token) {
+  if (is.na(token)) return("an empty cell")
+  if (!nzchar(token)) return("an empty cell")
+  if (nchar(token) <= 8 && grepl("^[0-9.,+eE<>= -]+$", token)) return(paste0("'", token, "'"))
+  kind <- if (grepl("^[A-Za-z .-]+$", token)) "text" else if (grepl("^[0-9]+$", token)) "a long number" else "mixed text and symbols"
+  paste0(kind, " of ", nchar(token), " character(s)")
+}
+
 # Type one value column. Returns a list with the typed vector, per-row status
 # and a report. `row_offset` lets the caller report real file line numbers.
 type_assay_values <- function(values, column, missing_tokens, below_detection_tokens,
@@ -77,11 +88,14 @@ type_assay_values <- function(values, column, missing_tokens, below_detection_to
 }
 
 # Build researcher findings from a typing result. Example tokens shown to the
-# researcher are distinct malformed representations (never identifiers), capped.
+# researcher are masked unless they are short and numeric-shaped: free text
+# in a value column could be an identifier or a name, so it is described by
+# its shape and length, never echoed.
 typing_findings <- function(typing, column, missing_tokens, below_detection_tokens, allowed_range) {
   findings <- list()
   if (typing$counts$malformed > 0) {
-    ex <- unique(paste0("'", typing$malformed$token, "' (", typing$malformed$reason, ")"))
+    shown <- vapply(typing$malformed$token, mask_token, character(1), USE.NAMES = FALSE)
+    ex <- unique(paste0(shown, " (", typing$malformed$reason, ")"))
     ex_shown <- head(ex, 3)
     if (length(ex) > 3) ex_shown <- c(ex_shown, paste0("and ", length(ex) - 3, " other kind(s)"))
     approved <- c(

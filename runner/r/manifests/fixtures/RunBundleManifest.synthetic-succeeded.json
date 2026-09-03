@@ -9,7 +9,7 @@
   "run_state": "SUCCEEDED",
   "protocol_fingerprint": "a4d00a1894c62d8477e981ad81af7c4c81be7f097219ed35e0a2eda44ab4bd56",
   "dataset_fingerprint": "ecef33b4f0b68dd29fed4c3c42df4c62bb956b68046ca52d82a2f31bb7154619",
-  "code_fingerprint": "5da691e04023584d10da47ded60ec6e53fc849a1",
+  "code_fingerprint": "e131070cc2684b910a37aafe6e5bca8dbc4fbb3e",
   "config_fingerprint": "70f02ff46ac8f67994b87038439c50d4be4bfc3da16290df50a8f0924b242a08",
   "environment_fingerprint": "2d7aa7646cb1d5c8f6883b65b37a42b6ba32c90be202a657cf502d45aa42dac7",
   "seed": 20260903,
@@ -50,8 +50,8 @@
     "processing_location_approved": true
   },
   "timing": {
-    "started_at": "2026-09-03T11:14:46Z",
-    "completed_at": "2026-09-03T11:14:46Z"
+    "started_at": "2026-09-03T13:53:46Z",
+    "completed_at": "2026-09-03T13:53:47Z"
   },
   "runner": {
     "name": "project-firdous-r-runner",
@@ -63,7 +63,7 @@
     "r_version_short": "4.3.3",
     "platform": "x86_64-pc-linux-gnu",
     "os": "Linux 6.18.44-fc-v24",
-    "locale": "C",
+    "locale": "C.UTF-8",
     "base_r_only": false,
     "packages": [
       {
@@ -105,7 +105,7 @@
     ]
   },
   "code": {
-    "revision": "5da691e04023584d10da47ded60ec6e53fc849a1",
+    "revision": "e131070cc2684b910a37aafe6e5bca8dbc4fbb3e",
     "branch": "claude/firdous-r-runner-mhwc2j",
     "working_tree_clean": false,
     "available": true
@@ -116,7 +116,8 @@
     "content_fingerprint": "70f02ff46ac8f67994b87038439c50d4be4bfc3da16290df50a8f0924b242a08",
     "config_version": "0.1.1",
     "seed": 20260903,
-    "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380"
+    "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380",
+    "participant_id_pattern": "^SYN-[0-9]{4}$"
   },
   "analysis": {
     "kind": "SYNTHETIC_DESCRIPTIVE_PLACEHOLDER",
@@ -228,48 +229,48 @@
       "id": "environment",
       "researcher_label": "Checking the analysis environment",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:14:46Z",
-      "ended_at": "2026-09-03T11:14:46Z",
+      "started_at": "2026-09-03T13:53:46Z",
+      "ended_at": "2026-09-03T13:53:47Z",
       "support_reference": null
     },
     {
       "id": "data",
       "researcher_label": "Checking that your data structure is ready",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:14:46Z",
-      "ended_at": "2026-09-03T11:14:46Z",
+      "started_at": "2026-09-03T13:53:47Z",
+      "ended_at": "2026-09-03T13:53:47Z",
       "support_reference": null
     },
     {
       "id": "plan",
       "researcher_label": "Confirming the approved analysis plan",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:14:46Z",
-      "ended_at": "2026-09-03T11:14:46Z",
+      "started_at": "2026-09-03T13:53:47Z",
+      "ended_at": "2026-09-03T13:53:47Z",
       "support_reference": null
     },
     {
       "id": "analysis",
       "researcher_label": "Running the approved analysis",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:14:46Z",
-      "ended_at": "2026-09-03T11:14:46Z",
+      "started_at": "2026-09-03T13:53:47Z",
+      "ended_at": "2026-09-03T13:53:47Z",
       "support_reference": null
     },
     {
       "id": "outputs",
       "researcher_label": "Checking outputs before saving",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:14:46Z",
-      "ended_at": "2026-09-03T11:14:46Z",
+      "started_at": "2026-09-03T13:53:47Z",
+      "ended_at": "2026-09-03T13:53:47Z",
       "support_reference": null
     },
     {
       "id": "record",
       "researcher_label": "Saving the reproducibility record",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:14:46Z",
-      "ended_at": "2026-09-03T11:14:46Z",
+      "started_at": "2026-09-03T13:53:47Z",
+      "ended_at": "2026-09-03T13:53:47Z",
       "support_reference": null
     }
   ],
@@ -291,10 +292,11 @@
     {
       "path": "support/technical_log.txt",
       "kind": "support_only",
-      "sha256": "8dbffb3bc3f295725d2c673529971fc2f1f35d8c86f84fa4e4cd1c44a637a06c"
+      "sha256": "e21a5e2f1ad94aada562d1f51f86d6cd1022532cd83aec8bcb21e5facbd4c318"
     }
   ],
   "local_only_files": [],
   "record_complete": true,
-  "record_missing_fields": []
+  "record_missing_fields": [],
+  "identifier_redactions": 0
 }

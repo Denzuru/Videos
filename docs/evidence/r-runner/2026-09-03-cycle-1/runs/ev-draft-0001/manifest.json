@@ -9,7 +9,7 @@
   "run_state": "BLOCKED",
   "protocol_fingerprint": "6c4824f24ffe83e6f34083c64e77a73ebad559f895c37c19e505123c7e9e0b11",
   "dataset_fingerprint": "ecef33b4f0b68dd29fed4c3c42df4c62bb956b68046ca52d82a2f31bb7154619",
-  "code_fingerprint": "5da691e04023584d10da47ded60ec6e53fc849a1",
+  "code_fingerprint": "e131070cc2684b910a37aafe6e5bca8dbc4fbb3e",
   "config_fingerprint": "fb451aeaa59a4078a5a6e16eeb4aa9179fbd1b714ec46134af5156186fe49130",
   "environment_fingerprint": "2d7aa7646cb1d5c8f6883b65b37a42b6ba32c90be202a657cf502d45aa42dac7",
   "seed": 20260903,
@@ -46,8 +46,8 @@
     "processing_location_approved": true
   },
   "timing": {
-    "started_at": "2026-09-03T11:14:49Z",
-    "completed_at": "2026-09-03T11:14:50Z"
+    "started_at": "2026-09-03T13:53:50Z",
+    "completed_at": "2026-09-03T13:53:51Z"
   },
   "runner": {
     "name": "project-firdous-r-runner",
@@ -59,7 +59,7 @@
     "r_version_short": "4.3.3",
     "platform": "x86_64-pc-linux-gnu",
     "os": "Linux 6.18.44-fc-v24",
-    "locale": "C",
+    "locale": "C.UTF-8",
     "base_r_only": false,
     "packages": [
       {
@@ -101,7 +101,7 @@
     ]
   },
   "code": {
-    "revision": "5da691e04023584d10da47ded60ec6e53fc849a1",
+    "revision": "e131070cc2684b910a37aafe6e5bca8dbc4fbb3e",
     "branch": "claude/firdous-r-runner-mhwc2j",
     "working_tree_clean": false,
     "available": true
@@ -112,7 +112,8 @@
     "content_fingerprint": "fb451aeaa59a4078a5a6e16eeb4aa9179fbd1b714ec46134af5156186fe49130",
     "config_version": "0.1.1",
     "seed": 20260903,
-    "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380"
+    "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380",
+    "participant_id_pattern": "^SYN-[0-9]{4}$"
   },
   "analysis": null,
   "inputs": [
@@ -184,24 +185,24 @@
       "id": "environment",
       "researcher_label": "Checking the analysis environment",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:14:49Z",
-      "ended_at": "2026-09-03T11:14:49Z",
+      "started_at": "2026-09-03T13:53:50Z",
+      "ended_at": "2026-09-03T13:53:50Z",
       "support_reference": null
     },
     {
       "id": "data",
       "researcher_label": "Checking that your data structure is ready",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:14:49Z",
-      "ended_at": "2026-09-03T11:14:49Z",
+      "started_at": "2026-09-03T13:53:50Z",
+      "ended_at": "2026-09-03T13:53:50Z",
       "support_reference": null
     },
     {
       "id": "plan",
       "researcher_label": "Confirming the approved analysis plan",
       "state": "BLOCKED",
-      "started_at": "2026-09-03T11:14:49Z",
-      "ended_at": "2026-09-03T11:14:50Z",
+      "started_at": "2026-09-03T13:53:50Z",
+      "ended_at": "2026-09-03T13:53:51Z",
       "support_reference": "FR-20260903-d1fa5a-PLAN_PROTOCOL_NOT_LOCKED"
     },
     {
@@ -224,8 +225,8 @@
       "id": "record",
       "researcher_label": "Saving the reproducibility record",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:14:50Z",
-      "ended_at": "2026-09-03T11:14:50Z",
+      "started_at": "2026-09-03T13:53:51Z",
+      "ended_at": "2026-09-03T13:53:51Z",
       "support_reference": null
     }
   ],
@@ -286,10 +287,11 @@
     {
       "path": "support/technical_log.txt",
       "kind": "support_only",
-      "sha256": "9ba03f70750b56a8b07b56d603e866d1d6fc6fcb3cb9a4c6e1e0bcb55c38ccb0"
+      "sha256": "2074091027e21e4a35e03fe5229ce39c07de5cce6d8662842a2f51ae30d84db0"
     }
   ],
   "local_only_files": [],
   "record_complete": true,
-  "record_missing_fields": []
+  "record_missing_fields": [],
+  "identifier_redactions": 0
 }

@@ -12,6 +12,12 @@ export_bundle_request <- function(run_dir, project_id = NULL, run_plan_id = NULL
   leaked <- restricted_keys_present(manifest)
   if (length(leaked)) stop_firdous("OUTPUT_CONTAINS_PARTICIPANT_ROWS", list(file = "manifest.json"),
     technical = paste("restricted keys:", paste(leaked, collapse = ", ")))
+  pat <- manifest$configuration$participant_id_pattern
+  if (!is.null(pat) && !is.na(pat) && nzchar(pat)) {
+    hit <- redact_identifiers(manifest, sub("\\$$", "", sub("^\\^", "", pat)))$count
+    if (hit > 0) stop_firdous("OUTPUT_CONTAINS_PARTICIPANT_ROWS", list(file = "manifest.json"),
+      technical = paste(hit, "identifier-shaped value(s) found in the manifest"))
+  }
   missing <- CODEX_REQUIRED_FIELDS[vapply(CODEX_REQUIRED_FIELDS, function(f) is.null(manifest[[f]]), logical(1))]
   if (length(missing)) stop_firdous("RECORD_WRITE_FAILED", list(),
     technical = paste("manifest lacks contract fields:", paste(missing, collapse = ", ")))

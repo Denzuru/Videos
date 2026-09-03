@@ -9,7 +9,7 @@
   "run_state": "FAILED",
   "protocol_fingerprint": "a4d00a1894c62d8477e981ad81af7c4c81be7f097219ed35e0a2eda44ab4bd56",
   "dataset_fingerprint": "8a4699aa600c392e2f2061a91e21a62d0053d13c969fdcd7143bb73a4c867e25",
-  "code_fingerprint": "5da691e04023584d10da47ded60ec6e53fc849a1",
+  "code_fingerprint": "e131070cc2684b910a37aafe6e5bca8dbc4fbb3e",
   "config_fingerprint": "cc86ed24454327ef3b6ecb5b9182ee810869bcab246dd9af14f9d9ddfca50c48",
   "environment_fingerprint": "2d7aa7646cb1d5c8f6883b65b37a42b6ba32c90be202a657cf502d45aa42dac7",
   "seed": 20260903,
@@ -46,8 +46,8 @@
     "processing_location_approved": true
   },
   "timing": {
-    "started_at": "2026-09-03T11:14:52Z",
-    "completed_at": "2026-09-03T11:14:53Z"
+    "started_at": "2026-09-03T13:53:54Z",
+    "completed_at": "2026-09-03T13:53:55Z"
   },
   "runner": {
     "name": "project-firdous-r-runner",
@@ -59,7 +59,7 @@
     "r_version_short": "4.3.3",
     "platform": "x86_64-pc-linux-gnu",
     "os": "Linux 6.18.44-fc-v24",
-    "locale": "C",
+    "locale": "C.UTF-8",
     "base_r_only": false,
     "packages": [
       {
@@ -101,7 +101,7 @@
     ]
   },
   "code": {
-    "revision": "5da691e04023584d10da47ded60ec6e53fc849a1",
+    "revision": "e131070cc2684b910a37aafe6e5bca8dbc4fbb3e",
     "branch": "claude/firdous-r-runner-mhwc2j",
     "working_tree_clean": false,
     "available": true
@@ -112,7 +112,8 @@
     "content_fingerprint": "cc86ed24454327ef3b6ecb5b9182ee810869bcab246dd9af14f9d9ddfca50c48",
     "config_version": "0.1.1",
     "seed": 20260903,
-    "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380"
+    "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380",
+    "participant_id_pattern": "^SYN-[0-9]{4}$"
   },
   "analysis": null,
   "inputs": [
@@ -172,16 +173,16 @@
       "id": "environment",
       "researcher_label": "Checking the analysis environment",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:14:52Z",
-      "ended_at": "2026-09-03T11:14:52Z",
+      "started_at": "2026-09-03T13:53:54Z",
+      "ended_at": "2026-09-03T13:53:54Z",
       "support_reference": null
     },
     {
       "id": "data",
       "researcher_label": "Checking that your data structure is ready",
       "state": "FAILED",
-      "started_at": "2026-09-03T11:14:52Z",
-      "ended_at": "2026-09-03T11:14:53Z",
+      "started_at": "2026-09-03T13:53:54Z",
+      "ended_at": "2026-09-03T13:53:55Z",
       "support_reference": "FR-20260903-ff68af-DATA_VALUES_MALFORMED"
     },
     {
@@ -212,8 +213,8 @@
       "id": "record",
       "researcher_label": "Saving the reproducibility record",
       "state": "SUCCEEDED",
-      "started_at": "2026-09-03T11:14:53Z",
-      "ended_at": "2026-09-03T11:14:53Z",
+      "started_at": "2026-09-03T13:53:55Z",
+      "ended_at": "2026-09-03T13:53:55Z",
       "support_reference": null
     }
   ],
@@ -221,7 +222,7 @@
     "code": "DATA_VALUES_MALFORMED",
     "state": "FAILED",
     "plain_language_title": "Some measured values could not be interpreted",
-    "plain_language_summary": "7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: 'ND' (text where a number was expected); '' (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).",
+    "plain_language_summary": "7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: text of 2 character(s) (text where a number was expected); an empty cell (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).",
     "why_it_matters": "The runner will not guess what these values mean. Guessing could silently turn a missing or below-detection result into a number, which would change the analysis.",
     "next_action": "Decide with the data custodian how each of these should be written. Approved representations are: missing = 'NA'; below detection = '<LOD'; numbers written with a decimal point. Then update the file and start again.",
     "resolving_role": "The data custodian or the person who prepared the data file.",
@@ -235,7 +236,7 @@
       "code": "DATA_VALUES_MALFORMED",
       "state": "FAILED",
       "plain_language_title": "Some measured values could not be interpreted",
-      "plain_language_summary": "7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: 'ND' (text where a number was expected); '' (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).",
+      "plain_language_summary": "7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: text of 2 character(s) (text where a number was expected); an empty cell (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).",
       "why_it_matters": "The runner will not guess what these values mean. Guessing could silently turn a missing or below-detection result into a number, which would change the analysis.",
       "next_action": "Decide with the data custodian how each of these should be written. Approved representations are: missing = 'NA'; below detection = '<LOD'; numbers written with a decimal point. Then update the file and start again.",
       "resolving_role": "The data custodian or the person who prepared the data file.",
@@ -263,7 +264,7 @@
     {
       "path": "support/technical_log.txt",
       "kind": "support_only",
-      "sha256": "5243b226fd8f36204bf92e9a06febb638a524dc7fbc3636c62df345726ad0bf7"
+      "sha256": "fc0d73672b96517831988e1dcba96d966d16df660be1985ef2816b8bf07130fc"
     }
   ],
   "local_only_files": [
@@ -279,5 +280,6 @@
     }
   ],
   "record_complete": true,
-  "record_missing_fields": []
+  "record_missing_fields": [],
+  "identifier_redactions": 0
 }

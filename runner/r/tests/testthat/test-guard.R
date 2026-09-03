@@ -81,3 +81,45 @@ test_that("a participant_id column header in a synthetic fixture is still checke
   a <- put(repo, "runner/r/data/synthetic/legacy.csv", c("participant_id,value", "REAL-1,1"))
   expect_true("ID_NOT_SYNTHETIC" %in% scan(repo, a)$rule)
 })
+
+test_that("files the guard cannot inspect are reported, never silently skipped (fail closed)", {
+  repo <- make_repo()
+  utf16 <- file.path(repo, "runner/r/data/synthetic/unicode.csv"); dir.create(dirname(utf16), recursive = TRUE, showWarnings = FALSE)
+  con <- file(utf16, "wb"); writeBin(as.raw(c(0xff, 0xfe)), con); writeBin(iconv("study_id,surname\nSYN-0001,X\n", to = "UTF-16LE", toRaw = TRUE)[[1]], con); close(con)
+  big <- file.path(repo, "docs/big.csv"); dir.create(dirname(big), recursive = TRUE, showWarnings = FALSE)
+  writeLines(strrep("a", 1000), big)
+  small_rules <- rules; small_rules$scope$max_text_bytes <- 500
+  nulcsv <- put(repo, "runner/r/data/synthetic/nul.csv", "study_id,value"); con <- file(file.path(repo, nulcsv), "ab"); writeBin(as.raw(0), con); close(con)
+  f <- guard_scan(c("runner/r/data/synthetic/unicode.csv", "docs/big.csv", nulcsv, "runner/r/data/synthetic/missing.csv"), small_rules, RUNNER_ROOT, repo)
+  expect_equal(sum(f$rule == "FILE_NOT_INSPECTED"), 4)
+  expect_true(any(grepl("UTF-16", f$description)))
+  expect_true(any(grepl("larger than", f$description)))
+  expect_true(any(grepl("could not be opened", f$description)))
+  # a genuine binary with a binary extension is still skipped quietly
+  bin <- put(repo, "docs/picture.png", "x"); con <- file(file.path(repo, bin), "ab"); writeBin(as.raw(0), con); close(con)
+  expect_equal(nrow(guard_scan(bin, rules, RUNNER_ROOT, repo)), 0)
+})
+
+test_that("quoted and non-ASCII file names reach the guard verbatim from git", {
+  skip_if(Sys.which("git") == "", "git not available")
+  repo <- make_repo()
+  system2("git", c("-C", shQuote(repo), "init", "-q"))
+  system2("git", c("-C", shQuote(repo), "config", "user.email", "t@example.org")); system2("git", c("-C", shQuote(repo), "config", "user.name", "t"))
+  # A double quote and a space in the name: git C-quotes this regardless of core.quotePath.
+  odd <- put(repo, 'runner/r/data/real/raw "export" v2.csv', c("study_id", "SYN-0001"))
+  names_expected <- odd
+  if (isTRUE(l10n_info()[["UTF-8"]])) {   # non-ASCII names need a UTF-8 locale to be created at all
+    acc <- put(repo, "runner/r/data/real/r\u00e9sultats participants.csv", c("study_id", "SYN-0001"))
+    names_expected <- c(names_expected, acc)
+  }
+  system2("git", c("-C", shQuote(repo), "add", "-A"))
+  staged <- git_staged_files(repo)
+  for (nm in names_expected) expect_true(any(enc2utf8(staged) == enc2utf8(nm)), info = paste(staged, collapse = " | "))
+  expect_false(any(grepl('^"', staged)))
+  f <- guard_scan(staged, rules, RUNNER_ROOT, repo)
+  expect_equal(sum(f$rule == "PATH_REAL_DATA_DIR"), length(names_expected))
+  expect_false("FILE_NOT_INSPECTED" %in% f$rule)
+  system2("git", c("-C", shQuote(repo), "commit", "-q", "-m", "x"))
+  tracked <- git_tracked_files(repo, "runner/")
+  for (nm in names_expected) expect_true(any(enc2utf8(tracked) == enc2utf8(nm)))
+})

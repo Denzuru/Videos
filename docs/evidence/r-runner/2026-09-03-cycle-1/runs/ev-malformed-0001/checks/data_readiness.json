@@ -23,7 +23,7 @@
       "values": {
         "count": 7,
         "column": "value",
-        "examples": "'ND' (text where a number was expected); '' (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s)",
+        "examples": "text of 2 character(s) (text where a number was expected); an empty cell (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s)",
         "approved": "missing = 'NA'; below detection = '<LOD'; numbers written with a decimal point"
       }
     },

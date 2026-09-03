@@ -14,6 +14,11 @@
 set -eu
 here="$(cd "$(dirname "$0")" && pwd)"
 cd "$here"
+# A UTF-8 locale lets R handle file names with accented characters (data files
+# named in Afrikaans or French, for example). Only set when nothing is set.
+if [ -z "${LC_ALL:-}" ] && [ -z "${LANG:-}" ]; then
+  if locale -a 2>/dev/null | grep -qi '^C\.utf-\?8$'; then export LC_ALL=C.UTF-8 LANG=C.UTF-8; fi
+fi
 cmd="${1:-run}"
 [ $# -gt 0 ] && shift
 case "$cmd" in

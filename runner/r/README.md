@@ -39,6 +39,9 @@ Six steps, in the language of research, never an R console:
 When a step stops, the runner says what happened, why it matters, that
 earlier work is safe, the next action, who can resolve it, and a separate
 support reference. Raw R errors go only to `support/technical_log.txt`.
+Cell contents are never echoed: a value that cannot be read is described by
+its kind and length unless it is a short number, and the record stage
+redacts anything identifier-shaped before writing.
 The full catalogue of messages is in `docs/researcher-messages.md`.
 
 ## What the runner proves and does not prove
@@ -63,7 +66,7 @@ they are mapped in as new analysis kinds (see `baseline/v0.1.0/README.md`).
 | F03 schema lock | `R/schema_lock.R` | Runs only when data are declared synthetic, `protocol_status` and `schema_status` are `LOCKED`, required authority records exist, governance is approved, the location is approved and no decision is unresolved. |
 | F04 reproducible environment | `renv.lock`, `run.sh restore` | Explicit renv snapshot; the environment step blocks when installed runtime packages differ from the lockfile. Restore proof in `docs/evidence/r-runner`. |
 | F05 complete analysis record | `R/manifest.R` | `manifest.json` (RunBundleManifest, contracts-v0.1 fields plus detail): R, platform, packages, lockfile hash, Git revision, protocol, dataset, config, environment and seed fingerprints, input and output checksums, permitted logs, stages, researcher status. Written for failed and blocked runs too. |
-| F06 restricted-data guard | `R/guard.R`, `config/guard_rules.yml` | Staged-file, CI and explicit-path scans for identifiers, secrets and prohibited paths. `scripts/install_git_hooks.sh` installs it as a pre-commit hook. |
+| F06 restricted-data guard | `R/guard.R`, `config/guard_rules.yml` | Staged-file, CI and explicit-path scans for identifiers, secrets and prohibited paths. Fails closed: a file it cannot read (quoted name, UTF-16, oversize, binary behind a text extension) is a finding, never a silent skip. `scripts/install_git_hooks.sh` installs it as a pre-commit hook. |
 | F07 independent replay | `R/replay.R`, `run.sh replay` | Re-runs from a reference record and reports MATCH or MISMATCH with the differing fields. |
 | Platform hand-off | `R/export_bundle.R`, `run.sh export` | Packages a record as the `POST /projects/:id/run-bundles` request; proven against the Codex API handler in the test suite when `CODEX_CORE_ROOT` is set. |
 

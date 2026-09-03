@@ -44,6 +44,15 @@ test_that("the export command never shows a raw R error to the researcher", {
   expect_equal(attr(out2, "status"), 2L)
 })
 
+test_that("export refuses a record whose text carries an identifier-shaped value", {
+  res <- run_quiet(LOCKED, run_id = "t-export-idvalue")
+  m <- read_json_file(file.path(res$run_dir, "manifest.json"))
+  m$researcher_status$plain_language_summary <- "note about SYN-0007"
+  write_json_file(m, file.path(res$run_dir, "manifest.json"))
+  err <- tryCatch(export_bundle_request(res$run_dir), error = function(e) e)
+  expect_equal(err$code, "OUTPUT_CONTAINS_PARTICIPANT_ROWS")
+})
+
 test_that("export refuses a record that carries a restricted key", {
   res <- run_quiet(LOCKED, run_id = "t-export-bad")
   m <- read_json_file(file.path(res$run_dir, "manifest.json"))

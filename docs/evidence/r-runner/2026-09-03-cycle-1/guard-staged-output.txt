@@ -1,3 +1,2 @@
 Restricted-data guard: no problems found.
-(114 file(s) scanned, mode: staged)
-exit=0
+(2 file(s) scanned, mode: staged)
