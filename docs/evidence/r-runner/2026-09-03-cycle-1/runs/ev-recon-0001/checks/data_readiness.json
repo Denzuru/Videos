@@ -1,0 +1,42 @@
+{
+  "assay_typing": {
+    "total": 72,
+    "observed": 66,
+    "missing": 3,
+    "below_detection": 3,
+    "malformed": 0,
+    "out_of_range": 0
+  },
+  "reconciliation": {
+    "participants": 24,
+    "assay_rows": 72,
+    "required_targets": 3,
+    "orphan_assay_rows": 1,
+    "missing_required_assays": 1,
+    "duplicate_assay_keys": 1,
+    "duplicate_participants": 0,
+    "approved_exceptions_applied": 1
+  },
+  "findings": [
+    {
+      "code": "DATA_ORPHAN_ASSAYS",
+      "values": {
+        "count": 1,
+        "n_ids": 1
+      }
+    },
+    {
+      "code": "DATA_MISSING_ASSAYS",
+      "values": {
+        "count": 1,
+        "n_ids": 1
+      }
+    },
+    {
+      "code": "DATA_DUPLICATE_KEYS",
+      "values": {
+        "count": 1
+      }
+    }
+  ]
+}

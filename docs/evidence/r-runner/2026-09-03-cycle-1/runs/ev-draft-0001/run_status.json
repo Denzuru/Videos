@@ -1,0 +1,106 @@
+{
+  "run_id": "ev-draft-0001",
+  "run_state": "BLOCKED",
+  "data_classification": "SYNTHETIC",
+  "started_at": "2026-09-03T06:10:03Z",
+  "completed_at": "2026-09-03T06:10:04Z",
+  "stages": [
+    {
+      "id": "environment",
+      "label": "Checking the analysis environment",
+      "step": 1,
+      "of": 6,
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "data",
+      "label": "Checking that your data structure is ready",
+      "step": 2,
+      "of": 6,
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "plan",
+      "label": "Confirming the approved analysis plan",
+      "step": 3,
+      "of": 6,
+      "state": "BLOCKED"
+    },
+    {
+      "id": "analysis",
+      "label": "Running the approved analysis",
+      "step": 4,
+      "of": 6,
+      "state": "SKIPPED"
+    },
+    {
+      "id": "outputs",
+      "label": "Checking outputs before saving",
+      "step": 5,
+      "of": 6,
+      "state": "SKIPPED"
+    },
+    {
+      "id": "record",
+      "label": "Saving the reproducibility record",
+      "step": 6,
+      "of": 6,
+      "state": "SUCCEEDED"
+    }
+  ],
+  "researcher_status": {
+    "code": "PLAN_PROTOCOL_NOT_LOCKED",
+    "state": "BLOCKED",
+    "plain_language_title": "Your research plan has not been confirmed yet",
+    "plain_language_summary": "The research plan is currently 'still a draft'. The analysis can only run against a confirmed research plan.",
+    "why_it_matters": "Running an analysis before the plan is confirmed could produce results that later have to be discarded when a decision changes.",
+    "next_action": "Complete the outstanding decisions in the research plan and send it for confirmation. You can keep preparing data in the meantime.",
+    "resolving_role": "Your supervisor or the person who confirms the research plan.",
+    "can_continue_elsewhere": true,
+    "work_preserved": true,
+    "support_reference": "FR-20260903-d1fa5a-PLAN_PROTOCOL_NOT_LOCKED",
+    "stage": "plan"
+  },
+  "findings": [
+    {
+      "code": "PLAN_PROTOCOL_NOT_LOCKED",
+      "state": "BLOCKED",
+      "plain_language_title": "Your research plan has not been confirmed yet",
+      "plain_language_summary": "The research plan is currently 'still a draft'. The analysis can only run against a confirmed research plan.",
+      "why_it_matters": "Running an analysis before the plan is confirmed could produce results that later have to be discarded when a decision changes.",
+      "next_action": "Complete the outstanding decisions in the research plan and send it for confirmation. You can keep preparing data in the meantime.",
+      "resolving_role": "Your supervisor or the person who confirms the research plan.",
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-d1fa5a-PLAN_PROTOCOL_NOT_LOCKED",
+      "stage": "plan"
+    },
+    {
+      "code": "PLAN_DECISIONS_UNRESOLVED",
+      "state": "BLOCKED",
+      "plain_language_title": "2 decision(s) are needed before this analysis can run",
+      "plain_language_summary": "The following parts of the research plan are still waiting for a decision: The primary outcome; The multiple-testing correction.",
+      "why_it_matters": "These are scientific or governance choices. The runner will never fill them in on your behalf.",
+      "next_action": "Discuss the open decisions with your supervisor and record the outcome in the research plan. Nothing else needs to change.",
+      "resolving_role": "Your supervisor, statistician or methodologist.",
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-d1fa5a-PLAN_DECISIONS_UNRESOLVED",
+      "stage": "plan"
+    }
+  ],
+  "unresolved_decisions": [
+    {
+      "field": "analysis_plan.primary_outcome",
+      "decision": "The primary outcome",
+      "resolving_role": "Your supervisor or the person who confirms the research plan."
+    },
+    {
+      "field": "analysis_plan.multiplicity.correction",
+      "decision": "The multiple-testing correction",
+      "resolving_role": "Your supervisor, statistician or methodologist."
+    }
+  ],
+  "analysis_record": "manifest.json",
+  "support_log": "support/technical_log.txt"
+}

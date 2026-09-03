@@ -1,0 +1,85 @@
+# Project Firdous R runner: analysis-plan TEMPLATE for the real study.
+#
+# Every scientific, statistical and governance value is BLOCKED. The runner
+# will refuse to run against this file until a human authority resolves each
+# decision and the research plan is confirmed (protocol_status: LOCKED).
+# The runner never fills these in. See docs/protocol/statistical-boundary.md
+# for who decides each item.
+#
+# data_classification is REAL here deliberately: this runner version refuses
+# real data, so even a fully resolved copy of this file cannot execute until
+# the real-data readiness gate (Build Plan section 12.5) is passed.
+
+config_version: "0.1.1"
+data_classification: REAL
+
+project:
+  project_id: BLOCKED
+  run_plan_id: BLOCKED
+  label: Firdous study run plan (awaiting confirmation)
+
+research_plan:
+  protocol_version_id: BLOCKED
+  protocol_status: DRAFT
+  schema_status: DRAFT
+  required_authority_roles: [principal_researcher, supervisor]
+  authority_records: []
+
+governance:
+  approval_status: PENDING
+  approval_reference: BLOCKED
+  processing_location: BLOCKED
+  processing_location_approved: false
+  minimum_reportable_cell_size: BLOCKED
+  permitted_outputs: BLOCKED
+
+analysis_plan:
+  claim_intent: BLOCKED                 # association vs prediction: Firdous + supervisor + methodologist
+  prediction_timing: BLOCKED            # only if prediction remains in scope
+  primary_outcome: BLOCKED
+  secondary_outcomes: BLOCKED
+  target_panel: BLOCKED                 # canonical post-QC target list
+  covariates: BLOCKED                   # names and roles
+  confirmatory_targets: BLOCKED
+  exploratory_targets: BLOCKED
+  normality_rule: BLOCKED
+  transformation_rule: BLOCKED
+  missing_data_rule: BLOCKED
+  below_detection_rule: BLOCKED
+  categorical_outcome_path: BLOCKED
+  continuous_outcome_path: BLOCKED
+  post_hoc_method: BLOCKED
+  multiplicity:
+    family: BLOCKED
+    correction: BLOCKED
+  model_diagnostics: BLOCKED
+  validation: BLOCKED
+  sensitivity_analysis: BLOCKED
+  replicates_rule: BLOCKED
+
+data:
+  participants_file: BLOCKED
+  assays_file: BLOCKED
+  exceptions_file: BLOCKED
+  participant_id_column: BLOCKED
+  participant_id_pattern: BLOCKED
+  assay_target_column: BLOCKED
+  assay_value_column: BLOCKED
+  required_participant_columns: BLOCKED
+  value_representations:
+    missing_tokens: BLOCKED             # data custodian confirms the approved representation
+    below_detection_tokens: BLOCKED
+    decimal_separator: BLOCKED
+    allowed_range: BLOCKED
+
+environment:
+  enforce_lockfile: true
+
+stages:
+  seed: BLOCKED
+  analysis:
+    kind: BLOCKED                       # mapped from the verified seven scripts when supplied
+    group_by: BLOCKED
+
+outputs:
+  allow_list: BLOCKED                   # governance decides which aggregate outputs may leave the analysis

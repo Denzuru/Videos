@@ -1,0 +1,271 @@
+{
+  "schema": "RunBundleManifest",
+  "contract_version": "0.1.0-r-runner-draft",
+  "run_id": "ev-malformed-0001",
+  "run_state": "FAILED",
+  "data_classification": "SYNTHETIC",
+  "participant_rows_included": false,
+  "project": {
+    "project_id": "SYN-PROJECT-FIRDOUS",
+    "run_plan_id": "SYN-RUNPLAN-0003-MALFORMED",
+    "label": "Synthetic alpha run plan (no scientific content)"
+  },
+  "research_plan": {
+    "protocol_version_id": "SYN-PROTOCOL-v1",
+    "protocol_status": "LOCKED",
+    "schema_status": "LOCKED",
+    "authority_records": [
+      {
+        "role": "principal_researcher",
+        "reference": "SYN-AUTH-0001",
+        "recorded_at": "2026-09-01"
+      },
+      {
+        "role": "supervisor",
+        "reference": "SYN-AUTH-0002",
+        "recorded_at": "2026-09-01"
+      }
+    ]
+  },
+  "governance": {
+    "approval_status": "APPROVED",
+    "approval_reference": "SYN-GOV-0001",
+    "processing_location": "synthetic-local-workstation",
+    "processing_location_approved": true
+  },
+  "timing": {
+    "started_at": "2026-09-03T06:10:07Z",
+    "completed_at": "2026-09-03T06:10:08Z"
+  },
+  "runner": {
+    "name": "project-firdous-r-runner",
+    "version": "0.1.1-synthetic",
+    "command": "run_pipeline.R --config tests/fixtures/config_malformed_values.yml --run-id ev-malformed-0001 --out /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs"
+  },
+  "environment": {
+    "r_version": "R version 4.3.3 (2024-02-29)",
+    "r_version_short": "4.3.3",
+    "platform": "x86_64-pc-linux-gnu",
+    "os": "Linux 6.18.44-fc-v24",
+    "locale": "C",
+    "base_r_only": false,
+    "packages": [
+      {
+        "name": "compiler",
+        "version": "4.3.3",
+        "source": "base"
+      },
+      {
+        "name": "digest",
+        "version": "0.6.34",
+        "source": "CRAN"
+      },
+      {
+        "name": "renv",
+        "version": "1.0.3",
+        "source": "CRAN"
+      },
+      {
+        "name": "tools",
+        "version": "4.3.3",
+        "source": "base"
+      },
+      {
+        "name": "yaml",
+        "version": "2.3.8",
+        "source": "CRAN"
+      },
+      {
+        "name": "jsonlite",
+        "version": "1.8.8",
+        "source": "installed"
+      }
+    ],
+    "renv_lockfile_present": true,
+    "renv_lockfile_sha256": "3b549e3e0ad12415722c8923d9eb3156ed090f8327d3ea94cb332424ed15c948",
+    "library_paths": [
+      "/home/user/Videos/runner/r/renv/library/R-4.3/x86_64-pc-linux-gnu",
+      "/root/.cache/R/renv/sandbox/R-4.3/x86_64-pc-linux-gnu/9a444a72"
+    ]
+  },
+  "code": {
+    "revision": "ede9655d8c624b3c0443e3dd0b8c96197beace22",
+    "branch": "claude/firdous-r-runner-mhwc2j",
+    "working_tree_clean": true,
+    "available": true
+  },
+  "configuration": {
+    "path": "config_malformed_values.yml",
+    "sha256": "5022b8aae141d7442f8d697d2776f763ca68ab5d8cf89e377e65ecf20908cb85",
+    "content_fingerprint": "bfc947cea16e2dcb662ad38a81e2707c35526dfcabd275474d934eec772ec688",
+    "config_version": "0.1.1",
+    "seed": 20260903,
+    "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380"
+  },
+  "analysis": null,
+  "inputs": [
+    {
+      "role": "participant",
+      "path": "data/synthetic/participants.csv",
+      "sha256": "bb74c864b5e9363c3d858e227d94e72ba93847385a895a18b4ab500520f822fb",
+      "rows": 24,
+      "columns": ["participant_id", "synthetic_group", "synthetic_age"],
+      "participant_rows_included": false
+    },
+    {
+      "role": "assay",
+      "path": "tests/fixtures/assays_malformed_values.csv",
+      "sha256": "11eee377fd80f3202911e4fcb2b51c4128010ef15ddbac00850330bafd6dd734",
+      "rows": 71,
+      "columns": ["participant_id", "target", "value", "synthetic_batch"],
+      "participant_rows_included": false
+    },
+    {
+      "role": "approved-exceptions",
+      "path": "data/synthetic/approved_exceptions.csv",
+      "sha256": "15cce642d5bad89fc0a5b25dd04fd138b0abb369476812e131449ce2632d9632",
+      "rows": 1,
+      "columns": ["participant_id", "target", "exception_type", "reason", "approved_by", "approval_reference"],
+      "participant_rows_included": false
+    }
+  ],
+  "outputs": [],
+  "checks": {
+    "environment": {
+      "lockfile_enforced": true,
+      "lockfile_consistent": true,
+      "mismatches": []
+    },
+    "assay_typing": {
+      "total": 71,
+      "observed": 58,
+      "missing": 3,
+      "below_detection": 3,
+      "malformed": 7,
+      "out_of_range": 1
+    },
+    "reconciliation": {
+      "participants": 24,
+      "assay_rows": 71,
+      "required_targets": 3,
+      "orphan_assay_rows": 0,
+      "missing_required_assays": 0,
+      "duplicate_assay_keys": 0,
+      "duplicate_participants": 0,
+      "approved_exceptions_applied": 1
+    }
+  },
+  "stages": [
+    {
+      "id": "environment",
+      "researcher_label": "Checking the analysis environment",
+      "state": "SUCCEEDED",
+      "started_at": "2026-09-03T06:10:07Z",
+      "ended_at": "2026-09-03T06:10:08Z",
+      "support_reference": null
+    },
+    {
+      "id": "data",
+      "researcher_label": "Checking that your data structure is ready",
+      "state": "FAILED",
+      "started_at": "2026-09-03T06:10:08Z",
+      "ended_at": "2026-09-03T06:10:08Z",
+      "support_reference": "FR-20260903-ff68af-DATA_VALUES_MALFORMED"
+    },
+    {
+      "id": "plan",
+      "researcher_label": "Confirming the approved analysis plan",
+      "state": "SKIPPED",
+      "started_at": null,
+      "ended_at": null,
+      "support_reference": null
+    },
+    {
+      "id": "analysis",
+      "researcher_label": "Running the approved analysis",
+      "state": "SKIPPED",
+      "started_at": null,
+      "ended_at": null,
+      "support_reference": null
+    },
+    {
+      "id": "outputs",
+      "researcher_label": "Checking outputs before saving",
+      "state": "SKIPPED",
+      "started_at": null,
+      "ended_at": null,
+      "support_reference": null
+    },
+    {
+      "id": "record",
+      "researcher_label": "Saving the reproducibility record",
+      "state": "SUCCEEDED",
+      "started_at": "2026-09-03T06:10:08Z",
+      "ended_at": "2026-09-03T06:10:08Z",
+      "support_reference": null
+    }
+  ],
+  "researcher_status": {
+    "code": "DATA_VALUES_MALFORMED",
+    "state": "FAILED",
+    "plain_language_title": "Some measured values could not be interpreted",
+    "plain_language_summary": "7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: 'ND' (text where a number was expected); '' (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).",
+    "why_it_matters": "The runner will not guess what these values mean. Guessing could silently turn a missing or below-detection result into a number, which would change the analysis.",
+    "next_action": "Decide with the data custodian how each of these should be written. Approved representations are: missing = 'NA'; below detection = '<LOD'; numbers written with a decimal point. Then update the file and start again.",
+    "resolving_role": "The data custodian or the person who prepared the data file.",
+    "can_continue_elsewhere": true,
+    "work_preserved": true,
+    "support_reference": "FR-20260903-ff68af-DATA_VALUES_MALFORMED",
+    "stage": "data"
+  },
+  "findings": [
+    {
+      "code": "DATA_VALUES_MALFORMED",
+      "state": "FAILED",
+      "plain_language_title": "Some measured values could not be interpreted",
+      "plain_language_summary": "7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: 'ND' (text where a number was expected); '' (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).",
+      "why_it_matters": "The runner will not guess what these values mean. Guessing could silently turn a missing or below-detection result into a number, which would change the analysis.",
+      "next_action": "Decide with the data custodian how each of these should be written. Approved representations are: missing = 'NA'; below detection = '<LOD'; numbers written with a decimal point. Then update the file and start again.",
+      "resolving_role": "The data custodian or the person who prepared the data file.",
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-ff68af-DATA_VALUES_MALFORMED",
+      "stage": "data"
+    },
+    {
+      "code": "DATA_VALUES_OUT_OF_RANGE",
+      "state": "FAILED",
+      "plain_language_title": "Some measured values are outside the approved range",
+      "plain_language_summary": "1 value(s) in the 'value' column fall outside the approved range of 0 to 45.",
+      "why_it_matters": "Values outside the expected range often point to a units problem or a transcription error.",
+      "next_action": "Check these values with the data custodian. If the range itself is wrong, the approved data structure must be updated first.",
+      "resolving_role": "The data custodian or the person who prepared the data file.",
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-ff68af-DATA_VALUES_OUT_OF_RANGE",
+      "stage": "data"
+    }
+  ],
+  "unresolved_decisions": [],
+  "logs": [
+    {
+      "path": "support/technical_log.txt",
+      "kind": "support_only",
+      "sha256": "6d0774a0ebb7633f8664e9b805ec98ef4ac0f619ec0e22817dc53e29e72004bc"
+    }
+  ],
+  "local_only_files": [
+    {
+      "path": "local/data_values_malformed_detail.csv",
+      "purpose": "identifier-level detail for the data custodian",
+      "returned_to_platform": false
+    },
+    {
+      "path": "local/data_values_out_of_range_detail.csv",
+      "purpose": "identifier-level detail for the data custodian",
+      "returned_to_platform": false
+    }
+  ],
+  "record_complete": true,
+  "record_missing_fields": []
+}

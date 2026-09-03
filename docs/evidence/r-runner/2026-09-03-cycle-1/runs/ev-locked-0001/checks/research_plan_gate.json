@@ -1,0 +1,16 @@
+{
+  "locked": true,
+  "summary": {
+    "data_classification": "SYNTHETIC",
+    "protocol_status": "LOCKED",
+    "schema_status": "LOCKED",
+    "governance_approval_status": "APPROVED",
+    "processing_location_approved": true,
+    "unresolved_decisions": 0,
+    "authority_roles_present": [
+      "principal_researcher",
+      "supervisor"
+    ]
+  },
+  "findings": []
+}

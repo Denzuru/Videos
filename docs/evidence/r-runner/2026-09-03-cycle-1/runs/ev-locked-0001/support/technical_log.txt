@@ -1,0 +1,17 @@
+Project Firdous R runner: technical log (support use only)
+run_id: ev-locked-0001
+[2026-09-03T06:10:00Z] stage start: environment
+[2026-09-03T06:10:00Z] R: R version 4.3.3 (2024-02-29); platform: x86_64-pc-linux-gnu
+[2026-09-03T06:10:00Z] git: ede9655d8c624b3c0443e3dd0b8c96197beace22
+[2026-09-03T06:10:00Z] stage ok: environment
+[2026-09-03T06:10:00Z] stage start: data
+[2026-09-03T06:10:01Z] stage ok: data
+[2026-09-03T06:10:01Z] stage start: plan
+[2026-09-03T06:10:01Z] stage ok: plan
+[2026-09-03T06:10:01Z] stage start: analysis
+[2026-09-03T06:10:01Z] analysis kind=SYNTHETIC_DESCRIPTIVE_PLACEHOLDER seed=20260903
+[2026-09-03T06:10:01Z] stage ok: analysis
+[2026-09-03T06:10:01Z] stage start: outputs
+[2026-09-03T06:10:01Z] stage ok: outputs
+[2026-09-03T06:10:01Z] stage start: record
+[2026-09-03T06:10:01Z] stage ok: record

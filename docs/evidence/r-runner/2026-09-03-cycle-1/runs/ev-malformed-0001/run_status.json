@@ -1,0 +1,95 @@
+{
+  "run_id": "ev-malformed-0001",
+  "run_state": "FAILED",
+  "data_classification": "SYNTHETIC",
+  "started_at": "2026-09-03T06:10:07Z",
+  "completed_at": "2026-09-03T06:10:08Z",
+  "stages": [
+    {
+      "id": "environment",
+      "label": "Checking the analysis environment",
+      "step": 1,
+      "of": 6,
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "data",
+      "label": "Checking that your data structure is ready",
+      "step": 2,
+      "of": 6,
+      "state": "FAILED"
+    },
+    {
+      "id": "plan",
+      "label": "Confirming the approved analysis plan",
+      "step": 3,
+      "of": 6,
+      "state": "SKIPPED"
+    },
+    {
+      "id": "analysis",
+      "label": "Running the approved analysis",
+      "step": 4,
+      "of": 6,
+      "state": "SKIPPED"
+    },
+    {
+      "id": "outputs",
+      "label": "Checking outputs before saving",
+      "step": 5,
+      "of": 6,
+      "state": "SKIPPED"
+    },
+    {
+      "id": "record",
+      "label": "Saving the reproducibility record",
+      "step": 6,
+      "of": 6,
+      "state": "SUCCEEDED"
+    }
+  ],
+  "researcher_status": {
+    "code": "DATA_VALUES_MALFORMED",
+    "state": "FAILED",
+    "plain_language_title": "Some measured values could not be interpreted",
+    "plain_language_summary": "7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: 'ND' (text where a number was expected); '' (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).",
+    "why_it_matters": "The runner will not guess what these values mean. Guessing could silently turn a missing or below-detection result into a number, which would change the analysis.",
+    "next_action": "Decide with the data custodian how each of these should be written. Approved representations are: missing = 'NA'; below detection = '<LOD'; numbers written with a decimal point. Then update the file and start again.",
+    "resolving_role": "The data custodian or the person who prepared the data file.",
+    "can_continue_elsewhere": true,
+    "work_preserved": true,
+    "support_reference": "FR-20260903-ff68af-DATA_VALUES_MALFORMED",
+    "stage": "data"
+  },
+  "findings": [
+    {
+      "code": "DATA_VALUES_MALFORMED",
+      "state": "FAILED",
+      "plain_language_title": "Some measured values could not be interpreted",
+      "plain_language_summary": "7 value(s) in the 'value' column are written in a way the approved data structure does not recognise, for example: 'ND' (text where a number was expected); '' (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s).",
+      "why_it_matters": "The runner will not guess what these values mean. Guessing could silently turn a missing or below-detection result into a number, which would change the analysis.",
+      "next_action": "Decide with the data custodian how each of these should be written. Approved representations are: missing = 'NA'; below detection = '<LOD'; numbers written with a decimal point. Then update the file and start again.",
+      "resolving_role": "The data custodian or the person who prepared the data file.",
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-ff68af-DATA_VALUES_MALFORMED",
+      "stage": "data"
+    },
+    {
+      "code": "DATA_VALUES_OUT_OF_RANGE",
+      "state": "FAILED",
+      "plain_language_title": "Some measured values are outside the approved range",
+      "plain_language_summary": "1 value(s) in the 'value' column fall outside the approved range of 0 to 45.",
+      "why_it_matters": "Values outside the expected range often point to a units problem or a transcription error.",
+      "next_action": "Check these values with the data custodian. If the range itself is wrong, the approved data structure must be updated first.",
+      "resolving_role": "The data custodian or the person who prepared the data file.",
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-ff68af-DATA_VALUES_OUT_OF_RANGE",
+      "stage": "data"
+    }
+  ],
+  "unresolved_decisions": [],
+  "analysis_record": "manifest.json",
+  "support_log": "support/technical_log.txt"
+}

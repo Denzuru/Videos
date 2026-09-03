@@ -1,0 +1,89 @@
+# Project Firdous R runner: SYNTHETIC analysis plan that is NOT yet confirmed.
+#
+# Used to prove fail-closed behaviour: the plan is a DRAFT and two decisions
+# are BLOCKED, so the runner must stop before the analysis stage.
+
+config_version: "0.1.1"
+data_classification: SYNTHETIC
+
+project:
+  project_id: SYN-PROJECT-FIRDOUS
+  run_plan_id: SYN-RUNPLAN-0002-DRAFT
+  label: Synthetic alpha run plan (no scientific content)
+
+research_plan:                       # researcher-facing name: "Confirm your research plan"
+  protocol_version_id: SYN-PROTOCOL-v1
+  protocol_status: DRAFT
+  schema_status: LOCKED              # DRAFT | LOCKED   ("Data structure confirmed")
+  required_authority_roles: [principal_researcher, supervisor]
+  authority_records:
+    - role: principal_researcher
+      reference: SYN-AUTH-0001
+      recorded_at: "2026-09-01"
+    - role: supervisor
+      reference: SYN-AUTH-0002
+      recorded_at: "2026-09-01"
+
+governance:
+  approval_status: APPROVED          # APPROVED | PENDING | REVOKED | MISSING
+  approval_reference: SYN-GOV-0001
+  processing_location: synthetic-local-workstation
+  processing_location_approved: true
+  minimum_reportable_cell_size: 5
+  permitted_outputs: aggregate tables only
+
+analysis_plan:                       # the statistical boundary: every field must be resolved
+  claim_intent: association          # association | prediction
+  prediction_timing: not_applicable
+  primary_outcome: BLOCKED   # awaiting supervisor decision (synthetic example)
+  secondary_outcomes: [none_declared]
+  target_panel: [SYN-miR-A, SYN-miR-B, SYN-miR-C]
+  covariates:
+    - name: synthetic_age
+      role: descriptive_only
+  confirmatory_targets: [none_declared]
+  exploratory_targets: [SYN-miR-A, SYN-miR-B, SYN-miR-C]
+  normality_rule: synthetic-placeholder (not assessed; descriptive stage only)
+  transformation_rule: synthetic-placeholder (none applied)
+  missing_data_rule: synthetic-placeholder (missing values are counted and excluded from descriptives)
+  below_detection_rule: synthetic-placeholder (below-detection values are counted and excluded from descriptives)
+  categorical_outcome_path: synthetic-placeholder (descriptive counts only)
+  continuous_outcome_path: synthetic-placeholder (descriptive summary only)
+  post_hoc_method: not_applicable
+  multiplicity:
+    family: not_applicable (no tests are performed)
+    correction: BLOCKED
+  model_diagnostics: not_applicable
+  validation: not_applicable
+  sensitivity_analysis: not_applicable
+  replicates_rule: repeat measurements are not permitted in the synthetic fixture
+
+data:
+  participants_file: data/synthetic/participants.csv
+  assays_file: data/synthetic/assays.csv
+  exceptions_file: data/synthetic/approved_exceptions.csv
+  participant_id_column: participant_id
+  participant_id_pattern: "^SYN-[0-9]{4}$"
+  assay_target_column: target
+  assay_value_column: value
+  required_participant_columns: [participant_id, synthetic_group, synthetic_age]
+  value_representations:
+    missing_tokens: ["NA"]
+    below_detection_tokens: ["<LOD"]
+    decimal_separator: "."
+    allowed_range: {min: 0, max: 45}
+
+environment:
+  enforce_lockfile: true
+
+stages:
+  seed: 20260903
+  analysis:
+    kind: SYNTHETIC_DESCRIPTIVE_PLACEHOLDER
+    group_by: synthetic_group
+
+outputs:
+  allow_list:
+    - {name: group_counts.csv, kind: aggregate_table}
+    - {name: target_summary_by_group.csv, kind: aggregate_table}
+    - {name: data_readiness_summary.csv, kind: aggregate_table}

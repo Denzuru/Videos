@@ -1,0 +1,147 @@
+{
+  "schema": "RunBundleManifest",
+  "contract_version": "0.1.0-r-runner-draft",
+  "run_id": "ev-template-0001",
+  "run_state": "BLOCKED",
+  "data_classification": "REAL",
+  "participant_rows_included": false,
+  "project": {
+    "project_id": "BLOCKED",
+    "run_plan_id": "BLOCKED",
+    "label": "Firdous study run plan (awaiting confirmation)"
+  },
+  "research_plan": {
+    "protocol_version_id": "BLOCKED",
+    "protocol_status": "DRAFT",
+    "schema_status": "DRAFT",
+    "authority_records": []
+  },
+  "governance": {
+    "approval_status": "PENDING",
+    "approval_reference": "BLOCKED",
+    "processing_location": "BLOCKED",
+    "processing_location_approved": false
+  },
+  "timing": {
+    "started_at": "2026-09-03T06:10:13Z",
+    "completed_at": "2026-09-03T06:10:13Z"
+  },
+  "runner": {
+    "name": "project-firdous-r-runner",
+    "version": "0.1.1-synthetic",
+    "command": "run_pipeline.R --config config/firdous_template_BLOCKED.yml --run-id ev-template-0001 --out /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs"
+  },
+  "environment": null,
+  "code": null,
+  "configuration": {
+    "path": "firdous_template_BLOCKED.yml",
+    "sha256": "2b79942e2202fcbd0361281c7220d0e81565a2766c03aa2019df2925c453c8ca",
+    "content_fingerprint": "3091b55f83629649ff8957ba22ae53674ed9f6de04165543c77dfe2a53854d29",
+    "config_version": "0.1.1",
+    "seed": null,
+    "seed_fingerprint": "20ef0f0c8d0eea98772412cea9b3b92612e3e53cb5e59152b5703165f56e8a53"
+  },
+  "analysis": null,
+  "inputs": [],
+  "outputs": [],
+  "checks": [],
+  "stages": [
+    {
+      "id": "environment",
+      "researcher_label": "Checking the analysis environment",
+      "state": "BLOCKED",
+      "started_at": "2026-09-03T06:10:13Z",
+      "ended_at": "2026-09-03T06:10:13Z",
+      "support_reference": "FR-20260903-068333-PLAN_REAL_DATA_NOT_PERMITTED"
+    },
+    {
+      "id": "data",
+      "researcher_label": "Checking that your data structure is ready",
+      "state": "SKIPPED",
+      "started_at": null,
+      "ended_at": null,
+      "support_reference": null
+    },
+    {
+      "id": "plan",
+      "researcher_label": "Confirming the approved analysis plan",
+      "state": "SKIPPED",
+      "started_at": null,
+      "ended_at": null,
+      "support_reference": null
+    },
+    {
+      "id": "analysis",
+      "researcher_label": "Running the approved analysis",
+      "state": "SKIPPED",
+      "started_at": null,
+      "ended_at": null,
+      "support_reference": null
+    },
+    {
+      "id": "outputs",
+      "researcher_label": "Checking outputs before saving",
+      "state": "SKIPPED",
+      "started_at": null,
+      "ended_at": null,
+      "support_reference": null
+    },
+    {
+      "id": "record",
+      "researcher_label": "Saving the reproducibility record",
+      "state": "SUCCEEDED",
+      "started_at": "2026-09-03T06:10:13Z",
+      "ended_at": "2026-09-03T06:10:13Z",
+      "support_reference": null
+    }
+  ],
+  "researcher_status": {
+    "code": "PLAN_REAL_DATA_NOT_PERMITTED",
+    "state": "BLOCKED",
+    "plain_language_title": "This version of the runner works with synthetic data only",
+    "plain_language_summary": "The analysis plan describes the data as 'REAL'. This runner is approved for synthetic (made-up) data only.",
+    "why_it_matters": "Real participant data may only be processed once ethics approval, data-custodian authority, an approved processing location and a confirmed research plan are all in place and verified.",
+    "next_action": "Continue using synthetic data for development and testing. Real-data execution is a separate, human-approved step.",
+    "resolving_role": "The ethics or data-governance contact for the study.",
+    "can_continue_elsewhere": true,
+    "work_preserved": true,
+    "support_reference": "FR-20260903-068333-PLAN_REAL_DATA_NOT_PERMITTED",
+    "stage": "environment"
+  },
+  "findings": [
+    {
+      "code": "PLAN_REAL_DATA_NOT_PERMITTED",
+      "state": "BLOCKED",
+      "plain_language_title": "This version of the runner works with synthetic data only",
+      "plain_language_summary": "The analysis plan describes the data as 'REAL'. This runner is approved for synthetic (made-up) data only.",
+      "why_it_matters": "Real participant data may only be processed once ethics approval, data-custodian authority, an approved processing location and a confirmed research plan are all in place and verified.",
+      "next_action": "Continue using synthetic data for development and testing. Real-data execution is a separate, human-approved step.",
+      "resolving_role": "The ethics or data-governance contact for the study.",
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-068333-PLAN_REAL_DATA_NOT_PERMITTED",
+      "stage": "environment"
+    }
+  ],
+  "unresolved_decisions": [],
+  "logs": [
+    {
+      "path": "support/technical_log.txt",
+      "kind": "support_only",
+      "sha256": "c548a62fcabd3bc924daa6eb763ac2b7cf40e73c033b20ebcc9c98a9bb6c1c79"
+    }
+  ],
+  "local_only_files": [],
+  "record_complete": false,
+  "record_missing_fields": [
+    "environment.r_version",
+    "environment.platform",
+    "environment.os",
+    "environment.packages",
+    "environment.renv_lockfile_present",
+    "environment.renv_lockfile_sha256",
+    "code.revision",
+    "code.branch",
+    "code.working_tree_clean"
+  ]
+}

@@ -1,0 +1,90 @@
+# Restricted-data and secret guard rules (F06).
+# Read by R/guard.R. Every rule has an id and a plain description so a
+# reviewer can see exactly why a file was rejected.
+
+scope:
+  # In --all mode only these prefixes are scanned (the rest of the repository
+  # is owned by other lanes). In --staged mode every staged file is scanned.
+  include_prefixes: ["runner/", "packages/test-fixtures/", "docs/"]
+  max_text_bytes: 5000000
+
+synthetic_id_pattern: "^SYN-[0-9]{4}$"
+
+allow_paths:
+  - runner/r/config/guard_rules.yml
+  - runner/r/R/guard.R
+  - runner/r/tests/testthat/test-guard.R
+
+path_rules:
+  - id: PATH_REAL_DATA_DIR
+    pattern: "(^|/)(real|raw|export|exports|participant_data|identified|phi|pii)(/|$)"
+    description: "Directory name indicates real, raw or identified participant data, which may never enter the repository."
+  - id: PATH_BINARY_DATA_CONTAINER
+    pattern: "\\.(sav|dta|sas7bdat|por|xpt|accdb|mdb|rds|rda|rdata|xlsx|xlsm|xls|parquet|feather|sqlite|db)$"
+    applies_to_prefix: "runner/"
+    description: "Binary data container that the guard cannot inspect. Only inspectable synthetic text fixtures are permitted in the runner tree."
+  - id: PATH_SECRET_FILE
+    pattern: "(^|/)(\\.env(\\..*)?|[^/]*\\.pem|[^/]*\\.key|[^/]*\\.p12|[^/]*\\.pfx|id_rsa[^/]*|id_ed25519[^/]*|[^/]*\\.kdbx|\\.netrc|\\.Renviron)$"
+    description: "File name indicates credentials or private keys."
+  - id: PATH_TABULAR_OUTSIDE_SYNTHETIC
+    pattern: "^runner/.*\\.(csv|tsv)$"
+    unless_pattern: "^runner/r/(data/synthetic|tests/fixtures|manifests/fixtures)/"
+    description: "Tabular data under the runner tree must live in an approved synthetic fixture directory."
+
+content_rules:
+  - id: SECRET_PRIVATE_KEY
+    pattern: "-----BEGIN [A-Z ]*PRIVATE KEY-----"
+    description: "Private key material."
+  - id: SECRET_AWS_ACCESS_KEY
+    pattern: "(?<![A-Z0-9])AKIA[0-9A-Z]{16}(?![A-Z0-9])"
+    description: "AWS access key identifier."
+  - id: SECRET_GITHUB_TOKEN
+    pattern: "(?<![A-Za-z0-9])gh[pousr]_[A-Za-z0-9]{20,}"
+    description: "GitHub token."
+  - id: SECRET_JWT
+    pattern: "eyJ[A-Za-z0-9_-]{10,}\\.[A-Za-z0-9_-]{10,}\\.[A-Za-z0-9_-]{10,}"
+    description: "JSON web token (for example a Supabase service key)."
+  - id: SECRET_ASSIGNMENT
+    pattern: "(?i)(password|passwd|secret|api[_-]?key|service_role|access[_-]?token)\\s*[=:]\\s*['\"][^'\"]{8,}['\"]"
+    description: "A credential appears to be assigned in plain text."
+  - id: ID_NATIONAL_ID_NUMBER
+    pattern: "(?<![0-9])[0-9]{13}(?![0-9])"
+    file_types: ["tabular", "data_text"]
+    description: "13-digit number with a valid check digit, consistent with a national identity number."
+  - id: ID_EMAIL_ADDRESS
+    pattern: "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+    file_types: ["tabular"]
+    description: "Email address inside a data file."
+  - id: ID_PHONE_NUMBER
+    pattern: "(?<![0-9])(\\+27|0)[0-9]{9}(?![0-9])"
+    file_types: ["tabular"]
+    description: "Telephone number inside a data file."
+
+identifier_headers:
+  - surname
+  - first_name
+  - firstname
+  - last_name
+  - lastname
+  - full_name
+  - patient_name
+  - participant_name
+  - initials
+  - dob
+  - date_of_birth
+  - birth_date
+  - id_number
+  - national_id
+  - identity_number
+  - passport
+  - passport_number
+  - hospital_number
+  - folder_number
+  - mrn
+  - phone
+  - mobile
+  - telephone
+  - email
+  - address
+  - street
+  - postcode

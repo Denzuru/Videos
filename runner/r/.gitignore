@@ -1,0 +1,13 @@
+# Run directories are immutable evidence but are not committed; the evidence
+# bundle under docs/evidence/r-runner carries the manifests that matter.
+outputs/synthetic/runs/
+# renv project library and cache are restored, not committed.
+renv/library/
+renv/local/
+renv/cellar/
+renv/lock/
+renv/python/
+renv/sandbox/
+renv/staging/
+.Rhistory
+.RData

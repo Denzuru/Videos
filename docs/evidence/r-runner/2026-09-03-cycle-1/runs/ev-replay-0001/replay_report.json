@@ -1,0 +1,10 @@
+{
+  "replay_of": "ev-locked-0001",
+  "replay_run_id": "ev-replay-0001",
+  "reference_manifest": "/tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs/ev-locked-0001/manifest.json",
+  "candidate_manifest": "/tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs/ev-replay-0001/manifest.json",
+  "verdict": "MATCH",
+  "outputs_compared": 3,
+  "differences": [],
+  "plain_language": "The replay produced the same outputs from the same data, plan and seed. The earlier result is reproducible on this computer."
+}

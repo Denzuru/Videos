@@ -1,0 +1,31 @@
+{
+  "locked": false,
+  "summary": {
+    "data_classification": "SYNTHETIC",
+    "protocol_status": "DRAFT",
+    "schema_status": "LOCKED",
+    "governance_approval_status": "APPROVED",
+    "processing_location_approved": true,
+    "unresolved_decisions": 2,
+    "authority_roles_present": [
+      "principal_researcher",
+      "supervisor"
+    ]
+  },
+  "findings": [
+    {
+      "code": "PLAN_PROTOCOL_NOT_LOCKED",
+      "values": {
+        "status_label": "still a draft",
+        "status": "DRAFT"
+      }
+    },
+    {
+      "code": "PLAN_DECISIONS_UNRESOLVED",
+      "values": {
+        "count": 2,
+        "decisions": "The primary outcome; The multiple-testing correction"
+      }
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+LOCKED <- file.path(RUNNER_ROOT, "config", "synthetic_locked.yml")
+DRAFT <- file.path(RUNNER_ROOT, "config", "synthetic_draft.yml")
+MALFORMED <- file.path(RUNNER_ROOT, "tests", "fixtures", "config_malformed_values.yml")
+RECON <- file.path(RUNNER_ROOT, "tests", "fixtures", "config_reconciliation_problems.yml")
+TEMPLATE <- file.path(RUNNER_ROOT, "config", "firdous_template_BLOCKED.yml")
+stage_states <- function(res) { s <- read_json_file(res$status_path)$stages; setNames(vapply(s, `[[`, "", "state"), vapply(s, `[[`, "", "id")) }
+
+test_that("a fully locked synthetic configuration runs end to end and leaves a complete record", {
+  res <- run_quiet(LOCKED, run_id = "t-locked")
+  expect_equal(res$run_state, "SUCCEEDED")
+  expect_true(all(stage_states(res) == "SUCCEEDED"))
+  m <- read_json_file(res$manifest_path)
+  expect_equal(m$schema, "RunBundleManifest")
+  expect_equal(m$run_state, "SUCCEEDED")
+  expect_false(m$participant_rows_included)
+  expect_true(m$record_complete)
+  expect_length(manifest_missing_fields(m), 0)
+  expect_setequal(vapply(m$outputs, `[[`, "", "path"),
+                  c("outputs/group_counts.csv", "outputs/target_summary_by_group.csv", "outputs/data_readiness_summary.csv"))
+  expect_true(all(nchar(vapply(m$outputs, `[[`, "", "sha256")) == 64))
+  expect_equal(length(m$inputs), 3)
+  expect_true(m$environment$renv_lockfile_present)
+  expect_true(m$code$available)
+  expect_equal(m$configuration$seed, 20260903)
+  expect_equal(m$analysis$scientific_claim, "none")
+  expect_equal(m$researcher_status$state, "SUCCEEDED")
+  expect_true(file.exists(file.path(res$run_dir, "researcher_summary.md")))
+  expect_no_participant_ids(res$run_dir)
+})
+
+test_that("the same seed and configuration reproduce identical outputs (F07 determinism)", {
+  a <- run_quiet(LOCKED, run_id = "t-det-a")
+  b <- run_quiet(LOCKED, run_id = "t-det-b")
+  ma <- read_json_file(a$manifest_path); mb <- read_json_file(b$manifest_path)
+  sha <- function(m) setNames(vapply(m$outputs, `[[`, "", "sha256"), vapply(m$outputs, `[[`, "", "path"))
+  expect_identical(sha(ma), sha(mb))
+  expect_identical(ma$configuration$content_fingerprint, mb$configuration$content_fingerprint)
+  expect_identical(ma$configuration$seed_fingerprint, mb$configuration$seed_fingerprint)
+  cmp <- replay_compare(ma, mb)
+  expect_equal(cmp$verdict, "MATCH")
+  # And byte-identical files, not just matching hashes in the record.
+  for (f in names(sha(ma))) expect_identical(readLines(file.path(a$run_dir, f)), readLines(file.path(b$run_dir, f)))
+})
+
+test_that("replay_run against a reference record reports MATCH, and a tampered record reports MISMATCH (F07)", {
+  ref <- run_quiet(LOCKED, run_id = "t-ref")
+  rep <- replay_run(LOCKED, ref$manifest_path, out_root = tempfile("replay-"), run_id = "t-replay", quiet = TRUE)
+  expect_equal(rep$verdict, "MATCH")
+  expect_true(file.exists(file.path(dirname(rep$candidate_manifest), "replay_report.json")))
+  m <- read_json_file(ref$manifest_path)
+  m$outputs[[1]]$sha256 <- strrep("0", 64)
+  cmp <- replay_compare(m, read_json_file(rep$candidate_manifest))
+  expect_equal(cmp$verdict, "MISMATCH")
+  expect_true(any(grepl("^outputs\\.outputs/.*sha256$", vapply(cmp$differences, `[[`, "", "field"))))
+})
+
+test_that("malformed assay values stop the run at the data step with a precise, researcher-safe failure", {
+  res <- run_quiet(MALFORMED, run_id = "t-malformed")
+  expect_equal(res$run_state, "FAILED")
+  st <- stage_states(res)
+  expect_equal(unname(st[c("environment", "data", "plan", "analysis", "outputs", "record")]),
+               c("SUCCEEDED", "FAILED", "SKIPPED", "SKIPPED", "SKIPPED", "SUCCEEDED"))
+  expect_equal(res$researcher_status$code, "DATA_VALUES_MALFORMED")
+  expect_match(res$researcher_status$plain_language_summary, "7 value\\(s\\) in the 'value' column")
+  codes <- vapply(res$findings, `[[`, "", "code")
+  expect_setequal(codes, c("DATA_VALUES_MALFORMED", "DATA_VALUES_OUT_OF_RANGE"))
+  m <- read_json_file(res$manifest_path)
+  expect_equal(m$run_state, "FAILED")
+  expect_true(m$record_complete)
+  expect_length(m$outputs, 0)
+  expect_length(list.files(file.path(res$run_dir, "outputs")), 0)
+  # A failed run never looks successful anywhere a person or the platform reads.
+  texts <- read_run_files(res$run_dir)
+  expect_false(any(grepl("\"run_state\": \"SUCCEEDED\"", unlist(texts))))
+  expect_false(grepl("Completed", readLines(file.path(res$run_dir, "researcher_summary.md"))[3]))
+  summary <- paste(readLines(file.path(res$run_dir, "researcher_summary.md")), collapse = "\n")
+  expect_false(grepl("Error in|traceback", summary))
+  expect_true(all(nzchar(unlist(res$researcher_status[c("plain_language_title", "why_it_matters", "next_action", "resolving_role", "support_reference")]))))
+  expect_no_participant_ids(res$run_dir)
+})
+
+test_that("orphan, missing and duplicate identifiers are reported together and identifiers stay local", {
+  res <- run_quiet(RECON, run_id = "t-recon")
+  expect_equal(res$run_state, "FAILED")
+  codes <- vapply(res$findings, `[[`, "", "code")
+  expect_setequal(codes, c("DATA_ORPHAN_ASSAYS", "DATA_MISSING_ASSAYS", "DATA_DUPLICATE_KEYS"))
+  expect_true(all(vapply(res$findings, function(f) nzchar(f$support_reference), logical(1))))
+  local <- list.files(file.path(res$run_dir, "local"))
+  expect_true(all(c("data_orphan_assays_detail.csv", "data_missing_assays_detail.csv", "data_duplicate_keys_detail.csv") %in% local))
+  m <- read_json_file(res$manifest_path)
+  expect_true(all(!vapply(m$local_only_files, `[[`, TRUE, "returned_to_platform")))
+  expect_no_participant_ids(res$run_dir)   # excludes local/
+  expect_true(any(grepl("SYN-0099", readLines(file.path(res$run_dir, "local", "data_orphan_assays_detail.csv")))))
+})
+
+test_that("an unapproved exception blocks and names the resolver", {
+  p <- temp_config(function(c) { c$data$exceptions_file <- "tests/fixtures/exceptions_unapproved.csv"; c })
+  res <- run_quiet(p, run_id = "t-exc")
+  codes <- vapply(res$findings, `[[`, "", "code")
+  expect_true("DATA_EXCEPTION_UNAPPROVED" %in% codes)
+  expect_true("DATA_MISSING_ASSAYS" %in% codes)
+  f <- Filter(function(x) x$code == "DATA_EXCEPTION_UNAPPROVED", res$findings)[[1]]
+  expect_equal(f$state, "BLOCKED"); expect_match(f$resolving_role, "supervisor")
+})
+
+test_that("a draft research plan blocks before the analysis and lists the open decisions", {
+  res <- run_quiet(DRAFT, run_id = "t-draft")
+  expect_equal(res$run_state, "BLOCKED")
+  st <- stage_states(res)
+  expect_equal(unname(st["data"]), "SUCCEEDED")     # data work can continue while decisions are pending
+  expect_equal(unname(st["plan"]), "BLOCKED")
+  expect_equal(unname(st["analysis"]), "SKIPPED")
+  expect_equal(res$researcher_status$code, "PLAN_PROTOCOL_NOT_LOCKED")
+  expect_true(res$researcher_status$can_continue_elsewhere)
+  m <- read_json_file(res$manifest_path)
+  expect_equal(length(m$unresolved_decisions), 2)
+  expect_setequal(vapply(m$unresolved_decisions, `[[`, "", "decision"), c("The primary outcome", "The multiple-testing correction"))
+  expect_length(m$outputs, 0)
+})
+
+test_that("a locked plan with one unresolved scientific choice still blocks", {
+  p <- temp_config(function(c) { c$analysis_plan$below_detection_rule <- "BLOCKED"; c })
+  res <- run_quiet(p, run_id = "t-oneblocked")
+  expect_equal(res$run_state, "BLOCKED")
+  expect_equal(res$researcher_status$code, "PLAN_DECISIONS_UNRESOLVED")
+  expect_match(res$researcher_status$plain_language_summary, "How below-detection values are handled")
+})
+
+test_that("missing governance approval blocks even when the plan is locked", {
+  p <- temp_config(function(c) { c$governance$approval_status <- "REVOKED"; c })
+  res <- run_quiet(p, run_id = "t-gov")
+  expect_equal(res$run_state, "BLOCKED")
+  expect_equal(res$researcher_status$code, "PLAN_GOVERNANCE_NOT_APPROVED")
+  expect_match(res$researcher_status$resolving_role, "governance")
+})
+
+test_that("the real-study template is refused at the first step, before any data file is read", {
+  res <- run_quiet(TEMPLATE, run_id = "t-template")
+  expect_equal(res$run_state, "BLOCKED")
+  expect_equal(res$researcher_status$code, "PLAN_REAL_DATA_NOT_PERMITTED")
+  st <- stage_states(res)
+  expect_equal(unname(st["environment"]), "BLOCKED")
+  expect_equal(unname(st["data"]), "SKIPPED")
+  m <- read_json_file(res$manifest_path)
+  expect_length(m$inputs, 0)
+})
+
+test_that("an output not on the approved list is quarantined and the run fails", {
+  p <- temp_config(function(c) { c$outputs$allow_list <- c$outputs$allow_list[1:2]; c })
+  res <- run_quiet(p, run_id = "t-allow")
+  expect_equal(res$run_state, "FAILED")
+  expect_equal(res$researcher_status$code, "OUTPUT_NOT_ALLOWED")
+  expect_false(file.exists(file.path(res$run_dir, "outputs", "data_readiness_summary.csv")))
+  expect_true(file.exists(file.path(res$run_dir, "local", "quarantined_outputs", "data_readiness_summary.csv")))
+  m <- read_json_file(res$manifest_path)
+  expect_false("outputs/data_readiness_summary.csv" %in% vapply(m$outputs, `[[`, "", "path"))
+})
+
+test_that("groups below the minimum reportable size fail the output check", {
+  p <- temp_config(function(c) { c$governance$minimum_reportable_cell_size <- 13; c })
+  res <- run_quiet(p, run_id = "t-cell")
+  expect_equal(res$run_state, "FAILED")
+  expect_equal(res$researcher_status$code, "OUTPUT_SMALL_CELL")
+})
+
+test_that("an analysis kind the runner does not contain is blocked, not improvised", {
+  p <- temp_config(function(c) { c$stages$analysis$kind <- "REAL_SCRIPT_03_MODELLING"; c })
+  res <- run_quiet(p, run_id = "t-kind")
+  expect_equal(res$run_state, "BLOCKED")
+  expect_equal(res$researcher_status$code, "ANALYSIS_KIND_UNKNOWN")
+})
+
+test_that("a missing data file is explained in plain language", {
+  p <- temp_config(function(c) { c$data$assays_file <- "data/synthetic/does_not_exist.csv"; c })
+  res <- run_quiet(p, run_id = "t-nofile")
+  expect_equal(res$run_state, "FAILED")
+  expect_equal(res$researcher_status$code, "DATA_FILE_MISSING")
+  expect_match(res$researcher_status$plain_language_summary, "assay file was expected at")
+})
+
+test_that("an environment that differs from the lockfile is blocked (F04 enforcement)", {
+  alt <- tempfile("altroot-"); dir.create(alt)
+  for (d in c("R", "config", "data")) file.copy(file.path(RUNNER_ROOT, d), alt, recursive = TRUE)
+  lock <- read_json_file(file.path(RUNNER_ROOT, "renv.lock"))
+  lock$Packages$jsonlite$Version <- "0.0.1"
+  write_json_file(lock, file.path(alt, "renv.lock"))
+  old <- Sys.getenv("FIRDOUS_RUNNER_ROOT"); Sys.setenv(FIRDOUS_RUNNER_ROOT = alt); on.exit(Sys.setenv(FIRDOUS_RUNNER_ROOT = old))
+  res <- run_pipeline(file.path(alt, "config", "synthetic_locked.yml"), out_root = tempfile("runs-"), run_id = "t-env", quiet = TRUE)
+  expect_equal(res$run_state, "BLOCKED")
+  expect_equal(res$researcher_status$code, "ENV_NOT_REPRODUCIBLE")
+  expect_match(res$researcher_status$plain_language_summary, "jsonlite 0.0.1 recorded")
+})
+
+test_that("an unexpected R error never reaches the researcher as raw text", {
+  # A malformed range setting makes the typing code hit a genuine R error.
+  p <- temp_config(function(c) { c$data$value_representations$allowed_range <- "0-45"; c })
+  res <- run_quiet(p, run_id = "t-unexpected")
+  expect_equal(res$run_state, "FAILED")
+  expect_equal(res$researcher_status$code, "UNEXPECTED_ERROR")
+  expect_match(res$researcher_status$plain_language_summary, "Checking that your data structure is ready")
+  expect_false(grepl("operator|atomic|Error|object", res$researcher_status$plain_language_summary))
+  log <- readLines(file.path(res$run_dir, "support", "technical_log.txt"))
+  expect_true(any(grepl("technical detail \\(support only\\)", log)))
+  expect_true(any(grepl("operator|atomic", log)))     # the raw detail lives in the support log only
+  summary <- paste(readLines(file.path(res$run_dir, "researcher_summary.md")), collapse = "\n")
+  expect_false(grepl("operator|atomic", summary))
+  expect_true(nzchar(res$researcher_status$support_reference))
+})

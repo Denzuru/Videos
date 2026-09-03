@@ -1,0 +1,82 @@
+{
+  "run_id": "ev-template-0001",
+  "run_state": "BLOCKED",
+  "data_classification": "REAL",
+  "started_at": "2026-09-03T06:10:13Z",
+  "completed_at": "2026-09-03T06:10:13Z",
+  "stages": [
+    {
+      "id": "environment",
+      "label": "Checking the analysis environment",
+      "step": 1,
+      "of": 6,
+      "state": "BLOCKED"
+    },
+    {
+      "id": "data",
+      "label": "Checking that your data structure is ready",
+      "step": 2,
+      "of": 6,
+      "state": "SKIPPED"
+    },
+    {
+      "id": "plan",
+      "label": "Confirming the approved analysis plan",
+      "step": 3,
+      "of": 6,
+      "state": "SKIPPED"
+    },
+    {
+      "id": "analysis",
+      "label": "Running the approved analysis",
+      "step": 4,
+      "of": 6,
+      "state": "SKIPPED"
+    },
+    {
+      "id": "outputs",
+      "label": "Checking outputs before saving",
+      "step": 5,
+      "of": 6,
+      "state": "SKIPPED"
+    },
+    {
+      "id": "record",
+      "label": "Saving the reproducibility record",
+      "step": 6,
+      "of": 6,
+      "state": "SUCCEEDED"
+    }
+  ],
+  "researcher_status": {
+    "code": "PLAN_REAL_DATA_NOT_PERMITTED",
+    "state": "BLOCKED",
+    "plain_language_title": "This version of the runner works with synthetic data only",
+    "plain_language_summary": "The analysis plan describes the data as 'REAL'. This runner is approved for synthetic (made-up) data only.",
+    "why_it_matters": "Real participant data may only be processed once ethics approval, data-custodian authority, an approved processing location and a confirmed research plan are all in place and verified.",
+    "next_action": "Continue using synthetic data for development and testing. Real-data execution is a separate, human-approved step.",
+    "resolving_role": "The ethics or data-governance contact for the study.",
+    "can_continue_elsewhere": true,
+    "work_preserved": true,
+    "support_reference": "FR-20260903-068333-PLAN_REAL_DATA_NOT_PERMITTED",
+    "stage": "environment"
+  },
+  "findings": [
+    {
+      "code": "PLAN_REAL_DATA_NOT_PERMITTED",
+      "state": "BLOCKED",
+      "plain_language_title": "This version of the runner works with synthetic data only",
+      "plain_language_summary": "The analysis plan describes the data as 'REAL'. This runner is approved for synthetic (made-up) data only.",
+      "why_it_matters": "Real participant data may only be processed once ethics approval, data-custodian authority, an approved processing location and a confirmed research plan are all in place and verified.",
+      "next_action": "Continue using synthetic data for development and testing. Real-data execution is a separate, human-approved step.",
+      "resolving_role": "The ethics or data-governance contact for the study.",
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-068333-PLAN_REAL_DATA_NOT_PERMITTED",
+      "stage": "environment"
+    }
+  ],
+  "unresolved_decisions": [],
+  "analysis_record": "manifest.json",
+  "support_log": "support/technical_log.txt"
+}

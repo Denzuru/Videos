@@ -1,0 +1,67 @@
+{
+  "run_id": "ev-replay-0001",
+  "run_state": "SUCCEEDED",
+  "data_classification": "SYNTHETIC",
+  "started_at": "2026-09-03T06:10:16Z",
+  "completed_at": "2026-09-03T06:10:17Z",
+  "stages": [
+    {
+      "id": "environment",
+      "label": "Checking the analysis environment",
+      "step": 1,
+      "of": 6,
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "data",
+      "label": "Checking that your data structure is ready",
+      "step": 2,
+      "of": 6,
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "plan",
+      "label": "Confirming the approved analysis plan",
+      "step": 3,
+      "of": 6,
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "analysis",
+      "label": "Running the approved analysis",
+      "step": 4,
+      "of": 6,
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "outputs",
+      "label": "Checking outputs before saving",
+      "step": 5,
+      "of": 6,
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "record",
+      "label": "Saving the reproducibility record",
+      "step": 6,
+      "of": 6,
+      "state": "SUCCEEDED"
+    }
+  ],
+  "researcher_status": {
+    "code": "RUN_SUCCEEDED",
+    "state": "SUCCEEDED",
+    "plain_language_title": "Your analysis finished and the record was saved",
+    "plain_language_summary": "All steps completed. The approved outputs and the reproducibility record are saved together in the analysis record.",
+    "why_it_matters": "You can now review the results knowing exactly which data version, plan and settings produced them.",
+    "next_action": "Review the outputs. If anything looks unexpected, the analysis record shows how each result was produced.",
+    "resolving_role": null,
+    "can_continue_elsewhere": true,
+    "work_preserved": true,
+    "support_reference": "FR-20260903-5aac2b-OK"
+  },
+  "findings": [],
+  "unresolved_decisions": [],
+  "analysis_record": "manifest.json",
+  "support_log": "support/technical_log.txt"
+}

@@ -1,0 +1,11 @@
+Project Firdous R runner: technical log (support use only)
+run_id: ev-malformed-0001
+[2026-09-03T06:10:07Z] stage start: environment
+[2026-09-03T06:10:08Z] R: R version 4.3.3 (2024-02-29); platform: x86_64-pc-linux-gnu
+[2026-09-03T06:10:08Z] git: ede9655d8c624b3c0443e3dd0b8c96197beace22
+[2026-09-03T06:10:08Z] stage ok: environment
+[2026-09-03T06:10:08Z] stage start: data
+[2026-09-03T06:10:08Z] data findings: DATA_VALUES_MALFORMED, DATA_VALUES_OUT_OF_RANGE
+[2026-09-03T06:10:08Z] stage failed: data code=DATA_VALUES_MALFORMED
+[2026-09-03T06:10:08Z] stage start: record
+[2026-09-03T06:10:08Z] stage ok: record

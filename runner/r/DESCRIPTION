@@ -1,0 +1,13 @@
+Package: firdousrunner
+Type: Project
+Title: Project Firdous R Runner (synthetic-only)
+Version: 0.1.1
+Description: One-command, deterministic, fail-closed R execution layer for
+    Project Firdous. Synthetic data only. Not an installable package; the
+    DESCRIPTION exists so renv records an explicit dependency set.
+Imports:
+    digest,
+    jsonlite,
+    yaml
+Suggests:
+    testthat

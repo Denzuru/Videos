@@ -1,0 +1,283 @@
+{
+  "schema": "RunBundleManifest",
+  "contract_version": "0.1.0-r-runner-draft",
+  "run_id": "ev-draft-0001",
+  "run_state": "BLOCKED",
+  "data_classification": "SYNTHETIC",
+  "participant_rows_included": false,
+  "project": {
+    "project_id": "SYN-PROJECT-FIRDOUS",
+    "run_plan_id": "SYN-RUNPLAN-0002-DRAFT",
+    "label": "Synthetic alpha run plan (no scientific content)"
+  },
+  "research_plan": {
+    "protocol_version_id": "SYN-PROTOCOL-v1",
+    "protocol_status": "DRAFT",
+    "schema_status": "LOCKED",
+    "authority_records": [
+      {
+        "role": "principal_researcher",
+        "reference": "SYN-AUTH-0001",
+        "recorded_at": "2026-09-01"
+      },
+      {
+        "role": "supervisor",
+        "reference": "SYN-AUTH-0002",
+        "recorded_at": "2026-09-01"
+      }
+    ]
+  },
+  "governance": {
+    "approval_status": "APPROVED",
+    "approval_reference": "SYN-GOV-0001",
+    "processing_location": "synthetic-local-workstation",
+    "processing_location_approved": true
+  },
+  "timing": {
+    "started_at": "2026-09-03T06:10:03Z",
+    "completed_at": "2026-09-03T06:10:04Z"
+  },
+  "runner": {
+    "name": "project-firdous-r-runner",
+    "version": "0.1.1-synthetic",
+    "command": "run_pipeline.R --config config/synthetic_draft.yml --run-id ev-draft-0001 --out /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/evidence-runs"
+  },
+  "environment": {
+    "r_version": "R version 4.3.3 (2024-02-29)",
+    "r_version_short": "4.3.3",
+    "platform": "x86_64-pc-linux-gnu",
+    "os": "Linux 6.18.44-fc-v24",
+    "locale": "C",
+    "base_r_only": false,
+    "packages": [
+      {
+        "name": "compiler",
+        "version": "4.3.3",
+        "source": "base"
+      },
+      {
+        "name": "digest",
+        "version": "0.6.34",
+        "source": "CRAN"
+      },
+      {
+        "name": "renv",
+        "version": "1.0.3",
+        "source": "CRAN"
+      },
+      {
+        "name": "tools",
+        "version": "4.3.3",
+        "source": "base"
+      },
+      {
+        "name": "yaml",
+        "version": "2.3.8",
+        "source": "CRAN"
+      },
+      {
+        "name": "jsonlite",
+        "version": "1.8.8",
+        "source": "installed"
+      }
+    ],
+    "renv_lockfile_present": true,
+    "renv_lockfile_sha256": "3b549e3e0ad12415722c8923d9eb3156ed090f8327d3ea94cb332424ed15c948",
+    "library_paths": [
+      "/home/user/Videos/runner/r/renv/library/R-4.3/x86_64-pc-linux-gnu",
+      "/root/.cache/R/renv/sandbox/R-4.3/x86_64-pc-linux-gnu/9a444a72"
+    ]
+  },
+  "code": {
+    "revision": "ede9655d8c624b3c0443e3dd0b8c96197beace22",
+    "branch": "claude/firdous-r-runner-mhwc2j",
+    "working_tree_clean": true,
+    "available": true
+  },
+  "configuration": {
+    "path": "synthetic_draft.yml",
+    "sha256": "f760246689e97649a06432a176d4a5f7cafb557a51a9a722638c7bf07f99e71c",
+    "content_fingerprint": "f29e186087d528738549cee5455c9e5587bcfe4a0f034dac1c7611e607626539",
+    "config_version": "0.1.1",
+    "seed": 20260903,
+    "seed_fingerprint": "9c9d46b02fb99ebf1106a97d8b6f5ec1275453304b461dbbb0695d7e5229f380"
+  },
+  "analysis": null,
+  "inputs": [
+    {
+      "role": "participant",
+      "path": "data/synthetic/participants.csv",
+      "sha256": "bb74c864b5e9363c3d858e227d94e72ba93847385a895a18b4ab500520f822fb",
+      "rows": 24,
+      "columns": ["participant_id", "synthetic_group", "synthetic_age"],
+      "participant_rows_included": false
+    },
+    {
+      "role": "assay",
+      "path": "data/synthetic/assays.csv",
+      "sha256": "beb97facec6cf5922be1c2bad31e80df380fb6a2199799c7b6e0ddd0f7b384c7",
+      "rows": 71,
+      "columns": ["participant_id", "target", "value", "synthetic_batch"],
+      "participant_rows_included": false
+    },
+    {
+      "role": "approved-exceptions",
+      "path": "data/synthetic/approved_exceptions.csv",
+      "sha256": "15cce642d5bad89fc0a5b25dd04fd138b0abb369476812e131449ce2632d9632",
+      "rows": 1,
+      "columns": ["participant_id", "target", "exception_type", "reason", "approved_by", "approval_reference"],
+      "participant_rows_included": false
+    }
+  ],
+  "outputs": [],
+  "checks": {
+    "environment": {
+      "lockfile_enforced": true,
+      "lockfile_consistent": true,
+      "mismatches": []
+    },
+    "assay_typing": {
+      "total": 71,
+      "observed": 65,
+      "missing": 3,
+      "below_detection": 3,
+      "malformed": 0,
+      "out_of_range": 0
+    },
+    "reconciliation": {
+      "participants": 24,
+      "assay_rows": 71,
+      "required_targets": 3,
+      "orphan_assay_rows": 0,
+      "missing_required_assays": 0,
+      "duplicate_assay_keys": 0,
+      "duplicate_participants": 0,
+      "approved_exceptions_applied": 1
+    },
+    "research_plan_gate": {
+      "data_classification": "SYNTHETIC",
+      "protocol_status": "DRAFT",
+      "schema_status": "LOCKED",
+      "governance_approval_status": "APPROVED",
+      "processing_location_approved": true,
+      "unresolved_decisions": 2,
+      "authority_roles_present": [
+        "principal_researcher",
+        "supervisor"
+      ]
+    }
+  },
+  "stages": [
+    {
+      "id": "environment",
+      "researcher_label": "Checking the analysis environment",
+      "state": "SUCCEEDED",
+      "started_at": "2026-09-03T06:10:03Z",
+      "ended_at": "2026-09-03T06:10:04Z",
+      "support_reference": null
+    },
+    {
+      "id": "data",
+      "researcher_label": "Checking that your data structure is ready",
+      "state": "SUCCEEDED",
+      "started_at": "2026-09-03T06:10:04Z",
+      "ended_at": "2026-09-03T06:10:04Z",
+      "support_reference": null
+    },
+    {
+      "id": "plan",
+      "researcher_label": "Confirming the approved analysis plan",
+      "state": "BLOCKED",
+      "started_at": "2026-09-03T06:10:04Z",
+      "ended_at": "2026-09-03T06:10:04Z",
+      "support_reference": "FR-20260903-d1fa5a-PLAN_PROTOCOL_NOT_LOCKED"
+    },
+    {
+      "id": "analysis",
+      "researcher_label": "Running the approved analysis",
+      "state": "SKIPPED",
+      "started_at": null,
+      "ended_at": null,
+      "support_reference": null
+    },
+    {
+      "id": "outputs",
+      "researcher_label": "Checking outputs before saving",
+      "state": "SKIPPED",
+      "started_at": null,
+      "ended_at": null,
+      "support_reference": null
+    },
+    {
+      "id": "record",
+      "researcher_label": "Saving the reproducibility record",
+      "state": "SUCCEEDED",
+      "started_at": "2026-09-03T06:10:04Z",
+      "ended_at": "2026-09-03T06:10:04Z",
+      "support_reference": null
+    }
+  ],
+  "researcher_status": {
+    "code": "PLAN_PROTOCOL_NOT_LOCKED",
+    "state": "BLOCKED",
+    "plain_language_title": "Your research plan has not been confirmed yet",
+    "plain_language_summary": "The research plan is currently 'still a draft'. The analysis can only run against a confirmed research plan.",
+    "why_it_matters": "Running an analysis before the plan is confirmed could produce results that later have to be discarded when a decision changes.",
+    "next_action": "Complete the outstanding decisions in the research plan and send it for confirmation. You can keep preparing data in the meantime.",
+    "resolving_role": "Your supervisor or the person who confirms the research plan.",
+    "can_continue_elsewhere": true,
+    "work_preserved": true,
+    "support_reference": "FR-20260903-d1fa5a-PLAN_PROTOCOL_NOT_LOCKED",
+    "stage": "plan"
+  },
+  "findings": [
+    {
+      "code": "PLAN_PROTOCOL_NOT_LOCKED",
+      "state": "BLOCKED",
+      "plain_language_title": "Your research plan has not been confirmed yet",
+      "plain_language_summary": "The research plan is currently 'still a draft'. The analysis can only run against a confirmed research plan.",
+      "why_it_matters": "Running an analysis before the plan is confirmed could produce results that later have to be discarded when a decision changes.",
+      "next_action": "Complete the outstanding decisions in the research plan and send it for confirmation. You can keep preparing data in the meantime.",
+      "resolving_role": "Your supervisor or the person who confirms the research plan.",
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-d1fa5a-PLAN_PROTOCOL_NOT_LOCKED",
+      "stage": "plan"
+    },
+    {
+      "code": "PLAN_DECISIONS_UNRESOLVED",
+      "state": "BLOCKED",
+      "plain_language_title": "2 decision(s) are needed before this analysis can run",
+      "plain_language_summary": "The following parts of the research plan are still waiting for a decision: The primary outcome; The multiple-testing correction.",
+      "why_it_matters": "These are scientific or governance choices. The runner will never fill them in on your behalf.",
+      "next_action": "Discuss the open decisions with your supervisor and record the outcome in the research plan. Nothing else needs to change.",
+      "resolving_role": "Your supervisor, statistician or methodologist.",
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-d1fa5a-PLAN_DECISIONS_UNRESOLVED",
+      "stage": "plan"
+    }
+  ],
+  "unresolved_decisions": [
+    {
+      "field": "analysis_plan.primary_outcome",
+      "decision": "The primary outcome",
+      "resolving_role": "Your supervisor or the person who confirms the research plan."
+    },
+    {
+      "field": "analysis_plan.multiplicity.correction",
+      "decision": "The multiple-testing correction",
+      "resolving_role": "Your supervisor, statistician or methodologist."
+    }
+  ],
+  "logs": [
+    {
+      "path": "support/technical_log.txt",
+      "kind": "support_only",
+      "sha256": "45c84d89b9cf3e8f8b3b7bbddec3359968f78d996b93db26f429b271666dd63d"
+    }
+  ],
+  "local_only_files": [],
+  "record_complete": true,
+  "record_missing_fields": []
+}

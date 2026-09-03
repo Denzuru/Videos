@@ -1,0 +1,25 @@
+renv: 1.0.3 
+lockfile sha256: 3b549e3e0ad12415722c8923d9eb3156ed090f8327d3ea94cb332424ed15c948 
+project library: /tmp/claude-0/-home-user-Videos/22ce6988-1b2e-5332-9050-085996fd0c89/scratchpad/restore-sXAO/renv/library/R-4.3/x86_64-pc-linux-gnu 
+cache: /root/.cache/R/renv/cache/v5/R-4.3/x86_64-pc-linux-gnu 
+The following package(s) will be updated:
+
+# CRAN -----------------------------------------------------------------------
+- digest     [* -> 0.6.34]
+- jsonlite   [* -> 1.8.8]
+- yaml       [* -> 2.3.8]
+
+# Installing packages --------------------------------------------------------
+- Installing digest ...                         OK [linked from cache]
+- Installing jsonlite ...                       OK [linked from cache]
+- Installing yaml ...                           OK [linked from cache]
+
+--- contents of project library after restore ---
+digest 0.6.34 (linked from renv cache) 
+jsonlite 1.8.8 (linked from renv cache) 
+yaml 2.3.8 (linked from renv cache) 
+digest matches lockfile: TRUE 
+jsonlite matches lockfile: TRUE 
+yaml matches lockfile: TRUE 
+
+RESTORE PROOF: PASS (offline, from local renv cache) 

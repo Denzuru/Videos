@@ -1,0 +1,108 @@
+{
+  "run_id": "ev-recon-0001",
+  "run_state": "FAILED",
+  "data_classification": "SYNTHETIC",
+  "started_at": "2026-09-03T06:10:10Z",
+  "completed_at": "2026-09-03T06:10:11Z",
+  "stages": [
+    {
+      "id": "environment",
+      "label": "Checking the analysis environment",
+      "step": 1,
+      "of": 6,
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "data",
+      "label": "Checking that your data structure is ready",
+      "step": 2,
+      "of": 6,
+      "state": "FAILED"
+    },
+    {
+      "id": "plan",
+      "label": "Confirming the approved analysis plan",
+      "step": 3,
+      "of": 6,
+      "state": "SKIPPED"
+    },
+    {
+      "id": "analysis",
+      "label": "Running the approved analysis",
+      "step": 4,
+      "of": 6,
+      "state": "SKIPPED"
+    },
+    {
+      "id": "outputs",
+      "label": "Checking outputs before saving",
+      "step": 5,
+      "of": 6,
+      "state": "SKIPPED"
+    },
+    {
+      "id": "record",
+      "label": "Saving the reproducibility record",
+      "step": 6,
+      "of": 6,
+      "state": "SUCCEEDED"
+    }
+  ],
+  "researcher_status": {
+    "code": "DATA_ORPHAN_ASSAYS",
+    "state": "FAILED",
+    "plain_language_title": "Some assay results belong to participants who are not in the participant file",
+    "plain_language_summary": "1 assay row(s) refer to 1 participant identifier(s) that do not appear in the participant file.",
+    "why_it_matters": "Results that cannot be linked to a participant cannot be analysed, and may indicate that the two files come from different dataset versions.",
+    "next_action": "Check that the participant and assay files are from the same dataset version. If an assay is a known exception, record it in the approved-exceptions list.",
+    "resolving_role": "The data custodian or the person who prepared the data file.",
+    "can_continue_elsewhere": true,
+    "work_preserved": true,
+    "support_reference": "FR-20260903-33d3d0-DATA_ORPHAN_ASSAYS",
+    "stage": "data"
+  },
+  "findings": [
+    {
+      "code": "DATA_ORPHAN_ASSAYS",
+      "state": "FAILED",
+      "plain_language_title": "Some assay results belong to participants who are not in the participant file",
+      "plain_language_summary": "1 assay row(s) refer to 1 participant identifier(s) that do not appear in the participant file.",
+      "why_it_matters": "Results that cannot be linked to a participant cannot be analysed, and may indicate that the two files come from different dataset versions.",
+      "next_action": "Check that the participant and assay files are from the same dataset version. If an assay is a known exception, record it in the approved-exceptions list.",
+      "resolving_role": "The data custodian or the person who prepared the data file.",
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-33d3d0-DATA_ORPHAN_ASSAYS",
+      "stage": "data"
+    },
+    {
+      "code": "DATA_MISSING_ASSAYS",
+      "state": "FAILED",
+      "plain_language_title": "Some participants are missing required assay results",
+      "plain_language_summary": "1 required assay result(s) are missing across 1 participant(s).",
+      "why_it_matters": "The approved plan expects every participant to have a result for each target in the panel. Missing rows change the sample size.",
+      "next_action": "Add the missing results, or record each missing result as an approved exception with the reason and who approved it.",
+      "resolving_role": "The data custodian or the person who prepared the data file.",
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-33d3d0-DATA_MISSING_ASSAYS",
+      "stage": "data"
+    },
+    {
+      "code": "DATA_DUPLICATE_KEYS",
+      "state": "FAILED",
+      "plain_language_title": "Some assay results are duplicated",
+      "plain_language_summary": "1 participant-and-target combination(s) appear more than once in the assay file.",
+      "why_it_matters": "Duplicated rows would count a participant more than once. Whether repeat measurements are allowed is a decision for the research plan, not for the runner.",
+      "next_action": "Remove accidental duplicates. If repeat measurements are intended, the research plan must say how they are handled before the analysis can run.",
+      "resolving_role": "Your supervisor, statistician or methodologist.",
+      "can_continue_elsewhere": true,
+      "work_preserved": true,
+      "support_reference": "FR-20260903-33d3d0-DATA_DUPLICATE_KEYS",
+      "stage": "data"
+    }
+  ],
+  "unresolved_decisions": [],
+  "analysis_record": "manifest.json",
+  "support_log": "support/technical_log.txt"
+}

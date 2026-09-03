@@ -1,0 +1,39 @@
+{
+  "assay_typing": {
+    "total": 71,
+    "observed": 58,
+    "missing": 3,
+    "below_detection": 3,
+    "malformed": 7,
+    "out_of_range": 1
+  },
+  "reconciliation": {
+    "participants": 24,
+    "assay_rows": 71,
+    "required_targets": 3,
+    "orphan_assay_rows": 0,
+    "missing_required_assays": 0,
+    "duplicate_assay_keys": 0,
+    "duplicate_participants": 0,
+    "approved_exceptions_applied": 1
+  },
+  "findings": [
+    {
+      "code": "DATA_VALUES_MALFORMED",
+      "values": {
+        "count": 7,
+        "column": "value",
+        "examples": "'ND' (text where a number was expected); '' (empty cell (not an approved missing representation)); '12,5' (comma used as the decimal separator); and 4 other kind(s)",
+        "approved": "missing = 'NA'; below detection = '<LOD'; numbers written with a decimal point"
+      }
+    },
+    {
+      "code": "DATA_VALUES_OUT_OF_RANGE",
+      "values": {
+        "count": 1,
+        "column": "value",
+        "range": "0 to 45"
+      }
+    }
+  ]
+}
