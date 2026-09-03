@@ -44,6 +44,8 @@ collect_environment <- function(root) {
     packages = pkg_records,
     renv_lockfile_present = file.exists(lock_path),
     renv_lockfile_sha256 = sha256_file(lock_path),
+    library_mode = Sys.getenv("FIRDOUS_LIBRARY_MODE", unset = "unknown"),
+    renv_bootstrap_error = { e <- Sys.getenv("FIRDOUS_RENV_BOOTSTRAP_ERROR", unset = ""); if (nzchar(e)) e else NULL },
     library_paths = as.list(.libPaths())
   )
 }

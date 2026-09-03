@@ -8,6 +8,7 @@
 #   ./run.sh guard [--staged|--all|--paths ...]      restricted-data guard (F06)
 #   ./run.sh export RUN_DIR       write RUN_DIR/bundle_request.json, the platform ingestion request
 #   ./run.sh restore              restore the recorded R environment with renv (F04)
+#   ./run.sh verify-clone [REPO] [REF]   clean-clone replay: tests, run, replay, export, guard
 #   ./run.sh fingerprint PATH     fingerprint the original v0.1.0 archive before remediation
 #
 # Everything runs from runner/r so renv activates the recorded environment.
@@ -28,6 +29,7 @@ case "$cmd" in
   guard)       exec Rscript scripts/guard_restricted_data.R "${@:---staged}" ;;
   export)      exec Rscript scripts/export_bundle.R "$@" ;;
   restore)     exec Rscript -e 'renv::restore(prompt = FALSE); renv::status()' ;;
+  verify-clone) exec sh scripts/verify_fresh_clone.sh "$@" ;;
   fingerprint) exec Rscript scripts/fingerprint_baseline.R "$@" ;;
-  *) echo "Unknown command: $cmd"; sed -n '2,13p' "$0"; exit 2 ;;
+  *) echo "Unknown command: $cmd"; sed -n '2,14p' "$0"; exit 2 ;;
 esac

@@ -85,7 +85,9 @@ stage_environment <- function(ctx) {
   ctx$seed <- seed_int
   ctx$environment <- collect_environment(ctx$root)
   ctx$git <- git_info(ctx$root)
-  log_support(ctx, "R: ", R.version.string, "; platform: ", R.version$platform)
+  log_support(ctx, "R: ", R.version.string, "; platform: ", R.version$platform,
+              "; library mode: ", ctx$environment$library_mode)
+  if (!is.null(ctx$environment$renv_bootstrap_error)) log_support(ctx, "renv bootstrap failed (support only): ", ctx$environment$renv_bootstrap_error)
   log_support(ctx, "git: ", ctx$git$revision %||% "unavailable")
 
   enforce <- cfg_get(ctx$cfg, "environment.enforce_lockfile", default = TRUE)

@@ -26,3 +26,9 @@ test_that("the manifest records the environment, packages and fingerprints neede
 test_that("the installed runtime matches the lockfile on this machine (F04)", {
   expect_length(lockfile_mismatches(RUNNER_ROOT), 0)
 })
+
+test_that("the record says which library mode produced it", {
+  res <- run_quiet(file.path(RUNNER_ROOT, "config", "synthetic_locked.yml"), run_id = "t-libmode")
+  m <- read_json_file(res$manifest_path)
+  expect_true(m$environment$library_mode %in% c("renv-project", "system-fallback", "unknown"))
+})
