@@ -24,6 +24,8 @@ r-runner:
         cd runner/r
         ./run.sh run --run-id ci-$GITHUB_RUN_ID --out /tmp/firdous-runs
         ./run.sh replay --reference /tmp/firdous-runs/ci-$GITHUB_RUN_ID/manifest.json --out /tmp/firdous-runs
+    - name: Clean-clone replay (independent of the checkout above)
+      run: cd runner/r && ./run.sh verify-clone "$GITHUB_WORKSPACE" "$GITHUB_SHA"
     - uses: actions/upload-artifact@v4
       with:
         name: r-runner-evidence

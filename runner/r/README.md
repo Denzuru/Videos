@@ -18,6 +18,7 @@ cd runner/r
 ./run.sh replay --reference <analysis record>/manifest.json
 ./run.sh export <analysis record>   # write bundle_request.json, the platform ingestion request
 ./run.sh restore         # restore the recorded R environment (renv)
+./run.sh verify-clone    # clean-clone replay: tests, run, replay, export, guard from a temporary clone
 ./run.sh fingerprint PATH_TO_V0.1.0_ARCHIVE
 ```
 
@@ -106,4 +107,7 @@ docs/                  message catalogue, CI snippet
   Codex core at commit 0400cc8; what the protocol and dataset fingerprints
   hash is interim until Codex confirms (`docs/protocol/contract-alignment-request-runbundle.md`).
 - The CRAN network restore of `renv.lock` could not be exercised in the
-  build sandbox; the offline restore from the local cache was.
+  build sandbox; the offline restore from the local cache was, and a fresh
+  clone replays offline: when renv cannot bootstrap, the runner uses the
+  system library and still refuses to run unless the installed packages
+  match the lockfile (`environment.library_mode` says which mode was used).

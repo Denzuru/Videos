@@ -10,6 +10,7 @@ Reviewers should replay rather than trust this page.
 | `test-output.txt` | Full console output of `./run.sh test`: 64 test blocks, 696 expectations, 0 failures (re-run after the security-review fixes, with CODEX_CORE_ROOT set so the Codex assertion and ingestion tests ran) |
 | `commands-and-output.md` | Exact commands and console output for five runs and one replay (regenerated after contract alignment) |
 | `guard-staged-output.txt` | Latest staged guard run: clean (the first lane commit scanned 114 files clean) |
+| `fresh-clone-replay-offline.txt` | `run.sh verify-clone` from a temporary clone with CRAN unreachable: renv bootstrap fails, the runner falls back to the system library, and tests, run, replay, export and guard all pass (library_mode = system-fallback) |
 | `renv-restore-offline-log.txt` | Restore of the lockfile into an empty project library from the local renv cache |
 | `runs/ev-locked-0001/` | Confirmed synthetic plan: SUCCEEDED, full analysis record |
 | `runs/ev-replay-0001/` | Replay of the above: verdict MATCH, identical output checksums |
@@ -50,5 +51,6 @@ real exported record is ingested (201) by their API handler in `test-export-bund
 ## Limits
 
 - The CRAN network path of `renv::restore()` was not exercised (proxy denies
-  CRAN in the build sandbox). The offline restore from cache was.
+  CRAN in the build sandbox). The offline restore from cache was, and a fresh
+  clone replays offline in system-fallback mode with the lockfile still enforced.
 - The original v0.1.0 archive was not supplied; no baseline fingerprint exists yet.

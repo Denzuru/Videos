@@ -1,0 +1,55 @@
+$ cd runner/r && ./run.sh verify-clone /home/user/Videos claude/firdous-r-runner-mhwc2j   # offline sandbox, CRAN unreachable
+date: 2026-09-03T16:13:00Z
+
+Fresh clone of /home/user/Videos at claude/firdous-r-runner-mhwc2j into <tmp>
+--- library mode probe ---
+# Bootstrapping renv 1.0.3 ---------------------------------------------------
+- Downloading renv ... FAILED
+library mode: system-fallback 
+--- tests ---
+# Bootstrapping renv 1.0.3 ---------------------------------------------------
+- Downloading renv ... FAILED
+analysis-registry: ..............
+assay-typing: .........................
+contract-codex: ..................................S
+export-bundle: .............W....W...S.......S
+guard: ..............................
+manifest: .............
+messages: ................................................................................................................................................................................................................................................................................................................................................................................................................
+pipeline: .......................................................................................................................
+reconcile: ...........
+schema-lock: ...................................
+
+══ Skipped ═════════════════════════════════════════════════════════════════════
+1. the committed manifest fixtures pass the Codex assertion when the candidate is available ('test-contract-codex.R:36:3') - Reason: CODEX_CORE_ROOT not set
+
+2. the exported request is ingested by the Codex core handler when the candidate is available ('test-export-bundle.R:66:3') - Reason: CODEX_CORE_ROOT not set
+
+3. Journey 5 seam: record ingested, then each proposed result is saved for review by the Codex handler ('test-export-bundle.R:111:3') - Reason: CODEX_CORE_ROOT not set
+
+══ Warnings ════════════════════════════════════════════════════════════════════
+1. the export command never shows a raw R error to the researcher ('test-export-bundle.R:38:3') - running command ''Rscript' <tmp>/clone/runner/r/scripts/export_bundle.R /no/such/dir 2>&1' had status 1
+
+2. the export command never shows a raw R error to the researcher ('test-export-bundle.R:43:3') - running command ''Rscript' <tmp>/clone/runner/r/scripts/export_bundle.R /tmp/Rtmpecx3R4 --project-id 2>&1' had status 2
+
+══ DONE ════════════════════════════════════════════════════════════════════════
+
+TEST SUMMARY: 68 test blocks, 708 expectations passed, 0 failed, 0 errors, 3 skipped
+--- run ---
+# Bootstrapping renv 1.0.3 ---------------------------------------------------
+- Downloading renv ... FAILED
+--- replay ---
+# Bootstrapping renv 1.0.3 ---------------------------------------------------
+- Downloading renv ... FAILED
+--- export ---
+# Bootstrapping renv 1.0.3 ---------------------------------------------------
+- Downloading renv ... FAILED
+Ingestion request written to <tmp>/runs/fresh-run/bundle_request.json 
+Result proposals written to <tmp>/runs/fresh-run/result_proposals.json 
+--- guard ---
+# Bootstrapping renv 1.0.3 ---------------------------------------------------
+- Downloading renv ... FAILED
+Restricted-data guard: no problems found.
+(137 file(s) scanned, mode: all)
+FRESH CLONE REPLAY: PASS (<tmp>)
+exit=0
