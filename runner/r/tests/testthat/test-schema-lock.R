@@ -65,3 +65,21 @@ test_that("placeholder detection covers the usual unresolved forms", {
   expect_false(is_unresolved_value("association")); expect_false(is_unresolved_value(5))
   expect_false(is_unresolved_value("not_applicable"))
 })
+
+test_that("deleting a decision from the plan does not resolve it (gate requires the full template set)", {
+  cfg <- locked_config(); cfg$governance$minimum_reportable_cell_size <- NULL
+  g <- check_research_plan_gate(cfg)
+  expect_false(g$locked)
+  f <- Filter(function(x) x$code == "PLAN_DECISIONS_UNRESOLVED", g$findings)[[1]]
+  expect_true("governance.minimum_reportable_cell_size" %in% f$detail$field)
+  expect_true("The minimum reportable group size" %in% f$detail$decision)
+  cfg2 <- locked_config(); cfg2$analysis_plan$multiplicity <- NULL
+  expect_true(any(grepl("^analysis_plan.multiplicity", Filter(function(x) x$code == "PLAN_DECISIONS_UNRESOLVED", check_research_plan_gate(cfg2)$findings)[[1]]$detail$field)))
+  expect_true(length(required_decision_paths()) >= 30)
+  expect_length(missing_decision_paths(locked_config()), 0)
+})
+
+test_that("an empty required-authority list cannot make the authority check vacuous", {
+  cfg <- locked_config(); cfg$research_plan$required_authority_roles <- list(); cfg$research_plan$authority_records <- list()
+  expect_true("PLAN_AUTHORITY_MISSING" %in% gate_codes(cfg))
+})

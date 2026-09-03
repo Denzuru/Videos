@@ -13,6 +13,37 @@
 # Every failed condition becomes a BLOCKED finding with a named resolver.
 # The gate never resolves a decision itself.
 
+# Every decision the real-study template carries must be PRESENT in a plan,
+# not merely free of placeholder tokens. Deleting a key is not a resolution.
+required_decision_paths <- function() {
+  tmpl_path <- file.path(runner_root(), "config", "firdous_template_BLOCKED.yml")
+  if (!file.exists(tmpl_path)) return(character(0))
+  tmpl <- yaml::read_yaml(tmpl_path)
+  leaf_paths <- function(x, prefix) {
+    out <- character(0)
+    for (nm in names(x)) {
+      path <- paste0(prefix, ".", nm); v <- x[[nm]]
+      if (is.list(v) && !is.null(names(v)) && length(v)) out <- c(out, leaf_paths(v, path)) else out <- c(out, path)
+    }
+    out
+  }
+  c(leaf_paths(tmpl$analysis_plan, "analysis_plan"),
+    leaf_paths(tmpl$governance, "governance"),
+    leaf_paths(tmpl$data, "data"),
+    leaf_paths(tmpl$stages, "stages"),
+    leaf_paths(tmpl$outputs, "outputs"))
+}
+
+# Paths from the template that are absent from cfg (missing keys, not values).
+missing_decision_paths <- function(cfg, required = required_decision_paths()) {
+  present <- function(path) {
+    parts <- strsplit(path, ".", fixed = TRUE)[[1]]; x <- cfg
+    for (p in parts) { if (!is.list(x) || is.null(names(x)) || !(p %in% names(x))) return(FALSE); x <- x[[p]] }
+    TRUE
+  }
+  required[!vapply(required, present, logical(1))]
+}
+
 check_research_plan_gate <- function(cfg) {
   findings <- list()
 
@@ -36,6 +67,7 @@ check_research_plan_gate <- function(cfg) {
 
   required_roles <- cfg_get(cfg, "research_plan.required_authority_roles",
                             default = list("principal_researcher"))
+  if (length(unlist(required_roles)) == 0) required_roles <- list("principal_researcher")   # never vacuous
   records <- cfg_get(cfg, "research_plan.authority_records", default = list())
   have_roles <- vapply(records, function(r) {
     if (is.list(r) && !is.null(r$role) && !is.null(r$reference) && nzchar(r$reference)) r$role else NA_character_
@@ -64,8 +96,8 @@ check_research_plan_gate <- function(cfg) {
     find_unresolved(cfg$analysis_plan, "analysis_plan"),
     find_unresolved(cfg$governance[setdiff(names(cfg$governance), c("approval_status", "processing_location_approved"))], "governance")
   )
-  # Optional fields may legitimately be empty when explicitly marked not applicable.
-  unresolved <- unique(unresolved)
+  # A decision that has been deleted from the plan is unresolved, not resolved.
+  unresolved <- unique(c(unresolved, missing_decision_paths(cfg)))
   if (length(unresolved) > 0) {
     labels <- vapply(unresolved, function(p) decision_label(p)$label, character(1))
     findings[[length(findings) + 1]] <- new_finding("PLAN_DECISIONS_UNRESOLVED",
