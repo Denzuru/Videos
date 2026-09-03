@@ -244,6 +244,15 @@ MESSAGES <- list(
     resolving_role = ROLE_SUPPORT,
     can_continue_elsewhere = TRUE, work_preserved = TRUE),
 
+  ANALYSIS_OUTPUTS_MISMATCH = list(
+    state = "BLOCKED",
+    plain_language_title = "The analysis plan and the analysis step do not agree on the outputs",
+    plain_language_summary = "For the step '{kind}': {detail}.",
+    why_it_matters = "Only outputs that both the plan allows and the step produces may be saved, so the record always matches what was approved.",
+    next_action = "No action is needed from you. Research support will align the plan's output list with the analysis step.",
+    resolving_role = ROLE_SUPPORT,
+    can_continue_elsewhere = TRUE, work_preserved = TRUE),
+
   ANALYSIS_STAGE_FAILED = list(
     state = "FAILED",
     plain_language_title = "The analysis stopped before it finished",

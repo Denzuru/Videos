@@ -235,6 +235,16 @@ Raw R errors never appear in these fields; they go to the support log only.
 - Other work can continue: yes
 - Work preserved: yes
 
+### The analysis plan and the analysis step do not agree on the outputs
+
+- Support code: `ANALYSIS_OUTPUTS_MISMATCH` (waiting for a decision)
+- What happened: For the step '{kind}': {detail}.
+- Why it matters: Only outputs that both the plan allows and the step produces may be saved, so the record always matches what was approved.
+- Next action: No action is needed from you. Research support will align the plan's output list with the analysis step.
+- Who can resolve it: Research support (quote the support reference).
+- Other work can continue: yes
+- Work preserved: yes
+
 ### The analysis stopped before it finished
 
 - Support code: `ANALYSIS_STAGE_FAILED` (stopped, action needed)

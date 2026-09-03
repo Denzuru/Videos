@@ -10,17 +10,27 @@
 # analytical decision. When the real scripts arrive they are mapped in here as
 # new analysis kinds without changing the gate or record logic.
 
-ANALYSIS_KINDS <- c("SYNTHETIC_DESCRIPTIVE_PLACEHOLDER")
-
 run_analysis_stage <- function(ctx) {
-  kind <- cfg_get(ctx$cfg, "stages.analysis.kind", default = NULL)
-  if (is.null(kind) || !(kind %in% ANALYSIS_KINDS)) {
-    stop_firdous("ANALYSIS_KIND_UNKNOWN", list(kind = kind %||% "(not recorded)"))
+  kind_id <- cfg_get(ctx$cfg, "stages.analysis.kind", default = NULL)
+  kind <- get_analysis_kind(kind_id)
+  if (is.null(kind)) stop_firdous("ANALYSIS_KIND_UNKNOWN", list(kind = kind_id %||% "(not recorded)"))
+  mism <- analysis_output_mismatch(kind, ctx$cfg)
+  if (length(mism$undeclared) || length(mism$unallowed)) {
+    stop_firdous("ANALYSIS_OUTPUTS_MISMATCH",
+                 list(kind = kind$label,
+                      detail = paste(c(if (length(mism$undeclared)) paste0("the plan expects ", paste(mism$undeclared, collapse = ", "), " which this step does not produce"),
+                                       if (length(mism$unallowed)) paste0("this step produces ", paste(mism$unallowed, collapse = ", "), " which the plan does not allow")),
+                                     collapse = "; ")))
   }
+  missing_cols <- setdiff(kind$requires_participant_columns, names(ctx$data$participants))
+  if (length(missing_cols)) stop_firdous("DATA_COLUMNS_MISSING", list(role = "participant", columns = paste(missing_cols, collapse = ", ")))
   set.seed(ctx$seed)
-  log_support(ctx, sprintf("analysis kind=%s seed=%s", kind, ctx$seed))
-  switch(kind,
-    SYNTHETIC_DESCRIPTIVE_PLACEHOLDER = run_synthetic_descriptive(ctx))
+  log_support(ctx, sprintf("analysis kind=%s seed=%s", kind$id, ctx$seed))
+  res <- kind$run(ctx)
+  res$kind <- kind$id
+  res$scientific_claim <- kind$scientific_claim
+  if (!is.null(kind$note) && is.null(res$note)) res$note <- kind$note
+  res
 }
 
 run_synthetic_descriptive <- function(ctx) {
@@ -83,11 +93,18 @@ run_synthetic_descriptive <- function(ctx) {
   write_csv_deterministic(readiness, file.path(out_dir, "data_readiness_summary.csv"))
 
   list(
-    kind = "SYNTHETIC_DESCRIPTIVE_PLACEHOLDER",
-    scientific_claim = "none",
     note = "Descriptive aggregates on synthetic data only. No statistical test was applied and no analytical decision was made by the runner.",
     outputs_written = c("group_counts.csv", "target_summary_by_group.csv", "data_readiness_summary.csv"),
     groups = nrow(group_counts),
     targets = length(unique(target_summary$target))
   )
 }
+
+register_analysis_kind(
+  id = "SYNTHETIC_DESCRIPTIVE_PLACEHOLDER",
+  label = "Synthetic descriptive placeholder",
+  run = run_synthetic_descriptive,
+  declared_outputs = c("group_counts.csv", "target_summary_by_group.csv", "data_readiness_summary.csv"),
+  requires_participant_columns = character(0),
+  scientific_claim = "none",
+  note = "Descriptive aggregates on synthetic data only. No statistical test was applied and no analytical decision was made by the runner.")

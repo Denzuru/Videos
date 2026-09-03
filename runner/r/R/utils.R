@@ -11,7 +11,7 @@ runner_root <- function() {
 # Load every module in R/ in a defined order.
 source_runner <- function(root = runner_root()) {
   files <- c("utils.R", "messages.R", "conditions.R", "io.R", "assay_typing.R",
-             "reconcile.R", "schema_lock.R", "analysis.R", "output_guard.R",
+             "reconcile.R", "schema_lock.R", "analysis_registry.R", "analysis.R", "output_guard.R",
              "manifest.R", "stages.R", "pipeline.R", "guard.R", "replay.R", "export_bundle.R")
   for (f in files) {
     p <- file.path(root, "R", f)

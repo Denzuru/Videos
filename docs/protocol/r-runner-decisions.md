@@ -24,6 +24,7 @@ revisited by the convergence operator or Brother D.
 | DEC-R-018 | Malformed value tokens are masked at source; the record stage redacts identifier-shaped text before writing; export scans values | Security self-review finding 1: raw cell content had a path into the returned record. Only short numeric-shaped tokens are ever echoed. | Adopted |
 | DEC-R-019 | The guard fails closed: unreadable, UTF-16, binary-behind-text-extension and oversize text files are `FILE_NOT_INSPECTED` findings; git paths are read NUL-separated | Security self-review finding 2: quoted names and UTF-16 files were silently skipped while the guard reported clean. | Adopted |
 | DEC-R-020 | `run.sh` selects `C.UTF-8` when no locale is set | R cannot open accented file names under the C locale; the manifest records the locale used. | Adopted |
+| DEC-R-021 | Analysis steps are registered kinds; the plan's output allow-list must equal the kind's declared outputs | Prepares the seam for the seven scripts: each becomes one registration with declared outputs and required columns, and cannot be asked for, or write, anything undeclared. Nothing is registered for them until the files exist. | Adopted |
 | DEC-R-011 | Descriptive placeholder output is identical across seeds | It contains no stochastic step. The seed is still set and recorded so later stochastic methods are reproducible. | Documented limitation |
 
 ## Requests to other lanes

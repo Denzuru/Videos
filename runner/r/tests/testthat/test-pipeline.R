@@ -147,14 +147,21 @@ test_that("the real-study template is refused at the first step, before any data
 })
 
 test_that("an output not on the approved list is quarantined and the run fails", {
-  p <- temp_config(function(c) { c$outputs$allow_list <- c$outputs$allow_list[1:2]; c })
+  # A step that writes more than it declared: the output guard, not the registry, must catch it.
+  on.exit(rm("LEAKY_KIND", envir = .analysis_registry))
+  register_analysis_kind("LEAKY_KIND", "Leaky test kind", function(ctx) {
+    write_csv_deterministic(data.frame(metric = "n", value = 1), file.path(ctx$run_dir, "outputs", "one_number.csv"))
+    write_csv_deterministic(data.frame(metric = "n", value = 2), file.path(ctx$run_dir, "outputs", "extra.csv"))
+    list(outputs_written = c("one_number.csv", "extra.csv"))
+  }, declared_outputs = "one_number.csv")
+  p <- temp_config(function(c) { c$stages$analysis$kind <- "LEAKY_KIND"; c$outputs$allow_list <- list(list(name = "one_number.csv", kind = "aggregate_table")); c })
   res <- run_quiet(p, run_id = "t-allow")
   expect_equal(res$run_state, "FAILED")
   expect_equal(res$researcher_status$code, "OUTPUT_NOT_ALLOWED")
-  expect_false(file.exists(file.path(res$run_dir, "outputs", "data_readiness_summary.csv")))
-  expect_true(file.exists(file.path(res$run_dir, "local", "quarantined_outputs", "data_readiness_summary.csv")))
+  expect_false(file.exists(file.path(res$run_dir, "outputs", "extra.csv")))
+  expect_true(file.exists(file.path(res$run_dir, "local", "quarantined_outputs", "extra.csv")))
   m <- read_json_file(res$manifest_path)
-  expect_false("outputs/data_readiness_summary.csv" %in% vapply(m$outputs, `[[`, "", "path"))
+  expect_false("outputs/extra.csv" %in% vapply(m$outputs, `[[`, "", "path"))
 })
 
 test_that("groups below the minimum reportable size fail the output check", {
