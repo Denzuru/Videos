@@ -1,0 +1,21 @@
+{
+  "name": "quiet-growth-revideo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "revideo serve",
+    "render": "node scripts/render.mjs --out=silent.mp4 && node scripts/add-music.mjs silent.mp4 quiet-growth.mp4 && rm -f silent.mp4",
+    "render:silent": "node scripts/render.mjs",
+    "placeholders": "python3 scripts/make-placeholders.py"
+  },
+  "dependencies": {
+    "@fontsource/caveat": "^5.0.0",
+    "@fontsource/kalam": "^5.3.0",
+    "@fontsource/patrick-hand": "^5.0.0",
+    "@revideo/2d": "0.11.0",
+    "@revideo/cli": "0.11.0",
+    "@revideo/core": "0.11.0",
+    "@revideo/renderer": "0.11.0",
+    "@revideo/ui": "^0.11.0"
+  }
+}
