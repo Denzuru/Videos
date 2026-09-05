@@ -1,0 +1,20 @@
+{
+  "name": "arrow-revideo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "revideo serve",
+    "render": "node scripts/render.mjs --out=silent.mp4 && node scripts/add-music.mjs silent.mp4 pulled-back.mp4 --release=7.75 && rm -f silent.mp4",
+    "render:silent": "node scripts/render.mjs",
+    "paper": "python3 scripts/make-paper.py public/paper.png"
+  },
+  "dependencies": {
+    "@fontsource/caveat": "^5.0.0",
+    "@fontsource/patrick-hand": "^5.0.0",
+    "@revideo/2d": "0.11.0",
+    "@revideo/cli": "0.11.0",
+    "@revideo/core": "0.11.0",
+    "@revideo/renderer": "0.11.0",
+    "@revideo/ui": "^0.11.0"
+  }
+}

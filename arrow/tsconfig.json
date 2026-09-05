@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "jsx": "preserve",
+    "jsxImportSource": "@revideo/2d/lib",
+    "types": ["vite/client"]
+  },
+  "include": ["src"]
+}
